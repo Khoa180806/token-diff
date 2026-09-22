@@ -1,0 +1,48 @@
+{
+  "name": "token-diff",
+  "version": "0.1.0",
+  "description": "Compare token usage between two text inputs. Measurement infrastructure for the AI Developer Tool Ecosystem.",
+  "type": "module",
+  "bin": {
+    "token-diff": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "AGENTS.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "clean": "rmdir /s /q dist 2>nul || true"
+  },
+  "keywords": [
+    "token",
+    "diff",
+    "llm",
+    "ai",
+    "context",
+    "measurement"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "js-tiktoken": "^1.0.15"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
