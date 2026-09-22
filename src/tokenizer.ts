@@ -2,7 +2,7 @@ import { getEncoding, TiktokenEncoding } from 'js-tiktoken';
 import { SupportedEncoding, TokenizerResult } from './types.js';
 import { createError } from './errors.js';
 
-// Cache encoder instances để tối ưu hiệu năng
+// Cache encoder instances for performance
 const encoderCache = new Map<SupportedEncoding, ReturnType<typeof getEncoding>>();
 
 const MODEL_TO_ENCODING: Record<string, SupportedEncoding> = {
@@ -42,17 +42,17 @@ const VALID_ENCODINGS = new Set<SupportedEncoding>([
 export function resolveEncodingForModel(modelOrEncoding: string): SupportedEncoding {
   const normalized = modelOrEncoding.trim().toLowerCase();
 
-  // Kiểm tra nếu trực tiếp truyền tên encoding
+  // Check if direct encoding name was provided
   if (VALID_ENCODINGS.has(normalized as SupportedEncoding)) {
     return normalized as SupportedEncoding;
   }
 
-  // Kiểm tra bảng map model -> encoding
+  // Check explicit model mapping
   if (MODEL_TO_ENCODING[normalized]) {
     return MODEL_TO_ENCODING[normalized];
   }
 
-  // Tiền tố model nhận biết tự động
+  // Prefix-based fallback detection
   if (normalized.startsWith('gpt-4o') || normalized.startsWith('o1')) {
     return 'o200k_base';
   }
@@ -62,7 +62,7 @@ export function resolveEncodingForModel(modelOrEncoding: string): SupportedEncod
 
   throw createError(
     'UNSUPPORTED_OPERATION',
-    `Mô hình hoặc kiểu mã hóa '${modelOrEncoding}' không được hỗ trợ.`,
+    `Model or encoding '${modelOrEncoding}' is not supported.`,
     { model: modelOrEncoding }
   );
 }

@@ -1,8 +1,3 @@
-/**
- * AI Developer Tool Ecosystem — T01 Token Diff
- * Hợp đồng dữ liệu & Schema chuẩn hóa theo 05_INTEGRATION_SPEC.md
- */
-
 export type SupportedEncoding = 'cl100k_base' | 'p50k_base' | 'r50k_base' | 'o200k_base';
 
 export interface TokenizerResult {
