@@ -33,6 +33,13 @@ export interface TokenDiffReport {
   summary: string;
 }
 
+export interface TokenCountReport {
+  schema_version: string;
+  model: string;
+  encoding: string;
+  stats: InputTokenStats;
+}
+
 export interface ResponseMetadata {
   schema_version: string;
   source: string;

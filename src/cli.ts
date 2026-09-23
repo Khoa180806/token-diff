@@ -3,8 +3,9 @@ import { Command } from 'commander';
 import * as fs from 'node:fs';
 import { countTokens } from './tokenizer.js';
 import { computeDiff } from './diff.js';
-import { formatHuman, formatJson } from './formatter.js';
+import { formatHuman, formatJson, formatCountHuman, formatCountJson } from './formatter.js';
 import { TokenDiffError, createError } from './errors.js';
+import { TokenCountReport } from './types.js';
 
 const program = new Command();
 
@@ -31,6 +32,26 @@ function readFileContent(filePath: string): string {
       path: filePath,
     });
   }
+}
+
+function handleCliError(error: unknown, json?: boolean): never {
+  if (error instanceof TokenDiffError) {
+    if (json) {
+      process.stdout.write(JSON.stringify(error.toEnvelope(), null, 2) + '\n');
+    } else {
+      process.stderr.write(`Error [${error.code}]: ${error.message}\n`);
+    }
+    process.exit(error.exitCode);
+  }
+
+  const unexpectedError = error as Error;
+  if (json) {
+    const fallbackError = createError('INTERNAL_ERROR', unexpectedError.message);
+    process.stdout.write(JSON.stringify(fallbackError.toEnvelope(), null, 2) + '\n');
+  } else {
+    process.stderr.write(`Error: ${unexpectedError.message}\n`);
+  }
+  process.exit(1);
 }
 
 program
@@ -63,23 +84,44 @@ program
       }
       process.exit(0);
     } catch (error) {
-      if (error instanceof TokenDiffError) {
-        if (options.json) {
-          process.stdout.write(JSON.stringify(error.toEnvelope(), null, 2) + '\n');
-        } else {
-          process.stderr.write(`Error [${error.code}]: ${error.message}\n`);
-        }
-        process.exit(error.exitCode);
-      }
+      handleCliError(error, options.json);
+    }
+  });
 
-      const unexpectedError = error as Error;
+program
+  .command('count')
+  .description('Count tokens for a single file')
+  .argument('<file>', 'Path to file')
+  .option('-m, --model <model>', 'Model name or encoding to use', 'gpt-4o')
+  .option('--json', 'Output machine-readable JSON envelope')
+  .action((filePath: string, options: { model: string; json?: boolean }) => {
+    const startTime = Date.now();
+    try {
+      const content = readFileContent(filePath);
+      const result = countTokens(content, options.model);
+
+      const report: TokenCountReport = {
+        schema_version: '1.0',
+        model: result.model,
+        encoding: result.encoding,
+        stats: {
+          label: filePath,
+          token_count: result.tokenCount,
+          char_count: result.charCount,
+          line_count: result.lineCount,
+        },
+      };
+
+      const durationMs = Date.now() - startTime;
+
       if (options.json) {
-        const fallbackError = createError('INTERNAL_ERROR', unexpectedError.message);
-        process.stdout.write(JSON.stringify(fallbackError.toEnvelope(), null, 2) + '\n');
+        process.stdout.write(formatCountJson(report, durationMs) + '\n');
       } else {
-        process.stderr.write(`Error: ${unexpectedError.message}\n`);
+        process.stdout.write(formatCountHuman(report) + '\n');
       }
-      process.exit(1);
+      process.exit(0);
+    } catch (error) {
+      handleCliError(error, options.json);
     }
   });
 

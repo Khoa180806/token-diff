@@ -1,4 +1,4 @@
-import { ApiEnvelope, TokenDiffReport } from './types.js';
+import { ApiEnvelope, TokenDiffReport, TokenCountReport } from './types.js';
 
 export function formatJson(report: TokenDiffReport, durationMs = 0): string {
   const envelope: ApiEnvelope<TokenDiffReport> = {
@@ -13,6 +13,35 @@ export function formatJson(report: TokenDiffReport, durationMs = 0): string {
   };
 
   return JSON.stringify(envelope, null, 2);
+}
+
+export function formatCountJson(report: TokenCountReport, durationMs = 0): string {
+  const envelope: ApiEnvelope<TokenCountReport> = {
+    data: report,
+    metadata: {
+      schema_version: report.schema_version,
+      source: 'token-diff',
+      duration_ms: durationMs,
+      truncated: false,
+      next_cursor: null,
+    },
+  };
+
+  return JSON.stringify(envelope, null, 2);
+}
+
+export function formatCountHuman(report: TokenCountReport): string {
+  const lines: string[] = [];
+
+  lines.push('=== Token Count Report ===');
+  lines.push(`File: ${report.stats.label}`);
+  lines.push(`Model: ${report.model} (${report.encoding})`);
+  lines.push('');
+  lines.push(`Tokens: ${report.stats.token_count}`);
+  lines.push(`Chars:  ${report.stats.char_count}`);
+  lines.push(`Lines:  ${report.stats.line_count}`);
+
+  return lines.join('\n');
 }
 
 export function formatHuman(report: TokenDiffReport): string {

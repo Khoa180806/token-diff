@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { formatJson, formatHuman } from '../src/formatter.js';
-import { TokenDiffReport } from '../src/types.js';
+import {
+  formatJson,
+  formatHuman,
+  formatCountJson,
+  formatCountHuman,
+} from '../src/formatter.js';
+import { TokenDiffReport, TokenCountReport } from '../src/types.js';
 
 describe('Formatter module', () => {
   const sampleReport: TokenDiffReport = {
@@ -26,6 +31,18 @@ describe('Formatter module', () => {
       char_delta_pct: -30.0,
     },
     summary: 'Reduced by 360 tokens (-30.00%) from 1200 to 840',
+  };
+
+  const sampleCountReport: TokenCountReport = {
+    schema_version: '1.0',
+    model: 'gpt-4o',
+    encoding: 'o200k_base',
+    stats: {
+      label: 'test.txt',
+      token_count: 120,
+      char_count: 500,
+      line_count: 15,
+    },
   };
 
   it('formatJson wraps report inside valid envelope structure', () => {
@@ -55,5 +72,27 @@ describe('Formatter module', () => {
     expect(output).toContain('840');
     expect(output).toContain('-360');
     expect(output).toContain(sampleReport.summary);
+  });
+
+  it('formatCountJson wraps count report inside valid envelope structure', () => {
+    const jsonStr = formatCountJson(sampleCountReport, 10);
+    const parsed = JSON.parse(jsonStr);
+
+    expect(parsed.data).toBeDefined();
+    expect(parsed.data.schema_version).toBe('1.0');
+    expect(parsed.data.stats.token_count).toBe(120);
+    expect(parsed.data.stats.label).toBe('test.txt');
+
+    expect(parsed.metadata).toBeDefined();
+    expect(parsed.metadata.source).toBe('token-diff');
+    expect(parsed.metadata.duration_ms).toBe(10);
+  });
+
+  it('formatCountHuman outputs readable token count summary', () => {
+    const output = formatCountHuman(sampleCountReport);
+
+    expect(output).toContain('Token Count Report');
+    expect(output).toContain('test.txt');
+    expect(output).toContain('120');
   });
 });
