@@ -1,0 +1,86 @@
+#!/usr/bin/env node
+import { Command } from 'commander';
+import * as fs from 'node:fs';
+import { countTokens } from './tokenizer.js';
+import { computeDiff } from './diff.js';
+import { formatHuman, formatJson } from './formatter.js';
+import { TokenDiffError, createError } from './errors.js';
+
+const program = new Command();
+
+program
+  .name('token-diff')
+  .description('Compare token usage between two inputs or count tokens')
+  .version('0.1.0');
+
+function readFileContent(filePath: string): string {
+  try {
+    if (!fs.existsSync(filePath)) {
+      throw createError('NOT_FOUND', `File not found: ${filePath}`, { path: filePath });
+    }
+    return fs.readFileSync(filePath, 'utf-8');
+  } catch (error) {
+    if (error instanceof TokenDiffError) {
+      throw error;
+    }
+    const err = error as NodeJS.ErrnoException;
+    if (err.code === 'EACCES') {
+      throw createError('PERMISSION_DENIED', `Permission denied: ${filePath}`, { path: filePath });
+    }
+    throw createError('INTERNAL_ERROR', `Failed to read file ${filePath}: ${err.message}`, {
+      path: filePath,
+    });
+  }
+}
+
+program
+  .command('diff')
+  .description('Compare token usage between two files')
+  .argument('<before>', 'Path to original/before file')
+  .argument('<after>', 'Path to modified/after file')
+  .option('-m, --model <model>', 'Model name or encoding to use', 'gpt-4o')
+  .option('--json', 'Output machine-readable JSON envelope')
+  .action((beforePath: string, afterPath: string, options: { model: string; json?: boolean }) => {
+    const startTime = Date.now();
+    try {
+      const beforeContent = readFileContent(beforePath);
+      const afterContent = readFileContent(afterPath);
+
+      const beforeResult = countTokens(beforeContent, options.model);
+      const afterResult = countTokens(afterContent, options.model);
+
+      const report = computeDiff(beforeResult, afterResult, {
+        beforeLabel: beforePath,
+        afterLabel: afterPath,
+      });
+
+      const durationMs = Date.now() - startTime;
+
+      if (options.json) {
+        process.stdout.write(formatJson(report, durationMs) + '\n');
+      } else {
+        process.stdout.write(formatHuman(report) + '\n');
+      }
+      process.exit(0);
+    } catch (error) {
+      if (error instanceof TokenDiffError) {
+        if (options.json) {
+          process.stdout.write(JSON.stringify(error.toEnvelope(), null, 2) + '\n');
+        } else {
+          process.stderr.write(`Error [${error.code}]: ${error.message}\n`);
+        }
+        process.exit(error.exitCode);
+      }
+
+      const unexpectedError = error as Error;
+      if (options.json) {
+        const fallbackError = createError('INTERNAL_ERROR', unexpectedError.message);
+        process.stdout.write(JSON.stringify(fallbackError.toEnvelope(), null, 2) + '\n');
+      } else {
+        process.stderr.write(`Error: ${unexpectedError.message}\n`);
+      }
+      process.exit(1);
+    }
+  });
+
+program.parse(process.argv);
