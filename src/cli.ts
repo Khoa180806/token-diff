@@ -14,22 +14,31 @@ program
   .description('Compare token usage between two inputs or count tokens')
   .version('0.1.0');
 
-function readFileContent(filePath: string): string {
-  try {
-    if (!fs.existsSync(filePath)) {
-      throw createError('NOT_FOUND', `File not found: ${filePath}`, { path: filePath });
+function readInputContent(sourcePath: string): string {
+  if (sourcePath === '-') {
+    try {
+      return fs.readFileSync(0, 'utf-8');
+    } catch (error) {
+      const err = error as NodeJS.ErrnoException;
+      throw createError('INTERNAL_ERROR', `Failed to read from stdin: ${err.message}`);
     }
-    return fs.readFileSync(filePath, 'utf-8');
+  }
+
+  try {
+    if (!fs.existsSync(sourcePath)) {
+      throw createError('NOT_FOUND', `File not found: ${sourcePath}`, { path: sourcePath });
+    }
+    return fs.readFileSync(sourcePath, 'utf-8');
   } catch (error) {
     if (error instanceof TokenDiffError) {
       throw error;
     }
     const err = error as NodeJS.ErrnoException;
     if (err.code === 'EACCES') {
-      throw createError('PERMISSION_DENIED', `Permission denied: ${filePath}`, { path: filePath });
+      throw createError('PERMISSION_DENIED', `Permission denied: ${sourcePath}`, { path: sourcePath });
     }
-    throw createError('INTERNAL_ERROR', `Failed to read file ${filePath}: ${err.message}`, {
-      path: filePath,
+    throw createError('INTERNAL_ERROR', `Failed to read file ${sourcePath}: ${err.message}`, {
+      path: sourcePath,
     });
   }
 }
@@ -56,23 +65,27 @@ function handleCliError(error: unknown, json?: boolean): never {
 
 program
   .command('diff')
-  .description('Compare token usage between two files')
-  .argument('<before>', 'Path to original/before file')
-  .argument('<after>', 'Path to modified/after file')
+  .description('Compare token usage between two inputs (supports stdin with -)')
+  .argument('<before>', 'Path to original/before file (or - for stdin)')
+  .argument('<after>', 'Path to modified/after file (or - for stdin)')
   .option('-m, --model <model>', 'Model name or encoding to use', 'gpt-4o')
   .option('--json', 'Output machine-readable JSON envelope')
   .action((beforePath: string, afterPath: string, options: { model: string; json?: boolean }) => {
     const startTime = Date.now();
     try {
-      const beforeContent = readFileContent(beforePath);
-      const afterContent = readFileContent(afterPath);
+      if (beforePath === '-' && afterPath === '-') {
+        throw createError('INVALID_INPUT', 'Cannot read both before and after inputs from stdin (-)');
+      }
+
+      const beforeContent = readInputContent(beforePath);
+      const afterContent = readInputContent(afterPath);
 
       const beforeResult = countTokens(beforeContent, options.model);
       const afterResult = countTokens(afterContent, options.model);
 
       const report = computeDiff(beforeResult, afterResult, {
-        beforeLabel: beforePath,
-        afterLabel: afterPath,
+        beforeLabel: beforePath === '-' ? 'stdin' : beforePath,
+        afterLabel: afterPath === '-' ? 'stdin' : afterPath,
       });
 
       const durationMs = Date.now() - startTime;
@@ -90,14 +103,14 @@ program
 
 program
   .command('count')
-  .description('Count tokens for a single file')
-  .argument('<file>', 'Path to file')
+  .description('Count tokens for a single file or stdin (-)')
+  .argument('<file>', 'Path to file or - for stdin')
   .option('-m, --model <model>', 'Model name or encoding to use', 'gpt-4o')
   .option('--json', 'Output machine-readable JSON envelope')
   .action((filePath: string, options: { model: string; json?: boolean }) => {
     const startTime = Date.now();
     try {
-      const content = readFileContent(filePath);
+      const content = readInputContent(filePath);
       const result = countTokens(content, options.model);
 
       const report: TokenCountReport = {
@@ -105,7 +118,7 @@ program
         model: result.model,
         encoding: result.encoding,
         stats: {
-          label: filePath,
+          label: filePath === '-' ? 'stdin' : filePath,
           token_count: result.tokenCount,
           char_count: result.charCount,
           line_count: result.lineCount,
