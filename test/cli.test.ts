@@ -80,6 +80,14 @@ describe('CLI Integration Tests - Error Paths', () => {
     expect(result.stderr).toContain('INVALID_INPUT');
   });
 
+  it('exits with code 2 when missing required arguments or invalid command is passed', async () => {
+    const missingArgsResult = await runCli(['diff']);
+    expect(missingArgsResult.exitCode).toBe(2);
+
+    const unknownCmdResult = await runCli(['nonexistent-command']);
+    expect(unknownCmdResult.exitCode).toBe(2);
+  });
+
   it('exits with code 2 (UNSUPPORTED_OPERATION) when unknown model is specified', async () => {
     const fileA = path.join(fixtureDir, 'fileA.txt');
     const fileB = path.join(fixtureDir, 'fileB.txt');

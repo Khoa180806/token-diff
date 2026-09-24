@@ -12,7 +12,14 @@ const program = new Command();
 program
   .name('token-diff')
   .description('Compare token usage between two inputs or count tokens')
-  .version('0.1.0');
+  .version('0.1.0')
+  .exitOverride((err) => {
+    if (err.code === 'commander.helpDisplayed' || err.code === 'commander.version') {
+      process.exit(0);
+    }
+    // Invalid argument or unknown command maps to exit code 2 (INVALID_INPUT)
+    process.exit(2);
+  });
 
 function readInputContent(sourcePath: string): string {
   if (sourcePath === '-') {
