@@ -32,8 +32,17 @@ function readInputContent(sourcePath: string): string {
   }
 
   try {
-    if (!fs.existsSync(sourcePath)) {
-      throw createError('NOT_FOUND', `File not found: ${sourcePath}`, { path: sourcePath });
+    let isFile = false;
+    try {
+      if (fs.existsSync(sourcePath) && fs.statSync(sourcePath).isFile()) {
+        isFile = true;
+      }
+    } catch {
+      // If stat/exists throws (e.g., path too long, invalid characters), treat as raw text
+    }
+
+    if (!isFile) {
+      return sourcePath; // Smart Input: treat as raw text
     }
     return fs.readFileSync(sourcePath, 'utf-8');
   } catch (error) {

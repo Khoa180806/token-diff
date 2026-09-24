@@ -52,25 +52,26 @@ describe('CLI Integration Tests - Error Paths', () => {
     }
   });
 
-  it('exits with code 3 (NOT_FOUND) when file does not exist', async () => {
-    const nonExistentPath = path.join(fixtureDir, 'does-not-exist.txt');
-    const existingPath = path.join(fixtureDir, 'fileA.txt');
+  it('treats input as raw text if file does not exist (Smart Input)', async () => {
+    const rawText = "This is a raw text prompt";
+    const existingPath = path.join(fixtureDir, 'fileA.txt'); // "Hello world, original prompt."
 
-    const result = await runCli(['diff', existingPath, nonExistentPath]);
-    expect(result.exitCode).toBe(3);
-    expect(result.stderr).toContain('NOT_FOUND');
+    const result = await runCli(['diff', existingPath, rawText]);
+    expect(result.exitCode).toBe(0);
+    // 6 tokens for "Hello world, original prompt."
+    // 6 tokens for "This is a raw text prompt"
+    // Wait, we just need to ensure it succeeds and outputs something.
+    expect(result.stdout).toContain('This is a raw text prompt');
   });
 
-  it('outputs ApiError envelope when file does not exist and --json flag is passed', async () => {
-    const nonExistentPath = path.join(fixtureDir, 'does-not-exist.txt');
+  it('outputs valid json and treats input as raw text when file does not exist and --json flag is passed', async () => {
+    const rawText = "Short text";
     const existingPath = path.join(fixtureDir, 'fileA.txt');
 
-    const result = await runCli(['diff', existingPath, nonExistentPath, '--json']);
-    expect(result.exitCode).toBe(3);
+    const result = await runCli(['diff', existingPath, rawText, '--json']);
+    expect(result.exitCode).toBe(0);
     const parsed = JSON.parse(result.stdout);
-    expect(parsed.error).toBeDefined();
-    expect(parsed.error.code).toBe('NOT_FOUND');
-    expect(parsed.metadata).toBeDefined();
+    expect(parsed.data.after.label).toBe('Short text');
     expect(parsed.metadata.source).toBe('token-diff');
   });
 
