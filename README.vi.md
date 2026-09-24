@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="assets/banner.png" alt="token-diff banner" width="100%" />
-</p>
+<h1 align="center">token-diff</h1>
 
 <p align="center">
   <strong>Hạ tầng Đo lường Tiêu thụ Token & So sánh Ngữ cảnh (Context Diff) Tiền định</strong>
