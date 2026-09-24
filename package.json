@@ -1,19 +1,27 @@
 {
   "name": "token-diff",
   "version": "0.1.0",
-  "description": "Compare token usage between two text inputs. Measurement infrastructure for the AI Developer Tool Ecosystem.",
+  "description": "Deterministic token usage measurement and context diff infrastructure for LLM workflows.",
   "type": "module",
   "bin": {
     "token-diff": "./dist/cli.js"
   },
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
   "files": [
     "dist",
     "README.md",
-    "AGENTS.md"
+    "README.vi.md",
+    "assets/logo.png",
+    "assets/demo.gif",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc",
@@ -21,16 +29,28 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "tsc --noEmit",
-    "clean": "rmdir /s /q dist 2>nul || true"
+    "prepack": "npm run build && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khoa180806/token-diff.git"
+  },
+  "homepage": "https://github.com/Khoa180806/token-diff#readme",
+  "bugs": {
+    "url": "https://github.com/Khoa180806/token-diff/issues"
   },
   "keywords": [
     "token",
     "diff",
     "llm",
     "ai",
+    "tiktoken",
     "context",
-    "measurement"
+    "measurement",
+    "cli",
+    "agent"
   ],
+  "author": "Khoa180806",
   "license": "MIT",
   "dependencies": {
     "commander": "^12.1.0",
