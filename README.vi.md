@@ -82,6 +82,8 @@ Khi tối ưu prompt, nén context cho AI agent, hay muốn đặt chặn trần
 └────────────────────────────────────────────────────────┘
 ```
 
+<p align="center"><img src="assets/architecture.png" alt="Kiến trúc 4 giai đoạn pipeline của token-diff" width="100%" /></p>
+
 - **Cache bộ từ điển (In-Memory Encoder Cache)**: Giữ lại instance BPE sau lần khởi tạo đầu tiên, giúp các lượt đếm tiếp theo chỉ mất chưa tới 1 mili-giây.
 - **An toàn trước dữ liệu rỗng**: Xử lý mượt mà khi tệp rỗng hoặc 0 token, không bao giờ bị lỗi văng phép chia cho 0 (`NaN` / `Infinity`).
 - **Terminal trực quan**: Tự động căn lề thẳng hàng các cột thông tin và hỗ trợ nhận luồng dữ liệu pipe (`-`) chuẩn phong cách Unix.
@@ -135,6 +137,8 @@ td diff [tùy_chọn] <before> <after>
 - **Nhận luồng dữ liệu từ pipe (`-`)**: `cat prompt_moi.txt | td diff prompt_cu.txt -`
 
 > **Lưu ý**: Nếu đường dẫn không tồn tại trên máy, công cụ sẽ tự động coi đó là chuỗi prompt thô và in kèm một cảnh báo nhẹ `[WARN]` ra terminal để bạn không bị nhầm lẫn khi gõ sai tên tệp.
+
+<p align="center"><img src="assets/smart-input.png" alt="Smart Input: 3 modes — Prompt strings, File paths, Stdin pipe" width="100%" /></p>
 
 #### Tùy chọn:
 | Tùy chọn | Mặc định | Ý nghĩa |
@@ -241,6 +245,8 @@ const jsonStr: string = formatJson(diffReport, 12);
 ## Cấu trúc JSON Envelope chuẩn
 
 Khi bật cờ `--json`, dữ liệu luôn được bọc trong cấu trúc envelope rõ ràng:
+
+<p align="center"><img src="assets/json-mode.png" alt="JSON envelope output với syntax highlighting" width="100%" /></p>
 
 ```json
 {

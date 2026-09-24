@@ -65,6 +65,10 @@ Whether verifying the efficacy of prompt compression algorithms, monitoring mult
 
 ## Key Architecture & Capabilities
 
+<p align="center">
+  <img src="assets/architecture.png" alt="token-diff architecture diagram" width="100%" />
+</p>
+
 ```
 ┌────────────────────────────────────────────────────────┐
 │                      token-diff                        │
@@ -133,6 +137,10 @@ td diff [options] <before> <after>
 - **Raw String vs Raw String**: `td diff "Please write a python function to calculate fibonacci" "Write python fibonacci"`
 - **File vs Raw String**: `td diff base_system_prompt.txt "You are a concise code assistant."`
 - **Standard Input (`-`)**: `cat new_prompt.txt | td diff old_prompt.txt -`
+
+<p align="center">
+  <img src="assets/smart-input.png" alt="Smart Input prompt and file modes" width="100%" />
+</p>
 
 > **Note**: If an input does not exist on disk, `token-diff` seamlessly falls back to treating it as raw text and displays a subtle `[WARN]` to prevent mistyped filename errors.
 
@@ -241,6 +249,8 @@ const jsonOutput: string = formatJson(diffReport, 15);
 ## Standardized API Transport Envelope
 
 When invoked with `--json`, `token-diff` guarantees structured output conforming to the standard tool transport envelope:
+
+<p align="center"><img src="assets/json-mode.png" alt="JSON envelope output with syntax highlighting" width="100%" /></p>
 
 ```json
 {

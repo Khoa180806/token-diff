@@ -21,8 +21,7 @@
     "dist",
     "README.md",
     "README.vi.md",
-    "assets/logo.png",
-    "assets/demo.gif",
+    "assets",
     "LICENSE"
   ],
   "scripts": {
