@@ -92,34 +92,49 @@ Khi tối ưu prompt, nén context cho AI agent, hay muốn đặt chặn trần
 
 ### Dùng nhanh qua `npx` (Không cần cài đặt trước):
 ```bash
-npx token-diff --help
+# Dùng tên gói đầy đủ trên npm
+npx ai-token-diff --help
+
+# Hoặc so sánh nhanh 2 prompt ngay lập tức
+npx ai-token-diff diff "Prompt gốc dài dòng" "Prompt ngắn gọn"
 ```
 
-### Cài đặt toàn cục (Global):
+### Cài đặt toàn cục (Khuyên dùng để tối ưu tốc độ làm việc):
+Cài đặt một lần duy nhất để mở khóa lệnh siêu ngắn gọn **`td`** ở mọi terminal:
 ```bash
-npm install -g token-diff
+npm install -g ai-token-diff
+
+# Giờ bạn có thể gõ lệnh td cực kỳ nhanh!
+td --help
 ```
 
 ### Thêm vào dự án Node.js / TypeScript:
 ```bash
-npm install token-diff
+npm install -D ai-token-diff
 ```
 
 ---
 
 ## Hướng dẫn sử dụng CLI
 
-### 1. `token-diff diff`
+Bạn có thể dùng lệnh rút gọn **`td`** hoặc tên đầy đủ **`token-diff`** / **`ai-token-diff`**.
 
-So sánh độ chênh lệch token và ký tự giữa hai tệp:
+### 1. `td diff` (hoặc `token-diff diff`)
+
+So sánh chính xác mức chênh lệch token, ký tự và số dòng giữa hai đầu vào:
 
 ```bash
-token-diff diff [tùy_chọn] <before> <after>
+td diff [tùy_chọn] <before> <after>
 ```
 
-#### Tham số:
-- `<before>`: Đường dẫn tệp ban đầu (hoặc `-` nếu đọc từ stdin).
-- `<after>`: Đường dẫn tệp sau khi rút gọn/chỉnh sửa (hoặc `-` nếu đọc từ stdin).
+#### Cơ chế nhận diện đầu vào thông minh (Smart Input)
+`token-diff` tự động phân biệt xem tham số `<before>` và `<after>` là đường dẫn tệp hay là chuỗi văn bản (prompt):
+- **So sánh 2 tệp**: `td diff prompt_v1.txt prompt_v2.txt`
+- **So sánh 2 đoạn prompt trực tiếp**: `td diff "Hãy viết một hàm python tính fibonacci" "Viết python fibonacci"`
+- **So sánh giữa tệp và prompt thô**: `td diff base_prompt.txt "Viết ngắn gọn súc tích"`
+- **Nhận luồng dữ liệu từ pipe (`-`)**: `cat prompt_moi.txt | td diff prompt_cu.txt -`
+
+> **Lưu ý**: Nếu đường dẫn không tồn tại trên máy, công cụ sẽ tự động coi đó là chuỗi prompt thô và in kèm một cảnh báo nhẹ `[WARN]` ra terminal để bạn không bị nhầm lẫn khi gõ sai tên tệp.
 
 #### Tùy chọn:
 | Tùy chọn | Mặc định | Ý nghĩa |
@@ -128,46 +143,51 @@ token-diff diff [tùy_chọn] <before> <after>
 | `--json` | `false` | Xuất kết quả dạng JSON envelope chuẩn |
 | `-h, --help` | - | Xem hướng dẫn lệnh |
 
-#### Kết quả hiển thị bảng trên terminal:
+#### Kết quả hiển thị bảng màu trực quan trên terminal:
 ```bash
-token-diff diff raw_prompt.txt compressed_prompt.txt
+td diff "Hãy giải thích chi tiết thuật toán quicksort bằng TypeScript kèm ví dụ minh họa" "Giải thích quicksort TypeScript ngắn gọn"
 ```
 ```text
 === Token Diff Report ===
-Model: gpt-4o (encoding: o200k_base)
+Model: gpt-4o (o200k_base)
 
-Target                Tokens       Chars        Lines     
-----------------------------------------------------------
-raw_prompt.txt         1,240       4,820          115
-compressed_prompt.txt    892       3,410           82
-----------------------------------------------------------
-Diff                    -348 (-28.06%) -1410 (-29.25%) -33        
+Target         Tokens       Chars        Lines     
+---------------------------------------------------
+Hãy giải th...           23           82          1
+Giải thích ...           11           42          1
+---------------------------------------------------
+Diff                    -12 (-52.17%) -40 (-48.78%) 0         
 
-Summary: Reduced by 348 tokens (-28.06%) from 1240 to 892 (chars: 4820 → 3410, -29.25%)
+Summary: Reduced by 12 tokens (-52.17%) from 23 to 11 (chars: 82 → 42, -48.78%)
 ```
+*(Trên terminal: Số lượng token tiết kiệm được hiển thị màu **xanh lá**, nếu tăng sẽ báo màu **đỏ**, và tiêu đề được in đậm màu **xanh lơ (cyan)**).*
 
 ---
 
-### 2. `token-diff count`
+### 2. `td count` (hoặc `token-diff count`)
 
-Đếm số lượng token, ký tự và số dòng của một tệp hoặc nội dung từ terminal:
+Đếm số lượng token, ký tự và số dòng của một tệp, chuỗi prompt trực tiếp hoặc dữ liệu pipe:
 
 ```bash
-token-diff count [tùy_chọn] <file>
+td count [tùy_chọn] <tệp_hoặc_chuỗi>
 ```
 
 #### Ví dụ:
 ```bash
-token-diff count context.md --model gpt-4
+# Đếm token của một tệp
+td count context.md --model gpt-4o
+
+# Đếm token trực tiếp cho một câu prompt
+td count "Bạn là một kỹ sư phần mềm cao cấp."
 ```
 ```text
 === Token Count Report ===
-File: context.md
-Model: gpt-4 (encoding: cl100k_base)
+File:  Bạn là một kỹ sư phần mềm cao cấp.
+Model: gpt-4o (o200k_base)
 
-Tokens: 642
-Chars:  2,710
-Lines:  84
+Tokens: 11
+Chars:  39
+Lines:  1
 ```
 
 ---

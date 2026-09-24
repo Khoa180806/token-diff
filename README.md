@@ -92,34 +92,49 @@ Whether verifying the efficacy of prompt compression algorithms, monitoring mult
 
 ### Immediate execution via `npx` (No installation needed):
 ```bash
-npx token-diff --help
+# Using the full package name
+npx ai-token-diff --help
+
+# Or run diff directly
+npx ai-token-diff diff "Original prompt" "Optimized prompt"
 ```
 
-### Global installation:
+### Global installation (Recommended for daily workflow):
+Install globally once to unlock the ultra-short `td` command everywhere in your terminal:
 ```bash
-npm install -g token-diff
+npm install -g ai-token-diff
+
+# Now you can use the concise `td` shorthand command!
+td --help
 ```
 
 ### Local project dependency:
 ```bash
-npm install token-diff
+npm install -D ai-token-diff
 ```
 
 ---
 
 ## CLI Command Reference
 
-### 1. `token-diff diff`
+You can use either the concise alias **`td`** or the canonical binary names **`token-diff`** / **`ai-token-diff`**.
 
-Calculates token and character differences between two inputs:
+### 1. `td diff` (or `token-diff diff`)
+
+Calculates exact token, character, and line differences between two inputs:
 
 ```bash
-token-diff diff [options] <before> <after>
+td diff [options] <before> <after>
 ```
 
-#### Arguments
-- `<before>`: Path to original/uncompressed file (or `-` for stdin).
-- `<after>`: Path to modified/compressed file (or `-` for stdin).
+#### Smart Input Detection (Files or Raw Strings)
+`token-diff` automatically detects whether `<before>` and `<after>` are file paths or raw text strings:
+- **File vs File**: `td diff prompt_v1.txt prompt_v2.txt`
+- **Raw String vs Raw String**: `td diff "Please write a python function to calculate fibonacci" "Write python fibonacci"`
+- **File vs Raw String**: `td diff base_system_prompt.txt "You are a concise code assistant."`
+- **Standard Input (`-`)**: `cat new_prompt.txt | td diff old_prompt.txt -`
+
+> **Note**: If an input does not exist on disk, `token-diff` seamlessly falls back to treating it as raw text and displays a subtle `[WARN]` to prevent mistyped filename errors.
 
 #### Options
 | Option | Default | Description |
@@ -128,46 +143,51 @@ token-diff diff [options] <before> <after>
 | `--json` | `false` | Emits structured JSON envelope to stdout |
 | `-h, --help` | - | Display help for command |
 
-#### Example: Tabular Terminal Output
+#### Example: Colorized Tabular Terminal Output
 ```bash
-token-diff diff raw_prompt.txt compressed_prompt.txt
+td diff "Please provide a detailed explanation of quicksort in TypeScript with examples" "Explain TypeScript quicksort with code"
 ```
 ```text
 === Token Diff Report ===
-Model: gpt-4o (encoding: o200k_base)
+Model: gpt-4o (o200k_base)
 
-Target                Tokens       Chars        Lines     
-----------------------------------------------------------
-raw_prompt.txt         1,240       4,820          115
-compressed_prompt.txt    892       3,410           82
-----------------------------------------------------------
-Diff                    -348 (-28.06%) -1410 (-29.25%) -33        
+Target         Tokens       Chars        Lines     
+---------------------------------------------------
+Please provide...         13           82          1
+Explain TypeSc...          6           38          1
+---------------------------------------------------
+Diff                      -7 (-53.85%) -44 (-53.66%) 0         
 
-Summary: Reduced by 348 tokens (-28.06%) from 1240 to 892 (chars: 4820 → 3410, -29.25%)
+Summary: Reduced by 7 tokens (-53.85%) from 13 to 6 (chars: 82 → 38, -53.66%)
 ```
+*(In terminal output: Token/char savings are rendered in **vibrant green**, increases in **red**, and headers in **bold cyan**).*
 
 ---
 
-### 2. `token-diff count`
+### 2. `td count` (or `token-diff count`)
 
-Counts tokens and characters for a single input file or stdin stream:
+Counts tokens, characters, and lines for a single file, raw text string, or stdin stream:
 
 ```bash
-token-diff count [options] <file>
+td count [options] <file_or_string>
 ```
 
-#### Example:
+#### Examples:
 ```bash
-token-diff count context.md --model gpt-4
+# Count tokens for a file
+td count context.md --model gpt-4o
+
+# Count tokens for a raw prompt string directly
+td count "You are a senior fullstack engineer."
 ```
 ```text
 === Token Count Report ===
-File: context.md
-Model: gpt-4 (encoding: cl100k_base)
+File:  You are a senior fullstack engineer.
+Model: gpt-4o (o200k_base)
 
-Tokens: 642
-Chars:  2,710
-Lines:  84
+Tokens: 7
+Chars:  36
+Lines:  1
 ```
 
 ---
