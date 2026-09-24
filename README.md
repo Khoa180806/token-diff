@@ -219,41 +219,6 @@ When invoked with `--json`, `token-diff` guarantees structured output conforming
 
 <p align="center"><img src="assets/json-mode.png" alt="JSON envelope output with syntax highlighting" width="100%" /></p>
 
-```json
-{
-  "data": {
-    "schema_version": "1.0",
-    "model": "gpt-4o",
-    "encoding": "o200k_base",
-    "before": {
-      "label": "raw_prompt.txt",
-      "token_count": 1240,
-      "char_count": 4820,
-      "line_count": 115
-    },
-    "after": {
-      "label": "compressed_prompt.txt",
-      "token_count": 892,
-      "char_count": 3410,
-      "line_count": 82
-    },
-    "diff": {
-      "token_delta": -348,
-      "token_delta_pct": -28.06,
-      "char_delta": -1410,
-      "char_delta_pct": -29.25
-    },
-    "summary": "Reduced by 348 tokens (-28.06%) from 1240 to 892 (chars: 4820 → 3410, -29.25%)"
-  },
-  "metadata": {
-    "schema_version": "1.0",
-    "source": "token-diff",
-    "duration_ms": 14,
-    "truncated": false,
-    "next_cursor": null
-  }
-}
-```
 
 ---
 
