@@ -1,10 +1,10 @@
 {
-  "name": "token-diff",
+  "name": "@khoa180806/token-diff",
   "version": "0.1.0",
   "description": "Deterministic token usage measurement and context diff infrastructure for LLM workflows.",
   "type": "module",
   "bin": {
-    "token-diff": "./dist/cli.js"
+    "token-diff": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
