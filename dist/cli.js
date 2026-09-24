@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import * as fs from 'node:fs';
+import pc from 'picocolors';
 import { countTokens } from './tokenizer.js';
 import { computeDiff } from './diff.js';
 import { formatHuman, formatJson, formatCountHuman, formatCountJson } from './formatter.js';
@@ -9,7 +10,7 @@ const program = new Command();
 program
     .name('token-diff')
     .description('Compare token usage between two inputs or count tokens')
-    .version('0.1.0')
+    .version('0.1.1')
     .exitOverride((err) => {
     if (err.code === 'commander.helpDisplayed' || err.code === 'commander.version') {
         process.exit(0);
@@ -28,8 +29,20 @@ function readInputContent(sourcePath) {
         }
     }
     try {
-        if (!fs.existsSync(sourcePath)) {
-            throw createError('NOT_FOUND', `File not found: ${sourcePath}`, { path: sourcePath });
+        let isFile = false;
+        try {
+            if (fs.existsSync(sourcePath) && fs.statSync(sourcePath).isFile()) {
+                isFile = true;
+            }
+        }
+        catch {
+            // If stat/exists throws (e.g., path too long, invalid characters), treat as raw text
+        }
+        if (!isFile) {
+            const cleanStr = sourcePath.replace(/\r?\n/g, ' ');
+            const displayStr = cleanStr.length > 40 ? cleanStr.substring(0, 37) + '...' : cleanStr;
+            process.stderr.write(pc.yellow(`[WARN] File not found, treating input as raw text: "${displayStr}"\n`));
+            return sourcePath; // Smart Input: treat as raw text
         }
         return fs.readFileSync(sourcePath, 'utf-8');
     }
@@ -52,7 +65,7 @@ function handleCliError(error, json) {
             process.stdout.write(JSON.stringify(error.toEnvelope(), null, 2) + '\n');
         }
         else {
-            process.stderr.write(`Error [${error.code}]: ${error.message}\n`);
+            process.stderr.write(pc.red(`Error [${error.code}]: ${error.message}\n`));
         }
         process.exit(error.exitCode);
     }
@@ -62,7 +75,7 @@ function handleCliError(error, json) {
         process.stdout.write(JSON.stringify(fallbackError.toEnvelope(), null, 2) + '\n');
     }
     else {
-        process.stderr.write(`Error: ${unexpectedError.message}\n`);
+        process.stderr.write(pc.red(`Error: ${unexpectedError.message}\n`));
     }
     process.exit(1);
 }

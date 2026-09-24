@@ -1,6 +1,6 @@
 {
   "name": "ai-token-diff",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Deterministic token usage measurement and context diff infrastructure for LLM workflows.",
   "type": "module",
   "bin": {

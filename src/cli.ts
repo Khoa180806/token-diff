@@ -13,7 +13,7 @@ const program = new Command();
 program
   .name('token-diff')
   .description('Compare token usage between two inputs or count tokens')
-  .version('0.1.0')
+  .version('0.1.1')
   .exitOverride((err) => {
     if (err.code === 'commander.helpDisplayed' || err.code === 'commander.version') {
       process.exit(0);
