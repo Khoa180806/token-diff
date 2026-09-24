@@ -1,0 +1,139 @@
+#!/usr/bin/env node
+import { Command } from 'commander';
+import * as fs from 'node:fs';
+import { countTokens } from './tokenizer.js';
+import { computeDiff } from './diff.js';
+import { formatHuman, formatJson, formatCountHuman, formatCountJson } from './formatter.js';
+import { TokenDiffError, createError } from './errors.js';
+const program = new Command();
+program
+    .name('token-diff')
+    .description('Compare token usage between two inputs or count tokens')
+    .version('0.1.0')
+    .exitOverride((err) => {
+    if (err.code === 'commander.helpDisplayed' || err.code === 'commander.version') {
+        process.exit(0);
+    }
+    // Invalid argument or unknown command maps to exit code 2 (INVALID_INPUT)
+    process.exit(2);
+});
+function readInputContent(sourcePath) {
+    if (sourcePath === '-') {
+        try {
+            return fs.readFileSync(0, 'utf-8');
+        }
+        catch (error) {
+            const err = error;
+            throw createError('INTERNAL_ERROR', `Failed to read from stdin: ${err.message}`);
+        }
+    }
+    try {
+        if (!fs.existsSync(sourcePath)) {
+            throw createError('NOT_FOUND', `File not found: ${sourcePath}`, { path: sourcePath });
+        }
+        return fs.readFileSync(sourcePath, 'utf-8');
+    }
+    catch (error) {
+        if (error instanceof TokenDiffError) {
+            throw error;
+        }
+        const err = error;
+        if (err.code === 'EACCES') {
+            throw createError('PERMISSION_DENIED', `Permission denied: ${sourcePath}`, { path: sourcePath });
+        }
+        throw createError('INTERNAL_ERROR', `Failed to read file ${sourcePath}: ${err.message}`, {
+            path: sourcePath,
+        });
+    }
+}
+function handleCliError(error, json) {
+    if (error instanceof TokenDiffError) {
+        if (json) {
+            process.stdout.write(JSON.stringify(error.toEnvelope(), null, 2) + '\n');
+        }
+        else {
+            process.stderr.write(`Error [${error.code}]: ${error.message}\n`);
+        }
+        process.exit(error.exitCode);
+    }
+    const unexpectedError = error;
+    if (json) {
+        const fallbackError = createError('INTERNAL_ERROR', unexpectedError.message);
+        process.stdout.write(JSON.stringify(fallbackError.toEnvelope(), null, 2) + '\n');
+    }
+    else {
+        process.stderr.write(`Error: ${unexpectedError.message}\n`);
+    }
+    process.exit(1);
+}
+program
+    .command('diff')
+    .description('Compare token usage between two inputs (supports stdin with -)')
+    .argument('<before>', 'Path to original/before file (or - for stdin)')
+    .argument('<after>', 'Path to modified/after file (or - for stdin)')
+    .option('-m, --model <model>', 'Model name or encoding to use', 'gpt-4o')
+    .option('--json', 'Output machine-readable JSON envelope')
+    .action((beforePath, afterPath, options) => {
+    const startTime = Date.now();
+    try {
+        if (beforePath === '-' && afterPath === '-') {
+            throw createError('INVALID_INPUT', 'Cannot read both before and after inputs from stdin (-)');
+        }
+        const beforeContent = readInputContent(beforePath);
+        const afterContent = readInputContent(afterPath);
+        const beforeResult = countTokens(beforeContent, options.model);
+        const afterResult = countTokens(afterContent, options.model);
+        const report = computeDiff(beforeResult, afterResult, {
+            beforeLabel: beforePath === '-' ? 'stdin' : beforePath,
+            afterLabel: afterPath === '-' ? 'stdin' : afterPath,
+        });
+        const durationMs = Date.now() - startTime;
+        if (options.json) {
+            process.stdout.write(formatJson(report, durationMs) + '\n');
+        }
+        else {
+            process.stdout.write(formatHuman(report) + '\n');
+        }
+        process.exit(0);
+    }
+    catch (error) {
+        handleCliError(error, options.json);
+    }
+});
+program
+    .command('count')
+    .description('Count tokens for a single file or stdin (-)')
+    .argument('<file>', 'Path to file or - for stdin')
+    .option('-m, --model <model>', 'Model name or encoding to use', 'gpt-4o')
+    .option('--json', 'Output machine-readable JSON envelope')
+    .action((filePath, options) => {
+    const startTime = Date.now();
+    try {
+        const content = readInputContent(filePath);
+        const result = countTokens(content, options.model);
+        const report = {
+            schema_version: '1.0',
+            model: result.model,
+            encoding: result.encoding,
+            stats: {
+                label: filePath === '-' ? 'stdin' : filePath,
+                token_count: result.tokenCount,
+                char_count: result.charCount,
+                line_count: result.lineCount,
+            },
+        };
+        const durationMs = Date.now() - startTime;
+        if (options.json) {
+            process.stdout.write(formatCountJson(report, durationMs) + '\n');
+        }
+        else {
+            process.stdout.write(formatCountHuman(report) + '\n');
+        }
+        process.exit(0);
+    }
+    catch (error) {
+        handleCliError(error, options.json);
+    }
+});
+program.parse(process.argv);
+//# sourceMappingURL=cli.js.map
