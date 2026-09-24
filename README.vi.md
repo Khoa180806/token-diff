@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="token-diff logo" width="128" height="128" />
+</p>
+
 <h1 align="center">token-diff</h1>
 
 <p align="center">
