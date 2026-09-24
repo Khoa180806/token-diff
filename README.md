@@ -41,8 +41,9 @@
 8. [Deterministic Error Model & Exit Codes](#deterministic-error-model--exit-codes)
 9. [Supported Models & Encoding Mapping](#supported-models--encoding-mapping)
 10. [Performance Benchmarks & Memory Profile](#performance-benchmarks--memory-profile)
-11. [Development & Contributing](#development--contributing)
-12. [License & Acknowledgments](#license--acknowledgments)
+11. [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
+12. [Development & Contributing](#development--contributing)
+13. [License & Acknowledgments](#license--acknowledgments)
 
 ---
 
@@ -309,6 +310,40 @@ When `--json` is enabled and an error occurs, the error details are serialized t
 - **Execution Latency**: <15ms for typical documents (<50 KLOC / <10,000 tokens).
 - **Memory Footprint**: <40MB RSS under active tokenization.
 - **Pure In-Memory Operations**: Zero temporary files written to disk.
+
+---
+
+## Frequently Asked Questions (FAQ)
+
+### Does `token-diff` require an OpenAI API key or internet access?
+**No.** `token-diff` runs 100% locally on your machine using `js-tiktoken` Byte Pair Encoding (BPE). It never transmits prompt text or metadata over the network, requires zero API keys, and has zero rate limits or telemetry.
+
+### How does `token-diff` differ from standard `diff` or `wc`?
+Traditional tools count lines (`wc -l`), characters (`wc -c`), or textual line differences (`diff`). LLMs, however, charge and enforce context windows based on **sub-word BPE tokens**, which do not map 1:1 to words, characters, or lines. `token-diff` measures token savings and expansions with exact encoder fidelity, calculating net deltas and percentages across models.
+
+### Which models and encodings are supported?
+`token-diff` natively supports modern OpenAI tokenizers:
+- `o200k_base` (`gpt-4o`, `gpt-4o-mini`, `o1`, `o1-mini`, `o1-preview`)
+- `cl100k_base` (`gpt-4`, `gpt-4-turbo`, `gpt-3.5-turbo`, embeddings)
+- `p50k_base` / `r50k_base` (Legacy Davinci models)
+
+You can specify either the model name (e.g. `--model gpt-4o`) or the encoding directly (e.g. `--model o200k_base`).
+
+### How does Smart Input fallback work?
+When passing arguments to `td diff` or `td count`, the tool first checks if the argument points to an existing file on disk. If not, it treats the string as literal text/prompt content and prints a non-blocking `[WARN]` to stderr. This lets you compare inline prompt strings without needing to create temporary files.
+
+### Can `token-diff` be integrated into CI/CD pipelines?
+**Yes.** `token-diff` provides deterministic exit codes:
+- `0`: Success (tokens calculated)
+- `1`: Internal runtime or stream read error
+- `2`: Invalid CLI arguments or unsupported model
+- `3`: Missing file error (in strict mode)
+- `4`: Permission denied
+
+Combined with `--json`, it produces standardized JSON envelopes that can be parsed by `jq` or assertions in GitHub Actions, GitLab CI, or pre-commit hooks.
+
+### Does `token-diff` require native C++ compiler tools during installation?
+**No.** Unlike official Python tiktoken or Rust-based binaries, `token-diff` uses a pure JavaScript BPE implementation. It installs cleanly via npm without requiring node-gyp, Python, or Visual Studio C++ build tools.
 
 ---
 

@@ -41,8 +41,9 @@
 8. [Mã lỗi và Exit Code](#mã-lỗi-và-exit-code)
 9. [Các model và encoding hỗ trợ](#các-model-và-encoding-hỗ-trợ)
 10. [Hiệu năng và tài nguyên](#hiệu-năng-và-tài-nguyên)
-11. [Phát triển và đóng góp](#phát-triển-và-đóng-góp)
-12. [Giấy phép](#giấy-phép)
+11. [Câu hỏi thường gặp (FAQ)](#câu-hỏi-thường-gặp-faq)
+12. [Phát triển và đóng góp](#phát-triển-và-đóng-góp)
+13. [Giấy phép](#giấy-phép)
 
 ---
 
@@ -299,6 +300,40 @@ Bạn có thể truyền tên model phổ biến hoặc trực tiếp tên bộ 
 - **Tốc độ xử lý**: <15ms cho các tệp tài liệu thông thường (<10.000 tokens).
 - **Bộ nhớ tiêu hao**: <40MB RAM.
 - **Thuần tính toán trong bộ nhớ**: Tuyệt đối không tạo hay ghi tệp tạm ra ổ cứng.
+
+---
+
+## Câu hỏi thường gặp (FAQ)
+
+### `token-diff` có yêu cầu API key OpenAI hay kết nối internet không?
+**Hoàn toàn không.** `token-diff` chạy 100% offline ngay trên máy tính của bạn thông qua thuật toán Byte Pair Encoding (BPE) của `js-tiktoken`. Công cụ không gửi bất kỳ dữ liệu văn bản hay metadata nào qua mạng, không cần tài khoản, không cần API key và không bao giờ gặp tình trạng giới hạn lượt gọi (rate limit).
+
+### `token-diff` khác gì so với lệnh `diff` hoặc `wc` thông thường?
+Các công cụ truyền thống chỉ đếm số dòng (`wc -l`), số ký tự (`wc -c`) hoặc dòng thay đổi (`diff`). Tuy nhiên, các mô hình ngôn ngữ lớn (LLM) tính chi phí và giới hạn ngữ cảnh theo **token BPE (sub-words)**, vốn không tương ứng 1:1 với từ ngữ, ký tự hay dòng. `token-diff` đo lường chính xác lượng token tăng/giảm theo từng bộ từ điển của từng mô hình, giúp bạn kiểm soát ngân sách context một cách tuyệt đối.
+
+### Những mô hình (model) và bộ mã hóa (encoding) nào được hỗ trợ?
+`token-diff` hỗ trợ sẵn tất cả các bộ tokenizer thông dụng của OpenAI:
+- `o200k_base` (`gpt-4o`, `gpt-4o-mini`, `o1`, `o1-mini`, `o1-preview`)
+- `cl100k_base` (`gpt-4`, `gpt-4-turbo`, `gpt-3.5-turbo`, các model embedding)
+- `p50k_base` / `r50k_base` (Các model Davinci cũ)
+
+Bạn có thể truyền tên model (ví dụ `--model gpt-4o`) hoặc trực tiếp tên encoding (ví dụ `--model o200k_base`).
+
+### Cơ chế Smart Input fallback hoạt động ra sao?
+Khi truyền tham số vào `td diff` hoặc `td count`, công cụ sẽ kiểm tra xem đường dẫn có tồn tại trên ổ cứng hay không. Nếu không tìm thấy tệp, công cụ tự động coi chuỗi đó là nội dung văn bản thô (prompt) và in cảnh báo nhẹ `[WARN]` ra stderr. Điều này giúp bạn so sánh nhanh hai câu prompt trực tiếp trên terminal mà không cần mất công tạo tệp tạm.
+
+### Tôi có thể tích hợp `token-diff` vào luồng CI/CD không?
+**Có.** `token-diff` tuân thủ hệ thống exit code chuẩn mực:
+- `0`: Thành công
+- `1`: Lỗi nội bộ hoặc lỗi đọc luồng pipe
+- `2`: Sai tham số dòng lệnh hoặc model không được hỗ trợ
+- `3`: Không tìm thấy tệp chỉ định (trong chế độ kiểm tra nghiêm ngặt)
+- `4`: Không có quyền đọc tệp (Permission Denied)
+
+Khi kết hợp cùng cờ `--json`, kết quả được xuất dưới dạng JSON envelope chuẩn, dễ dàng parse bằng `jq` hoặc dùng làm assertion gate trong GitHub Actions, GitLab CI.
+
+### Cài đặt `token-diff` có cần cài compiler C++ hay Python không?
+**Không.** Khác với gói tiktoken gốc bằng Rust/Python cần trình biên dịch native (node-gyp, Visual C++ Build Tools), `token-diff` là mã nguồn thuần JavaScript 100%. Bạn có thể cài đặt mượt mà qua npm trên mọi hệ điều hành (Windows, macOS, Linux, Alpine Docker).
 
 ---
 
