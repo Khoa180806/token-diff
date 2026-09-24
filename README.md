@@ -69,23 +69,6 @@ Whether verifying the efficacy of prompt compression algorithms, monitoring mult
   <img src="assets/architecture.png" alt="token-diff architecture diagram" width="100%" />
 </p>
 
-```
-┌────────────────────────────────────────────────────────┐
-│                      token-diff                        │
-│                                                        │
-│  [File A / Stdin] ──┐                                  │
-│                     ├──► [Tokenizer (js-tiktoken)]     │
-│  [File B / Stdin] ──┘         │                        │
-│                               ▼                        │
-│                     [Diff Engine (Delta, %)]           │
-│                               │                        │
-│                     ┌─────────┴─────────┐              │
-│                     ▼                   ▼              │
-│             [Human Formatter]   [JSON Envelope]        │
-│             (Tabular CLI view)  (Machine readable)     │
-└────────────────────────────────────────────────────────┘
-```
-
 - **In-Memory Encoder Cache**: Reuses loaded BPE vocabulary instances across repeated invocations, reducing tokenization latency to sub-millisecond ranges for typical prompt sizes.
 - **Zero Div-by-Zero Hazards**: Handles empty initial prompts and zero-token states gracefully with strict edge-case safety.
 - **Streamlined CLI UX**: Automatic alignment for tabular terminal reporting and standardized Unix hyphen (`-`) pipe resolution.
@@ -133,14 +116,10 @@ td diff [options] <before> <after>
 
 #### Smart Input Detection (Files or Raw Strings)
 `token-diff` automatically detects whether `<before>` and `<after>` are file paths or raw text strings:
-- **File vs File**: `td diff prompt_v1.txt prompt_v2.txt`
+- **File vs File**: `td diff formatter.ts formatter.v2.ts`
 - **Raw String vs Raw String**: `td diff "Please write a python function to calculate fibonacci" "Write python fibonacci"`
 - **File vs Raw String**: `td diff base_system_prompt.txt "You are a concise code assistant."`
 - **Standard Input (`-`)**: `cat new_prompt.txt | td diff old_prompt.txt -`
-
-<p align="center">
-  <img src="assets/smart-input.png" alt="Smart Input prompt and file modes" width="100%" />
-</p>
 
 > **Note**: If an input does not exist on disk, `token-diff` seamlessly falls back to treating it as raw text and displays a subtle `[WARN]` to prevent mistyped filename errors.
 
@@ -151,24 +130,9 @@ td diff [options] <before> <after>
 | `--json` | `false` | Emits structured JSON envelope to stdout |
 | `-h, --help` | - | Display help for command |
 
-#### Example: Colorized Tabular Terminal Output
-```bash
-td diff "Please provide a detailed explanation of quicksort in TypeScript with examples" "Explain TypeScript quicksort with code"
-```
-```text
-=== Token Diff Report ===
-Model: gpt-4o (o200k_base)
-
-Target         Tokens       Chars        Lines     
----------------------------------------------------
-Please provide...         13           82          1
-Explain TypeSc...          6           38          1
----------------------------------------------------
-Diff                      -7 (-53.85%) -44 (-53.66%) 0         
-
-Summary: Reduced by 7 tokens (-53.85%) from 13 to 6 (chars: 82 → 38, -53.66%)
-```
-*(In terminal output: Token/char savings are rendered in **vibrant green**, increases in **red**, and headers in **bold cyan**).*
+<p align="center">
+  <img src="assets/demo-diff.png" alt="td diff command output" width="100%" />
+</p>
 
 ---
 
@@ -183,20 +147,15 @@ td count [options] <file_or_string>
 #### Examples:
 ```bash
 # Count tokens for a file
-td count context.md --model gpt-4o
+td count README.md --model gpt-4o
 
 # Count tokens for a raw prompt string directly
 td count "You are a senior fullstack engineer."
 ```
-```text
-=== Token Count Report ===
-File:  You are a senior fullstack engineer.
-Model: gpt-4o (o200k_base)
 
-Tokens: 7
-Chars:  36
-Lines:  1
-```
+<p align="center">
+  <img src="assets/demo-count.png" alt="td count command output" width="100%" />
+</p>
 
 ---
 
@@ -206,11 +165,18 @@ Pass output from compressors, linters, or generator scripts directly into `token
 
 ```bash
 # Compare a baseline file against standard input
-cat compressed_output.json | token-diff diff baseline.json -
+cat optimized.txt | td diff original.txt -
 
 # Inspect stdin token footprint directly
-git diff HEAD~1 | token-diff count -
+git diff HEAD~1 | td count -
+
+# Pipe into jq for scripting
+cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 ```
+
+<p align="center">
+  <img src="assets/demo-stdin.png" alt="stdin pipe usage" width="100%" />
+</p>
 
 ---
 

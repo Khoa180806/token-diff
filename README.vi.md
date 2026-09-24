@@ -65,23 +65,6 @@ Khi tối ưu prompt, nén context cho AI agent, hay muốn đặt chặn trần
 
 ## Kiến trúc hoạt động
 
-```
-┌────────────────────────────────────────────────────────┐
-│                      token-diff                        │
-│                                                        │
-│  [File A / Stdin] ──┐                                  │
-│                     ├──► [Tokenizer (js-tiktoken)]     │
-│  [File B / Stdin] ──┘         │                        │
-│                               ▼                        │
-│                     [Diff Engine (Delta, %)]           │
-│                               │                        │
-│                     ┌─────────┴─────────┐              │
-│                     ▼                   ▼              │
-│             [Human Formatter]   [JSON Envelope]        │
-│             (Bảng terminal đẹp)  (Chuẩn máy đọc)       │
-└────────────────────────────────────────────────────────┘
-```
-
 <p align="center"><img src="assets/architecture.png" alt="Kiến trúc 4 giai đoạn pipeline của token-diff" width="100%" /></p>
 
 - **Cache bộ từ điển (In-Memory Encoder Cache)**: Giữ lại instance BPE sau lần khởi tạo đầu tiên, giúp các lượt đếm tiếp theo chỉ mất chưa tới 1 mili-giây.
@@ -131,14 +114,12 @@ td diff [tùy_chọn] <before> <after>
 
 #### Cơ chế nhận diện đầu vào thông minh (Smart Input)
 `token-diff` tự động phân biệt xem tham số `<before>` và `<after>` là đường dẫn tệp hay là chuỗi văn bản (prompt):
-- **So sánh 2 tệp**: `td diff prompt_v1.txt prompt_v2.txt`
+- **So sánh 2 tệp TypeScript**: `td diff formatter.ts formatter.v2.ts`
 - **So sánh 2 đoạn prompt trực tiếp**: `td diff "Hãy viết một hàm python tính fibonacci" "Viết python fibonacci"`
 - **So sánh giữa tệp và prompt thô**: `td diff base_prompt.txt "Viết ngắn gọn súc tích"`
 - **Nhận luồng dữ liệu từ pipe (`-`)**: `cat prompt_moi.txt | td diff prompt_cu.txt -`
 
 > **Lưu ý**: Nếu đường dẫn không tồn tại trên máy, công cụ sẽ tự động coi đó là chuỗi prompt thô và in kèm một cảnh báo nhẹ `[WARN]` ra terminal để bạn không bị nhầm lẫn khi gõ sai tên tệp.
-
-<p align="center"><img src="assets/smart-input.png" alt="Smart Input: 3 modes — Prompt strings, File paths, Stdin pipe" width="100%" /></p>
 
 #### Tùy chọn:
 | Tùy chọn | Mặc định | Ý nghĩa |
@@ -147,24 +128,7 @@ td diff [tùy_chọn] <before> <after>
 | `--json` | `false` | Xuất kết quả dạng JSON envelope chuẩn |
 | `-h, --help` | - | Xem hướng dẫn lệnh |
 
-#### Kết quả hiển thị bảng màu trực quan trên terminal:
-```bash
-td diff "Hãy giải thích chi tiết thuật toán quicksort bằng TypeScript kèm ví dụ minh họa" "Giải thích quicksort TypeScript ngắn gọn"
-```
-```text
-=== Token Diff Report ===
-Model: gpt-4o (o200k_base)
-
-Target         Tokens       Chars        Lines     
----------------------------------------------------
-Hãy giải th...           23           82          1
-Giải thích ...           11           42          1
----------------------------------------------------
-Diff                    -12 (-52.17%) -40 (-48.78%) 0         
-
-Summary: Reduced by 12 tokens (-52.17%) from 23 to 11 (chars: 82 → 42, -48.78%)
-```
-*(Trên terminal: Số lượng token tiết kiệm được hiển thị màu **xanh lá**, nếu tăng sẽ báo màu **đỏ**, và tiêu đề được in đậm màu **xanh lơ (cyan)**).*
+<p align="center"><img src="assets/demo-diff.png" alt="Kết quả lệnh td diff" width="100%" /></p>
 
 ---
 
@@ -178,21 +142,14 @@ td count [tùy_chọn] <tệp_hoặc_chuỗi>
 
 #### Ví dụ:
 ```bash
-# Đếm token của một tệp
-td count context.md --model gpt-4o
+# Đếm token của một tệp markdown
+td count README.md --model gpt-4o
 
 # Đếm token trực tiếp cho một câu prompt
 td count "Bạn là một kỹ sư phần mềm cao cấp."
 ```
-```text
-=== Token Count Report ===
-File:  Bạn là một kỹ sư phần mềm cao cấp.
-Model: gpt-4o (o200k_base)
 
-Tokens: 11
-Chars:  39
-Lines:  1
-```
+<p align="center"><img src="assets/demo-count.png" alt="Kết quả lệnh td count" width="100%" /></p>
 
 ---
 
@@ -202,11 +159,16 @@ Bạn có thể truyền kết quả từ các script tạo nội dung, nén d�
 
 ```bash
 # So sánh tệp gốc với kết quả script vừa tạo ra
-cat compressed_output.json | token-diff diff baseline.json -
+cat optimized.txt | td diff original.txt -
 
 # Đếm nhanh số token của git diff commit gần nhất
-git diff HEAD~1 | token-diff count -
+git diff HEAD~1 | td count -
+
+# Pipe vào jq để scripting tự động hóa
+cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 ```
+
+<p align="center"><img src="assets/demo-stdin.png" alt="Dùng stdin pipe với token-diff" width="100%" /></p>
 
 ---
 
