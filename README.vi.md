@@ -5,7 +5,7 @@
 <h1 align="center">token-diff</h1>
 
 <p align="center">
-  <strong>Hạ tầng Đo lường Tiêu thụ Token & So sánh Ngữ cảnh (Context Diff) Tiền định</strong>
+  <strong>Công cụ đo lường mức tiêu thụ token và so sánh độ lệch context cho các luồng LLM</strong>
 </p>
 
 <p align="center">
@@ -22,75 +22,75 @@
 </p>
 
 <p align="center">
-  <img src="assets/demo.gif" alt="token-diff terminal demo" width="100%" />
+  <img src="assets/demo.gif" alt="token-diff demo dòng lệnh" width="100%" />
 </p>
 
 ---
 
 ## Mục lục
-1. [Tóm tắt Dự án](#tóm-tắt-dự-án)
-2. [Tại sao cần token-diff?](#tại-sao-cần-token-diff)
-3. [Kiến trúc & Năng lực Cốt lõi](#kiến-trúc--năng-lực-cốt-lõi)
-4. [Cài đặt & Thiết lập](#cài-đặt--thiết-lập)
-5. [Hướng dẫn Sử dụng CLI](#hướng-dẫn-sử-dụng-cli)
+1. [Giới thiệu](#giới-thiệu)
+2. [Điểm mạnh cốt lõi](#điểm-mạnh-cốt-lõi)
+3. [Kiến trúc hoạt động](#kiến-trúc-hoạt-động)
+4. [Cài đặt](#cài-đặt)
+5. [Hướng dẫn sử dụng CLI](#hướng-dẫn-sử-dụng-cli)
    - [token-diff diff](#1-token-diff-diff)
    - [token-diff count](#2-token-diff-count)
-   - [Nhận luồng dữ liệu chuẩn (stdin pipelining)](#3-nhận-luồng-dữ-liệu-chuẩn-stdin-pipelining)
-6. [Tích hợp Thư viện / SDK](#tích-hợp-thư-viện--sdk)
-7. [Cấu trúc Chuẩn hóa API Transport Envelope](#cấu-trúc-chuẩn-hóa-api-transport-envelope)
-8. [Mô hình Lỗi Tiền định & Mã thoát (Exit Codes)](#mô-hình-lỗi-tiền-định--mã-thoát-exit-codes)
-9. [Danh mục Mô hình & Bảng ánh xạ Encoding](#danh-mục-mô-hình--bảng-ánh-xạ-encoding)
-10. [Hiệu năng & Mức tiêu thụ Bộ nhớ](#hiệu-năng--mức-tiêu-thụ-bộ-nhớ)
-11. [Phát triển & Kiểm thử Dự án](#phát-triển--kiểm-thử-dự-án)
+   - [Hứng dữ liệu từ stdin (pipe)](#3-hứng-dữ-liệu-từ-stdin-pipe)
+6. [Dùng làm thư viện (SDK)](#dùng-làm-thư-viện-sdk)
+7. [Cấu trúc JSON Envelope chuẩn](#cấu-trúc-json-envelope-chuẩn)
+8. [Mã lỗi và Exit Code](#mã-lỗi-và-exit-code)
+9. [Các model và encoding hỗ trợ](#các-model-và-encoding-hỗ-trợ)
+10. [Hiệu năng và tài nguyên](#hiệu-năng-và-tài-nguyên)
+11. [Phát triển và đóng góp](#phát-triển-và-đóng-góp)
 12. [Giấy phép](#giấy-phép)
 
 ---
 
-## Tóm tắt Dự án
+## Giới thiệu
 
-`token-diff` là công cụ dòng lệnh (CLI) và bộ công cụ lập trình (TypeScript SDK) siêu tốc, không phụ thuộc vào native binary, được thiết kế chuyên biệt để phân tích sự chênh lệch (delta) về số lượng token và dung lượng ngữ cảnh context trong các luồng làm việc với LLM, hệ thống agent tự hành và các pipeline tối ưu prompt.
+`token-diff` là công cụ dòng lệnh (CLI) và thư viện TypeScript/JavaScript thuần, chuyên dùng để đo lường và so sánh mức chênh lệch token giữa hai văn bản, hai tệp mã nguồn hoặc dữ liệu từ terminal.
 
-Dù bạn đang kiểm thử thuật toán nén prompt, giám sát kết quả phản hồi của agent tool-calling, hay thiết lập ngưỡng token ngân sách nghiêm ngặt trong CI/CD, `token-diff` cung cấp kết quả tính toán chính xác, ổn định và có thể tái lập tuyệt đối.
-
----
-
-## Tại sao cần token-diff?
-
-- **Xử lý Cục bộ 100% (Zero Cloud Overhead)**: Đo lường và mã hóa hoàn toàn trên máy cục bộ. Không cần API keys, không lo nghẽn mạng rate-limit, và triệt tiêu nguy cơ rò rỉ mã nguồn dự án nhạy cảm.
-- **Thuần JavaScript (Pure JS Tokenization)**: Xây dựng trên nền tảng `js-tiktoken`, không cần compiled WebAssembly (WASM) hay Rust native binary, đảm bảo chạy ổn định trên Windows, macOS, Linux, container Docker và môi trường serverless.
-- **Chuẩn hóa cho AI Agent**: Hỗ trợ xuất định dạng JSON envelope chuyên nghiệp có kèm metadata thời gian thực thi, cờ phân trang và thông điệp lỗi có cấu trúc.
-- **Mã thoát Tiền định (Deterministic Exit Codes)**: Phân tách rõ ràng giữa thành công, lỗi tham số và lỗi vận hành, giúp việc tích hợp vào shell script và CI kiểm thử hoàn toàn tự động.
+Khi tối ưu prompt, nén context cho AI agent, hay muốn đặt chặn trần token (token budget) trong CI/CD pipeline, `token-diff` giúp bạn có ngay số liệu trước/sau rõ ràng, chính xác từng token mà không cần đoán mò.
 
 ---
 
-## Kiến trúc & Năng lực Cốt lõi
+## Điểm mạnh cốt lõi
+
+- **Chạy offline 100% (Không phụ thuộc mạng)**: Mọi thao tác tính toán, tách từ (tokenize) diễn ra ngay trên máy của bạn. Không cần API key, không lo dính rate-limit, và tuyệt đối an toàn với mã nguồn hoặc dữ liệu mật.
+- **Thuần JavaScript (Không cần WebAssembly hay build C++)**: Dựa trên `js-tiktoken`, chạy mượt mà ngay lập tức trên Windows, macOS, Linux, môi trường Docker lẫn serverless mà không sợ lỗi thiếu thư viện C++ native.
+- **Thiết kế sẵn cho AI Agent**: Hỗ trợ xuất JSON envelope kèm đầy đủ metadata, thời gian chạy (`duration_ms`) và mã lỗi chi tiết để agent hoặc tool khác dễ dàng đọc hiểu.
+- **Exit code chuẩn mực, nhất quán**: Phân định rõ ràng giữa lệnh thành công, tệp không tìm thấy, hay sai tham số, giúp việc viết script bash/powershell tự động hóa cực kỳ nhàn.
+
+---
+
+## Kiến trúc hoạt động
 
 ```
 ┌────────────────────────────────────────────────────────┐
 │                      token-diff                        │
 │                                                        │
-│  [Tệp A / Stdin] ──┐                                   │
-│                    ├──► [Tokenizer (js-tiktoken)]      │
-│  [Tệp B / Stdin] ──┘         │                         │
-│                              ▼                         │
-│                    [Diff Engine (Delta, %)]            │
-│                              │                         │
-│                    ┌─────────┴─────────┐               │
-│                    ▼                   ▼               │
-│            [Human Formatter]   [JSON Envelope]         │
-│            (Bảng CLI trực quan) (Chuẩn hóa máy đọc)     │
+│  [File A / Stdin] ──┐                                  │
+│                     ├──► [Tokenizer (js-tiktoken)]     │
+│  [File B / Stdin] ──┘         │                        │
+│                               ▼                        │
+│                     [Diff Engine (Delta, %)]           │
+│                               │                        │
+│                     ┌─────────┴─────────┐              │
+│                     ▼                   ▼              │
+│             [Human Formatter]   [JSON Envelope]        │
+│             (Bảng terminal đẹp)  (Chuẩn máy đọc)       │
 └────────────────────────────────────────────────────────┘
 ```
 
-- **Bộ nhớ đệm Encoder (In-Memory Cache)**: Lưu lại các instance từ điển BPE sau lần khởi tạo đầu tiên, giảm độ trễ đếm token xuống dưới 1 mili-giây cho các prompt thông dụng.
-- **An toàn Tuyệt đối trước Phép chia cho 0**: Xử lý an toàn các trường hợp prompt rỗng hoặc trạng thái 0 token.
-- **Trải nghiệm Dòng lệnh Tiện dụng**: Tự động căn lề bảng hiển thị gọn gàng trên terminal và hỗ trợ pipe trực tiếp từ stdin qua ký hiệu `-`.
+- **Cache bộ từ điển (In-Memory Encoder Cache)**: Giữ lại instance BPE sau lần khởi tạo đầu tiên, giúp các lượt đếm tiếp theo chỉ mất chưa tới 1 mili-giây.
+- **An toàn trước dữ liệu rỗng**: Xử lý mượt mà khi tệp rỗng hoặc 0 token, không bao giờ bị lỗi văng phép chia cho 0 (`NaN` / `Infinity`).
+- **Terminal trực quan**: Tự động căn lề thẳng hàng các cột thông tin và hỗ trợ nhận luồng dữ liệu pipe (`-`) chuẩn phong cách Unix.
 
 ---
 
-## Cài đặt & Thiết lập
+## Cài đặt
 
-### Chạy trực tiếp qua `npx` (Không cần cài đặt trước):
+### Dùng nhanh qua `npx` (Không cần cài đặt trước):
 ```bash
 npx token-diff --help
 ```
@@ -107,28 +107,28 @@ npm install token-diff
 
 ---
 
-## Hướng dẫn Sử dụng CLI
+## Hướng dẫn sử dụng CLI
 
 ### 1. `token-diff diff`
 
-So sánh độ chênh lệch token và ký tự giữa hai văn bản:
+So sánh độ chênh lệch token và ký tự giữa hai tệp:
 
 ```bash
 token-diff diff [tùy_chọn] <before> <after>
 ```
 
-#### Tham số dòng lệnh:
-- `<before>`: Đường dẫn tệp gốc/chưa nén (hoặc `-` nếu đọc từ stdin).
-- `<after>`: Đường dẫn tệp sau tối ưu/đã nén (hoặc `-` nếu đọc từ stdin).
+#### Tham số:
+- `<before>`: Đường dẫn tệp ban đầu (hoặc `-` nếu đọc từ stdin).
+- `<after>`: Đường dẫn tệp sau khi rút gọn/chỉnh sửa (hoặc `-` nếu đọc từ stdin).
 
-#### Các tùy chọn:
+#### Tùy chọn:
 | Tùy chọn | Mặc định | Ý nghĩa |
 |---|---|---|
-| `-m, --model <model>` | `gpt-4o` | Tên mô hình mục tiêu hoặc encoding cụ thể |
-| `--json` | `false` | Xuất kết quả dạng JSON envelope ra stdout |
-| `-h, --help` | - | Hiển thị hướng dẫn lệnh |
+| `-m, --model <model>` | `gpt-4o` | Tên model hoặc tên bộ mã hóa (encoding) |
+| `--json` | `false` | Xuất kết quả dạng JSON envelope chuẩn |
+| `-h, --help` | - | Xem hướng dẫn lệnh |
 
-#### Ví dụ hiển thị dạng bảng:
+#### Kết quả hiển thị bảng trên terminal:
 ```bash
 token-diff diff raw_prompt.txt compressed_prompt.txt
 ```
@@ -150,7 +150,7 @@ Summary: Reduced by 348 tokens (-28.06%) from 1240 to 892 (chars: 4820 → 3410,
 
 ### 2. `token-diff count`
 
-Đếm số lượng token, ký tự và số dòng của một tệp duy nhất hoặc luồng stdin:
+Đếm số lượng token, ký tự và số dòng của một tệp hoặc nội dung từ terminal:
 
 ```bash
 token-diff count [tùy_chọn] <file>
@@ -172,23 +172,23 @@ Lines:  84
 
 ---
 
-### 3. Nhận luồng dữ liệu chuẩn (stdin pipelining)
+### 3. Hứng dữ liệu từ stdin (pipe)
 
-Truyền kết quả từ các script tạo nội dung, nén dữ liệu hoặc git diff trực tiếp vào `token-diff` thông qua ký hiệu `-`:
+Bạn có thể truyền kết quả từ các script tạo nội dung, nén dữ liệu hoặc git diff trực tiếp vào `token-diff` thông qua ký hiệu `-`:
 
 ```bash
-# So sánh tệp chuẩn với kết quả nén được truyền qua pipe
+# So sánh tệp gốc với kết quả script vừa tạo ra
 cat compressed_output.json | token-diff diff baseline.json -
 
-# Đếm token trực tiếp từ git diff
+# Đếm nhanh số token của git diff commit gần nhất
 git diff HEAD~1 | token-diff count -
 ```
 
 ---
 
-## Tích hợp Thư viện / SDK
+## Dùng làm thư viện (SDK)
 
-Gói `token-diff` cung cấp đầy đủ khai báo kiểu TypeScript:
+Gói `token-diff` hỗ trợ đầy đủ type TypeScript:
 
 ```typescript
 import {
@@ -199,28 +199,28 @@ import {
   TokenDiffReport
 } from 'token-diff';
 
-// 1. Phân tích token cho từng văn bản
-const banDau = countTokens('Hãy viết một bài hướng dẫn chi tiết về container Docker.', 'gpt-4o');
-const rutGon = countTokens('Hướng dẫn về container Docker.', 'gpt-4o');
+// 1. Đếm token từng đoạn văn bản
+const original = countTokens('Hãy viết một bài hướng dẫn chi tiết về container Docker.', 'gpt-4o');
+const compressed = countTokens('Hướng dẫn về container Docker.', 'gpt-4o');
 
-// 2. Tính toán diff
-const diffReport: TokenDiffReport = computeDiff(banDau, rutGon, {
-  beforeLabel: 'ban_dau',
-  afterLabel: 'rut_gon',
+// 2. Tính toán độ chênh lệch
+const diffReport: TokenDiffReport = computeDiff(original, compressed, {
+  beforeLabel: 'original',
+  afterLabel: 'compressed',
 });
 
 console.log(`Tiết kiệm được ${Math.abs(diffReport.diff.token_delta)} tokens!`);
 console.log(formatHuman(diffReport));
 
-// 3. Xuất JSON envelope chuẩn
+// 3. Xuất JSON envelope nếu cần
 const jsonStr: string = formatJson(diffReport, 12);
 ```
 
 ---
 
-## Cấu trúc Chuẩn hóa API Transport Envelope
+## Cấu trúc JSON Envelope chuẩn
 
-Khi bật tùy chọn `--json`, `token-diff` đảm bảo đầu ra khớp với chuẩn envelope của hệ sinh thái:
+Khi bật cờ `--json`, dữ liệu luôn được bọc trong cấu trúc envelope rõ ràng:
 
 ```json
 {
@@ -260,18 +260,20 @@ Khi bật tùy chọn `--json`, `token-diff` đảm bảo đầu ra khớp với
 
 ---
 
-## Mô hình Lỗi Tiền định & Mã thoát (Exit Codes)
+## Mã lỗi và Exit Code
 
-| Mã thoát | Mã lỗi | Tình huống phát sinh |
+Hệ thống mã thoát được định nghĩa rõ ràng, giúp các pipeline CI/CD nhận biết chính xác trạng thái:
+
+| Exit Code | Mã lỗi | Ý nghĩa / Tình huống |
 |:---:|---|---|
-| `0` | - | Thực thi thành công không có lỗi. |
-| `1` | `INTERNAL_ERROR` | Lỗi ngoại lệ runtime không mong muốn hoặc đọc luồng pipe thất bại. |
-| `2` | `INVALID_INPUT` / `UNSUPPORTED_OPERATION` | Sai tham số CLI, truyền cả hai đầu vào là `-`, hoặc tên mô hình không hỗ trợ. |
-| `3` | `NOT_FOUND` | Tệp chỉ định không tồn tại trên hệ thống tệp. |
-| `4` | `PERMISSION_DENIED` | Không có quyền truy cập đọc tệp được chỉ định. |
+| `0` | - | Chạy thành công. |
+| `1` | `INTERNAL_ERROR` | Lỗi ngoại lệ ngoài ý muốn hoặc lỗi đọc luồng pipe. |
+| `2` | `INVALID_INPUT` / `UNSUPPORTED_OPERATION` | Sai cú pháp tham số, cả hai đầu vào đều là `-`, hoặc model không hỗ trợ. |
+| `3` | `NOT_FOUND` | Không tìm thấy tệp được chỉ định. |
+| `4` | `PERMISSION_DENIED` | Không có quyền đọc tệp. |
 
-#### Envelope JSON khi có lỗi:
-Nếu sử dụng cờ `--json` và phát sinh lỗi, chi tiết lỗi được chuẩn hóa ra `stdout`:
+#### Khi gặp lỗi với cờ `--json`:
+Thông tin lỗi được xuất ra `stdout` dưới dạng JSON có cấu trúc:
 ```json
 {
   "error": {
@@ -290,45 +292,45 @@ Nếu sử dụng cờ `--json` và phát sinh lỗi, chi tiết lỗi được 
 
 ---
 
-## Danh mục Mô hình & Bảng ánh xạ Encoding
+## Các model và encoding hỗ trợ
 
-| Encoding | Các mô hình phổ biến tương ứng |
+Bạn có thể truyền tên model phổ biến hoặc trực tiếp tên bộ mã hóa (encoding):
+
+| Encoding | Các model thông dụng |
 |---|---|
 | `o200k_base` | `gpt-4o`, `gpt-4o-mini`, `chatgpt-4o-latest`, `o1`, `o1-mini`, `o1-preview` |
 | `cl100k_base` | `gpt-4`, `gpt-4-turbo`, `gpt-4-32k`, `gpt-3.5-turbo`, `text-embedding-ada-002`, `text-embedding-3-small`, `text-embedding-3-large` |
 | `p50k_base` | `text-davinci-003`, `text-davinci-002` |
 | `r50k_base` | `davinci` |
 
-*Có thể truyền trực tiếp tên encoding vào cờ model (ví dụ: `--model o200k_base`).*
+---
+
+## Hiệu năng và tài nguyên
+
+- **Khởi động**: ~80ms (thời gian nạp môi trường Node.js).
+- **Tốc độ xử lý**: <15ms cho các tệp tài liệu thông thường (<10.000 tokens).
+- **Bộ nhớ tiêu hao**: <40MB RAM.
+- **Thuần tính toán trong bộ nhớ**: Tuyệt đối không tạo hay ghi tệp tạm ra ổ cứng.
 
 ---
 
-## Hiệu năng & Mức tiêu thụ Bộ nhớ
-
-- **Thời gian khởi động lạnh (Cold Start)**: ~80ms (thời gian khởi tạo Node.js runtime).
-- **Độ trễ xử lý (Execution Latency)**: <15ms đối với văn bản thông thường (<50 KLOC / <10,000 tokens).
-- **Mức tiêu hao RAM**: <40MB RSS trong suốt phiên phân tích token.
-- **Xử lý hoàn toàn trong RAM**: Tuyệt đối không tạo file tạm rác ra ổ cứng.
-
----
-
-## Phát triển & Kiểm thử Dự án
+## Phát triển và đóng góp
 
 ```bash
 # Clone mã nguồn
 git clone https://github.com/Khoa180806/token-diff.git
 cd token-diff
 
-# Cài đặt thư viện phụ thuộc
+# Cài đặt dependencies
 npm install
 
-# Chạy toàn bộ 20 unit & integration tests
+# Chạy test suite (20 tests)
 npm test
 
-# Build mã chạy production vào dist/
+# Build mã production ra dist/
 npm run build
 
-# Kiểm tra cú pháp và kiểu dữ liệu
+# Kiểm tra type TypeScript
 npm run lint
 ```
 
@@ -336,5 +338,5 @@ npm run lint
 
 ## Giấy phép
 
-Dự án được phân phối theo giấy phép mã nguồn mở [MIT License](LICENSE).  
-Phát triển và duy trì bởi Khoa180806.
+Mã nguồn mở phát hành theo giấy phép [MIT License](LICENSE).  
+Dự án được duy trì bởi Khoa180806.
