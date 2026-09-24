@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import * as fs from 'node:fs';
+import pc from 'picocolors';
 import { countTokens } from './tokenizer.js';
 import { computeDiff } from './diff.js';
 import { formatHuman, formatJson, formatCountHuman, formatCountJson } from './formatter.js';
@@ -44,7 +45,7 @@ function readInputContent(sourcePath: string): string {
     if (!isFile) {
       const cleanStr = sourcePath.replace(/\r?\n/g, ' ');
       const displayStr = cleanStr.length > 40 ? cleanStr.substring(0, 37) + '...' : cleanStr;
-      process.stderr.write(`[WARN] File not found, treating input as raw text: "${displayStr}"\n`);
+      process.stderr.write(pc.yellow(`[WARN] File not found, treating input as raw text: "${displayStr}"\n`));
       return sourcePath; // Smart Input: treat as raw text
     }
     return fs.readFileSync(sourcePath, 'utf-8');
@@ -67,7 +68,7 @@ function handleCliError(error: unknown, json?: boolean): never {
     if (json) {
       process.stdout.write(JSON.stringify(error.toEnvelope(), null, 2) + '\n');
     } else {
-      process.stderr.write(`Error [${error.code}]: ${error.message}\n`);
+      process.stderr.write(pc.red(`Error [${error.code}]: ${error.message}\n`));
     }
     process.exit(error.exitCode);
   }
@@ -77,7 +78,7 @@ function handleCliError(error: unknown, json?: boolean): never {
     const fallbackError = createError('INTERNAL_ERROR', unexpectedError.message);
     process.stdout.write(JSON.stringify(fallbackError.toEnvelope(), null, 2) + '\n');
   } else {
-    process.stderr.write(`Error: ${unexpectedError.message}\n`);
+    process.stderr.write(pc.red(`Error: ${unexpectedError.message}\n`));
   }
   process.exit(1);
 }

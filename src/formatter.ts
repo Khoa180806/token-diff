@@ -1,3 +1,4 @@
+import pc from 'picocolors';
 import { ApiEnvelope, TokenDiffReport, TokenCountReport } from './types.js';
 
 export function formatJson(report: TokenDiffReport, durationMs = 0): string {
@@ -33,11 +34,11 @@ export function formatCountJson(report: TokenCountReport, durationMs = 0): strin
 export function formatCountHuman(report: TokenCountReport): string {
   const lines: string[] = [];
 
-  lines.push('=== Token Count Report ===');
-  lines.push(`File: ${report.stats.label}`);
-  lines.push(`Model: ${report.model} (${report.encoding})`);
+  lines.push(pc.bold(pc.cyan('=== Token Count Report ===')));
+  lines.push(`File:  ${pc.bold(report.stats.label)}`);
+  lines.push(`Model: ${pc.bold(report.model)} ${pc.dim(`(${report.encoding})`)}`);
   lines.push('');
-  lines.push(`Tokens: ${report.stats.token_count}`);
+  lines.push(`Tokens: ${pc.bold(pc.green(String(report.stats.token_count)))}`);
   lines.push(`Chars:  ${report.stats.char_count}`);
   lines.push(`Lines:  ${report.stats.line_count}`);
 
@@ -47,8 +48,8 @@ export function formatCountHuman(report: TokenCountReport): string {
 export function formatHuman(report: TokenDiffReport): string {
   const lines: string[] = [];
 
-  lines.push('=== Token Diff Report ===');
-  lines.push(`Model: ${report.model} (${report.encoding})`);
+  lines.push(pc.bold(pc.cyan('=== Token Diff Report ===')));
+  lines.push(`Model: ${pc.bold(report.model)} ${pc.dim(`(${report.encoding})`)}`);
   lines.push('');
 
   const colTarget = 14;
@@ -61,9 +62,11 @@ export function formatHuman(report: TokenDiffReport): string {
 
   // Header row
   lines.push(
-    `${pad('Target', colTarget)} ${pad('Tokens', colTokens)} ${pad('Chars', colChars)} ${pad('Lines', colLines)}`
+    pc.bold(
+      `${pad('Target', colTarget)} ${pad('Tokens', colTokens)} ${pad('Chars', colChars)} ${pad('Lines', colLines)}`
+    )
   );
-  lines.push('-'.repeat(colTarget + colTokens + colChars + colLines + 3));
+  lines.push(pc.dim('-'.repeat(colTarget + colTokens + colChars + colLines + 3)));
 
   // Data rows
   lines.push(
@@ -72,24 +75,48 @@ export function formatHuman(report: TokenDiffReport): string {
   lines.push(
     `${pad(report.after.label, colTarget)} ${padNum(report.after.token_count, colTokens)} ${padNum(report.after.char_count, colChars)} ${padNum(report.after.line_count, colLines)}`
   );
-  lines.push('-'.repeat(colTarget + colTokens + colChars + colLines + 3));
+  lines.push(pc.dim('-'.repeat(colTarget + colTokens + colChars + colLines + 3)));
 
   // Diff row
   const tokenSign = report.diff.token_delta > 0 ? '+' : '';
   const tokenDeltaStr = `${tokenSign}${report.diff.token_delta} (${tokenSign}${report.diff.token_delta_pct}%)`;
+  let paddedTokenDiff = pad(tokenDeltaStr, colTokens);
+  if (report.diff.token_delta < 0) {
+    paddedTokenDiff = pc.green(paddedTokenDiff);
+  } else if (report.diff.token_delta > 0) {
+    paddedTokenDiff = pc.red(paddedTokenDiff);
+  } else {
+    paddedTokenDiff = pc.dim(paddedTokenDiff);
+  }
 
   const charSign = report.diff.char_delta > 0 ? '+' : '';
   const charDeltaStr = `${charSign}${report.diff.char_delta} (${charSign}${report.diff.char_delta_pct}%)`;
+  let paddedCharDiff = pad(charDeltaStr, colChars);
+  if (report.diff.char_delta < 0) {
+    paddedCharDiff = pc.green(paddedCharDiff);
+  } else if (report.diff.char_delta > 0) {
+    paddedCharDiff = pc.red(paddedCharDiff);
+  } else {
+    paddedCharDiff = pc.dim(paddedCharDiff);
+  }
 
   const lineDelta = report.after.line_count - report.before.line_count;
   const lineSign = lineDelta > 0 ? '+' : '';
   const lineDeltaStr = `${lineSign}${lineDelta}`;
+  const paddedLineDiff = pad(lineDeltaStr, colLines);
 
   lines.push(
-    `${pad('Diff', colTarget)} ${pad(tokenDeltaStr, colTokens)} ${pad(charDeltaStr, colChars)} ${pad(lineDeltaStr, colLines)}`
+    `${pc.bold(pad('Diff', colTarget))} ${paddedTokenDiff} ${paddedCharDiff} ${paddedLineDiff}`
   );
   lines.push('');
-  lines.push(`Summary: ${report.summary}`);
+
+  let coloredSummary = report.summary;
+  if (report.diff.token_delta < 0) {
+    coloredSummary = pc.green(report.summary);
+  } else if (report.diff.token_delta > 0) {
+    coloredSummary = pc.red(report.summary);
+  }
+  lines.push(`${pc.bold('Summary:')} ${coloredSummary}`);
 
   return lines.join('\n');
 }
