@@ -42,6 +42,9 @@ function readInputContent(sourcePath: string): string {
     }
 
     if (!isFile) {
+      const cleanStr = sourcePath.replace(/\r?\n/g, ' ');
+      const displayStr = cleanStr.length > 40 ? cleanStr.substring(0, 37) + '...' : cleanStr;
+      process.stderr.write(`[WARN] File not found, treating input as raw text: "${displayStr}"\n`);
       return sourcePath; // Smart Input: treat as raw text
     }
     return fs.readFileSync(sourcePath, 'utf-8');

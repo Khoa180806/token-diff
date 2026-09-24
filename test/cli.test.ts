@@ -62,6 +62,7 @@ describe('CLI Integration Tests - Error Paths', () => {
     // 6 tokens for "This is a raw text prompt"
     // Wait, we just need to ensure it succeeds and outputs something.
     expect(result.stdout).toContain('This is a raw text prompt');
+    expect(result.stderr).toContain('[WARN] File not found, treating input as raw text: "This is a raw text prompt"');
   });
 
   it('outputs valid json and treats input as raw text when file does not exist and --json flag is passed', async () => {
