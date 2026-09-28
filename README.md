@@ -10,6 +10,13 @@
 
 <p align="center">
   <a href="README.md">English</a> • <a href="README.vi.md">Tiếng Việt</a>
+  <br />
+  <a href="docs/ARCHITECTURE.md">Architecture</a> •
+  <a href="docs/CLI_REFERENCE.md">CLI Reference</a> •
+  <a href="docs/SDK_GUIDE.md">SDK Guide</a> •
+  <a href="docs/BENCHMARKS.md">Benchmarks</a> •
+  <a href="docs/CONTRIBUTING.md">Contributing</a> •
+  <a href="docs/decisions/">ADRs</a>
 </p>
 
 <p align="center">
@@ -74,6 +81,8 @@ Whether verifying the efficacy of prompt compression algorithms, monitoring mult
 - **Zero Div-by-Zero Hazards**: Handles empty initial prompts and zero-token states gracefully with strict edge-case safety.
 - **Streamlined CLI UX**: Automatic alignment for tabular terminal reporting and standardized Unix hyphen (`-`) pipe resolution.
 
+> 📖 *For a deep dive into the 4-stage pipeline, in-memory cache, and error boundaries, see [System Architecture & Technical Design](docs/ARCHITECTURE.md).*
+
 ---
 
 ## Installation & Setup
@@ -106,6 +115,8 @@ npm install -D ai-token-diff
 ## CLI Command Reference
 
 You can use either the concise alias **`td`** or the canonical binary names **`token-diff`** / **`ai-token-diff`**.
+
+> 📖 *For complete command flags, advanced piping recipes, and scripting examples, see the [CLI Command Reference](docs/CLI_REFERENCE.md).*
 
 ### 1. `td diff` (or `token-diff diff`)
 
@@ -184,6 +195,8 @@ cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 ## Programmatic SDK / Library Usage
 
 `token-diff` is distributed with complete ESM and TypeScript definitions:
+
+> 📖 *For complete type definitions, recipes, and batch tokenization patterns, see the [TypeScript SDK Guide](docs/SDK_GUIDE.md).*
 
 ```typescript
 import {
@@ -276,6 +289,8 @@ When `--json` is enabled and an error occurs, the error details are serialized t
 - **Memory Footprint**: <40MB RSS under active tokenization.
 - **Pure In-Memory Operations**: Zero temporary files written to disk.
 
+> 📖 *For complete scaling benchmarks, payload matrices, and architectural trade-off comparisons, see [Performance Benchmarks & Profiling](docs/BENCHMARKS.md).*
+
 ---
 
 ## Frequently Asked Questions (FAQ)
@@ -313,6 +328,8 @@ Combined with `--json`, it produces standardized JSON envelopes that can be pars
 ---
 
 ## Development & Contributing
+
+> 📖 *For detailed contribution guidelines, test-driven development (TDD) workflow, and commit standards, see the [Contributing Guide](docs/CONTRIBUTING.md).*
 
 ```bash
 # Clone the repository

@@ -10,6 +10,13 @@
 
 <p align="center">
   <a href="README.md">English</a> • <a href="README.vi.md">Tiếng Việt</a>
+  <br />
+  <a href="docs/ARCHITECTURE.md">Kiến trúc (Architecture)</a> •
+  <a href="docs/CLI_REFERENCE.md">Cẩm nang CLI</a> •
+  <a href="docs/SDK_GUIDE.md">Tài liệu SDK</a> •
+  <a href="docs/BENCHMARKS.md">Hiệu năng (Benchmarks)</a> •
+  <a href="docs/CONTRIBUTING.md">Đóng góp (Contributing)</a> •
+  <a href="docs/decisions/">ADRs</a>
 </p>
 
 <p align="center">
@@ -72,6 +79,8 @@ Khi tối ưu prompt, nén context cho AI agent, hay muốn đặt chặn trần
 - **An toàn trước dữ liệu rỗng**: Xử lý mượt mà khi tệp rỗng hoặc 0 token, không bao giờ bị lỗi văng phép chia cho 0 (`NaN` / `Infinity`).
 - **Terminal trực quan**: Tự động căn lề thẳng hàng các cột thông tin và hỗ trợ nhận luồng dữ liệu pipe (`-`) chuẩn phong cách Unix.
 
+> 📖 *Xem phân tích chi tiết về pipeline 4 giai đoạn, cache in-memory và ranh giới hệ thống tại [Tài liệu Kiến trúc (Architecture)](docs/ARCHITECTURE.md).*
+
 ---
 
 ## Cài đặt
@@ -104,6 +113,8 @@ npm install -D ai-token-diff
 ## Hướng dẫn sử dụng CLI
 
 Bạn có thể dùng lệnh rút gọn **`td`** hoặc tên đầy đủ **`token-diff`** / **`ai-token-diff`**.
+
+> 📖 *Xem đầy đủ danh sách cờ tùy chọn, cú pháp pipe nâng cao và kịch bản tự động hóa tại [Cẩm nang CLI Reference](docs/CLI_REFERENCE.md).*
 
 ### 1. `td diff` (hoặc `token-diff diff`)
 
@@ -176,6 +187,8 @@ cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 ## Dùng làm thư viện (SDK)
 
 Gói `token-diff` hỗ trợ đầy đủ type TypeScript:
+
+> 📖 *Xem hướng dẫn chi tiết kiểu dữ liệu TypeScript, code mẫu và tối ưu batch tại [Tài liệu SDK Guide](docs/SDK_GUIDE.md).*
 
 ```typescript
 import {
@@ -266,6 +279,8 @@ Bạn có thể truyền tên model phổ biến hoặc trực tiếp tên bộ 
 - **Bộ nhớ tiêu hao**: <40MB RAM.
 - **Thuần tính toán trong bộ nhớ**: Tuyệt đối không tạo hay ghi tệp tạm ra ổ cứng.
 
+> 📖 *Xem bảng đo kiểm chi tiết theo kích cỡ payload và so sánh kiến trúc tại [Tài liệu Benchmarks & Hiệu năng](docs/BENCHMARKS.md).*
+
 ---
 
 ## Câu hỏi thường gặp (FAQ)
@@ -303,6 +318,8 @@ Khi kết hợp cùng cờ `--json`, kết quả được xuất dưới dạng 
 ---
 
 ## Phát triển và đóng góp
+
+> 📖 *Xem hướng dẫn chi tiết quy trình đóng góp mã nguồn, phương pháp kiểm thử TDD và quy chuẩn commit tại [Tài liệu Hướng dẫn Đóng góp](docs/CONTRIBUTING.md).*
 
 ```bash
 # Clone mã nguồn
