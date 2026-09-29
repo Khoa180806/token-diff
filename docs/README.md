@@ -2,7 +2,7 @@
 
 Welcome to the technical documentation directory for `token-diff` (`ai-token-diff`).
 
-This folder contains deep-dive architectural specifications, developer integration guides, benchmark results, and architecture decision records (ADRs).
+This folder contains deep-dive architectural specifications, developer integration guides, benchmark results, and references to overarching ecosystem standards.
 
 ---
 
@@ -15,12 +15,12 @@ This folder contains deep-dive architectural specifications, developer integrati
 | [**TypeScript / JS SDK Guide**](SDK_GUIDE.md) | Node.js / TypeScript developers | Programmatic usage, type definitions (`TokenDiffReport`, `ApiEnvelope`), and practical code recipes. |
 | [**Benchmarks & Profiling**](BENCHMARKS.md) | Performance engineers, evaluators | Cold start latency (~80ms), execution benchmarks (<15ms), memory footprint (<40MB), and comparisons. |
 | [**Contributing Guide**](CONTRIBUTING.md) | Open-source contributors | Development environment setup, Vitest test suite, TDD workflow, and Conventional Commits guidelines. |
-| [**Architecture Decision Records (ADRs)**](decisions/) | Everyone | Historical context, trade-offs, and rationale behind foundational technical choices. |
+| [**AI Developer Tool Ecosystem Docs**](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs) | Architects & System Integrators | Global tool registry, binding decisions (D-001 to D-023), transport envelopes, and integration specs. |
 
 ---
 
-## Architecture Decision Records (ADRs)
+## Ecosystem Architecture & Decisions
 
-- [**ADR-001: Pure JavaScript Tokenizer Selection**](decisions/ADR-001-pure-js-tokenizer.md) — Why we chose `js-tiktoken` over native C++ addons (`node-pre-gyp`) and WebAssembly.
-- [**ADR-002: Smart Input Fallback**](decisions/ADR-002-smart-input-fallback.md) — Automatic detection between disk files and inline prompt strings with stderr warnings.
-- [**ADR-003: Standardized API Transport Envelope**](decisions/ADR-003-api-transport-envelope.md) — Uniform JSON transport envelope (`data` + `metadata`) for AI Agent Control Planes.
+`token-diff` is an integral component of the broader **AI Developer Tool Ecosystem**. All formal architectural decisions (such as D-023 establishing `token-diff` as a canonical 1★ primitive), global schema contracts, lifecycle gates, and inter-tool workflows are maintained in the primary ecosystem documentation:
+
+👉 **[Explore AI Developer Tool Ecosystem Documentation](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs)**

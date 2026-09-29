@@ -9,7 +9,7 @@ Comprehensive user manual and command-line reference for `token-diff` (`ai-token
 `token-diff` provides three interchangeable binary names:
 
 - **`td`**: Concise shorthand recommended for daily interactive terminal use.
-- **`token-diff`**: Canonical ecosystem binary name.
+- **`token-diff`**: Canonical binary name registered in the [AI Developer Tool Ecosystem](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs).
 - **`ai-token-diff`**: Full npm distribution binary name.
 
 All commands below demonstrate the concise `td` alias.

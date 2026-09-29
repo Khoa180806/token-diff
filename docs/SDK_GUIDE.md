@@ -134,7 +134,7 @@ export interface TokenDiffReport {
 ```
 
 ### `ApiEnvelope<T>`
-Standardized integration wrapper:
+Standardized integration wrapper conforming to the [AI Developer Tool Ecosystem Docs](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs):
 ```typescript
 export interface ApiEnvelope<T> {
   data: T;

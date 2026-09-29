@@ -6,7 +6,7 @@ This document details the architectural design, internal components, data flows,
 
 ## 1. High-Level Design Principles
 
-`token-diff` is designed as a foundational measurement primitive within the **AI Developer Tool Ecosystem**. Its architecture adheres to four core principles:
+`token-diff` is designed as a foundational measurement primitive within the [AI Developer Tool Ecosystem](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs). Its architecture adheres to four core principles:
 
 1. **Deterministic Accuracy**: Given the same input text and tokenizer encoding, the calculated token counts, deltas, and percentage statistics are 100% reproducible across operating systems.
 2. **Zero-WASM, Pure In-Memory Execution**: Relies strictly on `js-tiktoken` without requiring WebAssembly (`.wasm`) or native C++ addons (`node-gyp`). It executes purely in RAM without writing temporary files to disk.
@@ -125,7 +125,7 @@ The formatters decouple presentation from calculation logic:
      - **Vibrant Red**: Context expansion / token increases (positive deltas).
      - **Dim Gray**: Dashed partition rules and metadata.
 2. **JSON Envelope Formatter (`formatJson`, `formatCountJson`)**:
-   - Wraps reports inside the standardized `ApiEnvelope<T>` matching the ecosystem integration specification.
+   - Wraps reports inside the standardized `ApiEnvelope<T>` matching the [ecosystem integration specification](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs).
    - Injects runtime execution latency (`duration_ms`), schema version (`1.0`), and pagination metadata.
 
 ---

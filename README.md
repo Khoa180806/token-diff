@@ -16,7 +16,7 @@
   <a href="docs/SDK_GUIDE.md">SDK Guide</a> •
   <a href="docs/BENCHMARKS.md">Benchmarks</a> •
   <a href="docs/CONTRIBUTING.md">Contributing</a> •
-  <a href="docs/decisions/">ADRs</a>
+  <a href="https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs">Ecosystem Docs</a>
 </p>
 
 <p align="center">
@@ -228,7 +228,7 @@ const jsonOutput: string = formatJson(diffReport, 15);
 
 ## Standardized API Transport Envelope
 
-When invoked with `--json`, `token-diff` guarantees structured output conforming to the standard tool transport envelope:
+When invoked with `--json`, `token-diff` guarantees structured output conforming to the standard tool transport envelope defined in the [AI Developer Tool Ecosystem Docs](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs):
 
 <p align="center"><img src="assets/json-mode.png" alt="JSON envelope output with syntax highlighting" width="100%" /></p>
 
