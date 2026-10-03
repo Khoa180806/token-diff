@@ -1,9 +1,16 @@
 import Image from "next/image";
+import { computeDiff, resolveEncodingForModel } from "ai-token-diff";
 
 export default function Home() {
+  const enc = resolveEncodingForModel("gpt-4o");
+  const testDiff = computeDiff(
+    { tokenCount: 10, tokens: [], charCount: 40, lineCount: 1, encoding: enc, model: "gpt-4o" },
+    { tokenCount: 7, tokens: [], charCount: 28, lineCount: 1, encoding: enc, model: "gpt-4o" }
+  );
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+        <p className="text-sm font-mono text-emerald-500">Core Link Test: {testDiff.summary}</p>
         <Image
           className="dark:invert h-5 w-[100px]"
           src="/next.svg"

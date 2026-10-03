@@ -103,7 +103,7 @@ web/
 
 ### Giai đoạn 1 — Scaffold
 - [x] **T1.1** `create-next-app` trong `web/` (TS, Tailwind, App Router, src dir, ESLint). — `chore(web): scaffold Next.js app`
-- [ ] **T1.2** Cấu hình alias `@core/*`, `externalDir`, import thử `computeDiff` build thành công. — `chore(web): wire core source alias`
+- [x] **T1.2** Cấu hình alias `@core/*`, `externalDir` / local package binding `ai-token-diff`, import thử `computeDiff` build thành công. — `chore(web): wire core source alias`
 - [ ] **T1.3** Cài shadcn/ui + theme dark mặc định. — `chore(web): add shadcn/ui`
 - [ ] **T1.4** Cập nhật `.gitignore` root (`web/node_modules`, `web/.next`, `web/.vercel`). — `chore`
 
