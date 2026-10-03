@@ -130,10 +130,10 @@ web/
 
 ### Giai đoạn 5 — CI & Deploy
 - [ ] **T5.1** Thêm job `web` vào `.github/workflows/ci.yml` (install, lint, test, build trong `web/`).
-- [ ] **T5.2** Vercel: import repo → Root Directory `web`, Framework Next.js, bật "Include files outside root directory" (cần cho alias `../src`), Production Branch `master`.
+- [ ] **T5.2** Vercel: import repo → Root Directory `web`, Framework Next.js, bật "Include files outside root directory" (cần cho alias `../src`), Production Branch `main`.
 - [ ] **T5.3** Cập nhật `homepage` trong `package.json`, thêm link website vào `README.md`, `README.vi.md`, GitHub About.
 
-**✅ Checkpoint 5 (DoD):** URL production hoạt động; G1–G5 đạt; push đồng bộ `master` + `main`.
+**✅ Checkpoint 5 (DoD):** URL production hoạt động; G1–G5 đạt; push nhánh `main` duy nhất.
 
 ---
 
@@ -143,7 +143,6 @@ web/
 |---|---|---|
 | Rank file lớn (o200k ~ vài MB) làm chậm lần đầu | Cao | Lazy load theo encoding, Web Worker, hiển thị loading; cache HTTP dài hạn của Vercel |
 | Vercel không thấy `../src` khi Root Directory = `web` | Trung bình | Bật "Include source files outside of the Root Directory"; fallback: script `prebuild` copy `src` vào `web/src/core` |
-| Push đôi `master`/`main` kích hoạt 2 deploy | Thấp | Chỉ đặt production branch `master`; tắt preview cho `main` trong `vercel.json` (`git.deploymentEnabled`) |
 | Lệch kết quả web vs CLI | Trung bình | Parity test trong CI |
 | npm chưa publish → link npm/`npx` hỏng | Trung bình | Hiển thị "coming soon" / ưu tiên hướng dẫn clone; bật lại khi publish |
 
