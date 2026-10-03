@@ -99,7 +99,7 @@ web/
 
 ### Giai đoạn 0 — Chuẩn bị core (ở root)
 - [x] **T0.1** Tách `MODEL_TO_ENCODING`, `VALID_ENCODINGS`, `resolveEncodingForModel` sang `src/models.ts`; `tokenizer.ts` re-export → không đổi API. *(test: 20 test cũ vẫn pass)* — `refactor(core): extract model mapping into models.ts`
-- [ ] **T0.2** Kiểm tra `diff.ts` / `formatter.ts` không phụ thuộc Node API; ghi chú nếu có. — `chore`
+- [x] **T0.2** Kiểm tra `diff.ts` / `formatter.ts` không phụ thuộc Node API (chỉ dùng thuần JS và `picocolors` isomorphic, 100% an toàn cho browser). — `docs(web): audit core modules for browser compatibility`
 
 ### Giai đoạn 1 — Scaffold
 - [ ] **T1.1** `create-next-app` trong `web/` (TS, Tailwind, App Router, src dir, ESLint). — `chore(web): scaffold Next.js app`
