@@ -98,7 +98,7 @@ web/
 ## 5. Lộ trình theo lát cắt (mỗi lát = ≥1 commit nguyên tử)
 
 ### Giai đoạn 0 — Chuẩn bị core (ở root)
-- [ ] **T0.1** Tách `MODEL_TO_ENCODING`, `VALID_ENCODINGS`, `resolveEncodingForModel` sang `src/models.ts`; `tokenizer.ts` re-export → không đổi API. *(test: 20 test cũ vẫn pass)* — `refactor(core): extract model mapping into models.ts`
+- [x] **T0.1** Tách `MODEL_TO_ENCODING`, `VALID_ENCODINGS`, `resolveEncodingForModel` sang `src/models.ts`; `tokenizer.ts` re-export → không đổi API. *(test: 20 test cũ vẫn pass)* — `refactor(core): extract model mapping into models.ts`
 - [ ] **T0.2** Kiểm tra `diff.ts` / `formatter.ts` không phụ thuộc Node API; ghi chú nếu có. — `chore`
 
 ### Giai đoạn 1 — Scaffold

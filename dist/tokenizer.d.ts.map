@@ -1,1 +1,1 @@
-{"version":3,"file":"tokenizer.d.ts","sourceRoot":"","sources":["../src/tokenizer.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,iBAAiB,EAAE,eAAe,EAAE,MAAM,YAAY,CAAC;AAwChE,wBAAgB,uBAAuB,CAAC,eAAe,EAAE,MAAM,GAAG,iBAAiB,CA0BlF;AAWD,wBAAgB,WAAW,CAAC,IAAI,EAAE,MAAM,EAAE,eAAe,SAAW,GAAG,eAAe,CAerF"}
+{"version":3,"file":"tokenizer.d.ts","sourceRoot":"","sources":["../src/tokenizer.ts"],"names":[],"mappings":"AACA,OAAO,EAAqB,eAAe,EAAE,MAAM,YAAY,CAAC;AAGhE,cAAc,aAAa,CAAC;AAc5B,wBAAgB,WAAW,CAAC,IAAI,EAAE,MAAM,EAAE,eAAe,SAAW,GAAG,eAAe,CAerF"}
