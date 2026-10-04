@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { TokenizerResult, TokenDiffReport } from 'ai-token-diff';
 import { requestTokenDiff } from '@/lib/tokenizer/client';
 
@@ -17,53 +17,59 @@ export interface UseTokenDiffResult {
   error: string | null;
 }
 
+interface CalculatedState {
+  before: TokenizerResult;
+  after: TokenizerResult;
+  diff: TokenDiffReport;
+  key: string;
+}
+
 export function useTokenDiff({
   beforeText,
   afterText,
   model,
   debounceMs = 200,
 }: UseTokenDiffOptions): UseTokenDiffResult {
-  const [before, setBefore] = useState<TokenizerResult | null>(null);
-  const [after, setAfter] = useState<TokenizerResult | null>(null);
-  const [diff, setDiff] = useState<TokenDiffReport | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const currentKey = `${model}:::${beforeText}:::${afterText}`;
+  const [calculated, setCalculated] = useState<CalculatedState | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const abortControllerRef = useRef<number | null>(null);
-
   useEffect(() => {
-    setLoading(true);
+    let active = true;
 
-    if (abortControllerRef.current !== null) {
-      window.clearTimeout(abortControllerRef.current);
-    }
-
-    abortControllerRef.current = window.setTimeout(async () => {
+    const timer = window.setTimeout(async () => {
       try {
         const result = await requestTokenDiff(beforeText, afterText, model);
-        setBefore(result.before);
-        setAfter(result.after);
-        setDiff(result.diff);
-        setError(null);
+        if (active) {
+          setCalculated({
+            before: result.before,
+            after: result.after,
+            diff: result.diff,
+            key: currentKey,
+          });
+          setError(null);
+        }
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : String(err);
-        setError(msg);
-      } finally {
-        setLoading(false);
+        if (active) {
+          const msg = err instanceof Error ? err.message : String(err);
+          setError(msg);
+        }
       }
     }, debounceMs);
 
     return () => {
-      if (abortControllerRef.current !== null) {
-        window.clearTimeout(abortControllerRef.current);
-      }
+      active = false;
+      window.clearTimeout(timer);
     };
-  }, [beforeText, afterText, model, debounceMs]);
+  }, [beforeText, afterText, model, debounceMs, currentKey]);
+
+  const isCurrent = calculated !== null && calculated.key === currentKey;
+  const loading = !isCurrent;
 
   return {
-    before,
-    after,
-    diff,
+    before: calculated?.before ?? null,
+    after: calculated?.after ?? null,
+    diff: calculated?.diff ?? null,
     loading,
     error,
   };
