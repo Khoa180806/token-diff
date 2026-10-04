@@ -12,7 +12,7 @@ const pendingRequests = new Map<
 >();
 
 function getWorker(): Worker | null {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === 'undefined' || typeof Worker === 'undefined') return null;
 
   if (!workerInstance) {
     try {
