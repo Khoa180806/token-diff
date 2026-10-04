@@ -111,7 +111,7 @@ web/
 
 ### Giai đoạn 2 — Tokenizer trình duyệt (TDD)
 - [x] **T2.1** Viết `parity.test.ts` (fail trước - Red state). — `test(web): add tokenizer parity tests`
-- [ ] **T2.2** `ranks.ts` + `worker.ts` + `client.ts` dùng `js-tiktoken/lite`. — `feat(web): browser tokenizer worker with lazy ranks`
+- [x] **T2.2** `ranks.ts` + `worker.ts` + `client.ts` dùng `js-tiktoken/lite`. — `feat(web): browser tokenizer worker with lazy ranks`
 - [ ] **T2.3** Hook `useTokenDiff` (debounce, loading, error). — `feat(web): useTokenDiff hook`
 
 **✅ Checkpoint 2:** parity test pass 4 encoding; bundle chính không chứa rank file (kiểm bằng `@next/bundle-analyzer`).
