@@ -11,11 +11,11 @@
 <p align="center">
   <a href="README.md">English</a> • <a href="README.vi.md">Tiếng Việt</a>
   <br />
-  <a href="docs/ARCHITECTURE.md">Architecture</a> •
-  <a href="docs/CLI_REFERENCE.md">CLI Reference</a> •
-  <a href="docs/SDK_GUIDE.md">SDK Guide</a> •
-  <a href="docs/BENCHMARKS.md">Benchmarks</a> •
-  <a href="docs/CONTRIBUTING.md">Contributing</a> •
+  <a href="docs/README.md">Documentation</a> •
+  <a href="docs/02-technical/architecture.md">Architecture</a> •
+  <a href="docs/02-technical/api-reference.md">API & CLI Reference</a> •
+  <a href="docs/01-overview/getting-started.md">Getting Started</a> •
+  <a href="docs/01-overview/development-workflow.md">Contributing</a> •
   <a href="https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs">Ecosystem Docs</a>
 </p>
 
@@ -81,7 +81,7 @@ Whether verifying the efficacy of prompt compression algorithms, monitoring mult
 - **Zero Div-by-Zero Hazards**: Handles empty initial prompts and zero-token states gracefully with strict edge-case safety.
 - **Streamlined CLI UX**: Automatic alignment for tabular terminal reporting and standardized Unix hyphen (`-`) pipe resolution.
 
-> 📖 *For a deep dive into the 4-stage pipeline, in-memory cache, and error boundaries, see [System Architecture & Technical Design](docs/ARCHITECTURE.md).*
+> 📖 *For a deep dive into the 4-stage pipeline, in-memory cache, and error boundaries, see [System Architecture & Technical Design](docs/02-technical/architecture.md).*
 
 ---
 
@@ -116,7 +116,7 @@ npm install -D ai-token-diff
 
 You can use either the concise alias **`td`** or the canonical binary names **`token-diff`** / **`ai-token-diff`**.
 
-> 📖 *For complete command flags, advanced piping recipes, and scripting examples, see the [CLI Command Reference](docs/CLI_REFERENCE.md).*
+> 📖 *For complete command flags, advanced piping recipes, and scripting examples, see the [API & CLI Reference](docs/02-technical/api-reference.md).*
 
 ### 1. `td diff` (or `token-diff diff`)
 
@@ -196,7 +196,7 @@ cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 
 `token-diff` is distributed with complete ESM and TypeScript definitions:
 
-> 📖 *For complete type definitions, recipes, and batch tokenization patterns, see the [TypeScript SDK Guide](docs/SDK_GUIDE.md).*
+> 📖 *For complete type definitions, recipes, and batch tokenization patterns, see the [API & SDK Guide](docs/02-technical/api-reference.md).*
 
 ```typescript
 import {
@@ -289,7 +289,23 @@ When `--json` is enabled and an error occurs, the error details are serialized t
 - **Memory Footprint**: <40MB RSS under active tokenization.
 - **Pure In-Memory Operations**: Zero temporary files written to disk.
 
-> 📖 *For complete scaling benchmarks, payload matrices, and architectural trade-off comparisons, see [Performance Benchmarks & Profiling](docs/BENCHMARKS.md).*
+> 📖 *For complete scaling benchmarks, payload matrices, and architectural trade-off comparisons, see [Architecture & Performance](docs/02-technical/architecture.md).*
+
+---
+
+## Documentation
+
+Full architectural specifications, developer workflows, operations, and technical decision records are available in the dedicated documentation directory:
+
+👉 **[Explore Full Technical Documentation (docs/README.md)](docs/README.md)**
+
+- [**01. Overview**](docs/README.md#01-overview): [Project Overview](docs/01-overview/project-overview.md) • [Project Structure](docs/01-overview/project-structure.md) • [Getting Started](docs/01-overview/getting-started.md) • [Development Workflow](docs/01-overview/development-workflow.md)
+- [**02. Technical**](docs/README.md#02-technical-architecture--specifications): [System Architecture](docs/02-technical/architecture.md) • [Core Business Flows](docs/02-technical/business-flow.md) • [API & CLI Reference](docs/02-technical/api-reference.md) • [Technical Decisions (ADRs)](docs/02-technical/tech-decisions.md)
+- [**03. Product**](docs/README.md#03-product--evolution): [Changelog](docs/03-product/changelog.md) • [Product Roadmap](docs/03-product/roadmap.md)
+- [**04. Operations**](docs/README.md#04-operations--configuration): [Deployment & CI/CD](docs/04-operations/deployment.md) • [Configuration Reference](docs/04-operations/configuration.md)
+- [**05. Templates**](docs/README.md#05-templates): [Bug Report Template](docs/05-templates/bug-report.md) • [ADR Template](docs/05-templates/adr-template.md)
+- [**06. Frontend UI**](docs/README.md#06-frontend-ui-design): [Web UI Architecture](docs/06-design/ui-notes.md)
+- [**07. Notes**](docs/README.md#07-notes--limitations): [Known Issues & Technical Notes](docs/07-notes/known-issues.md)
 
 ---
 
@@ -329,7 +345,7 @@ Combined with `--json`, it produces standardized JSON envelopes that can be pars
 
 ## Development & Contributing
 
-> 📖 *For detailed contribution guidelines, test-driven development (TDD) workflow, and commit standards, see the [Contributing Guide](docs/CONTRIBUTING.md).*
+> 📖 *For detailed contribution guidelines, test-driven development (TDD) workflow, and commit standards, see the [Development Workflow Guide](docs/01-overview/development-workflow.md).*
 
 ```bash
 # Clone the repository
