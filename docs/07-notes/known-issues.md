@@ -1,39 +1,38 @@
 # Known Issues & Technical Limitations
 
-Operational limitations, technical trade-offs, and tracked TODO items based on actual codebase state.
+Operational limitations, technical trade-offs, and tracked debt based on actual codebase state. This document details current system boundaries and architectural constraints.
 
 ---
 
-## 1. Operational & Release Holds
+## 1. Resolved Historical Holds
 
-### NPM Registry Publication Hold
-- **Issue**: Package publication (`npm publish`) is pending the resolution of an account authentication hold on npmjs.com.
-- **Current Workaround**: Users can run the CLI directly via `npx` from GitHub or clone the repository and run `npm run build` locally.
-- **Source**: Project task notes (`tasks/todo.md`).
+### NPM Registry Publication (Resolved)
+- **Status**: Resolved (Published v0.1.1 on npm as `ai-token-diff`).
+- **Resolution**: Package is now live and installable via `npm install -g ai-token-diff` or runnable via `npx ai-token-diff` (source: `package.json`).
+
+### Web UI Implementation & Bilingual Localization (Resolved)
+- **Status**: Resolved (Shipped in v0.2.0).
+- **Resolution**: Next.js 16 Web Playground is fully operational with English/Vietnamese toggles and CI validation in `.github/workflows/ci.yml` (source: `web/src/app/page.tsx`).
 
 ---
 
-## 2. Technical Limitations
+## 2. Current Technical Limitations
+
+### Model Vocabulary Scope
+- **Limitation**: `token-diff` currently supports OpenAI BPE tokenizers (`o200k_base`, `cl100k_base`, `p50k_base`, `r50k_base`).
+- **Impact**: Anthropic Claude, Google Gemini, and Meta Llama 3 SentencePiece tokenizers are not natively bundled.
+- **Mitigation / Next Step**: Multi-model tokenizer adapters are scheduled for Milestone 1 in the product roadmap (source: `docs/03-product/roadmap.md`).
 
 ### Initial Rank Dictionary Load Latency in Browsers
-- **Observation**: The `o200k_base` vocabulary file is approximately 2.5MB in size. On slow 3G network connections, the first tokenization call on the web playground experiences a 1–2 second network download delay before caching in memory.
-- **Mitigation**: Rank files are lazily loaded on-demand via dynamic `import()` in `web/src/lib/tokenizer/ranks.ts`, ensuring other encodings (`cl100k_base`, `p50k_base`) are not downloaded until requested.
+- **Observation**: The `o200k_base` vocabulary file is approximately 2.5MB in size. On slow connections, the first tokenization call on the web playground experiences a 1–2 second network download delay before caching in memory.
+- **Mitigation**: Rank files are lazily loaded on-demand via dynamic `import()` in `web/src/lib/tokenizer/ranks.ts`, ensuring other encodings (`cl100k_base`, `p50k_base`) are not downloaded until requested. Subsequent requests are instant.
 - **Source**: `web/src/lib/tokenizer/ranks.ts`.
 
-### Single File Stdin Limitation
-- **Observation**: Standard input (`-`) can only be used for one input stream at a time in `td diff` (e.g. `cat file.txt | td diff baseline.txt -`).
+### Single Stream Stdin Limitation
+- **Observation**: Standard input (`-`) can only be consumed by one input argument at a time in `td diff` (e.g. `cat file.txt | td diff baseline.txt -`).
 - **Behavior**: Passing `-` for both `<before>` and `<after>` triggers `TokenDiffError("INVALID_INPUT")` with exit code 2.
 - **Source**: `src/cli.ts#L96-L98`.
 
-### Windows CRLF Git Warnings
-- **Observation**: Git may warn that `LF will be replaced by CRLF` when touching `.ts` or `.md` files on Windows developer environments.
-- **Impact**: Harmless warning; code formatting and tokenization handle both `\r\n` and `\n` line breaks identically in memory.
-- **Source**: `src/tokenizer.ts#L84`.
-
----
-
-## 3. Tracked Code TODOs & Technical Debt
-
-- [ ] **Web Playground UI Completion**: Implement UI component hierarchy (`web/src/components/playground/`) and connect to `useTokenDiff` hook (source: `web/PLAN.md#L118-L125`).
-- [ ] **Dual Language UI Localization**: Add Vietnamese language toggle strings for web headers and buttons (source: `web/PLAN.md#L155`).
-- [ ] **Vercel CI Integration**: Add web build verification step into root `.github/workflows/ci.yml` (source: `web/PLAN.md#L132`).
+### Payload Memory Ceiling for Very Large Files
+- **Observation**: Processing monolithic documents exceeding 100MB in a single CLI invocation can approach default V8 heap limits.
+- **Context**: LLM context windows currently top out at 128K–2M tokens (<10MB text), so this does not affect prompt optimization workflows. Streaming chunk tokenization is planned for future batch workloads.
