@@ -98,7 +98,7 @@ Resolves a given model name or encoding string into one of the 4 supported canon
 
 ## 2. Standardized API Transport Envelope (`--json`)
 
-When invoked with `--json`, output is wrapped in a standardized transport envelope matching the AI Developer Tool Ecosystem specification (source: `src/formatter.ts#L4-L32`, `src/types.ts#L51-L54`).
+When invoked with `--json`, output is wrapped in a standardized transport envelope matching AI agent tool specifications (source: `src/formatter.ts#L4-L32`, `src/types.ts#L51-L54`).
 
 ### Success Envelope Schema
 ```typescript

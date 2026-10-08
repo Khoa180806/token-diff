@@ -184,14 +184,12 @@ export const INSTALL_SNIPPETS: InstallSnippet[] = [
 export const PROJECT_LINKS = {
   github: 'https://github.com/Khoa180806/token-diff',
   docs: 'https://github.com/Khoa180806/token-diff/tree/main/docs',
-  ecosystemDocs: 'https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs',
   license: 'https://github.com/Khoa180806/token-diff/blob/main/LICENSE',
 };
 
 export const I18N_STRINGS = {
   en: {
     navDocs: 'Docs',
-    navEcosystem: 'Ecosystem',
     navGitHub: 'GitHub',
     heroBadge: 'v0.1.1 · Pure JavaScript · Zero WASM',
     heroTitlePre: 'Measure prompt token savings.',
@@ -279,13 +277,6 @@ export const I18N_STRINGS = {
     useCase3Title: 'Autonomous Agent Tool Loops',
     useCase3Desc:
       'Parse JSON envelopes directly inside agent reasoning loops to audit and prune bloated tool call responses before feeding back into LLM memory.',
-    // Ecosystem strings
-    ecosystemBadge: 'Tools Ecosystem',
-    ecosystemHeading: 'Part of the AI Developer Tool Ecosystem',
-    ecosystemSubheading:
-      'Built according to the rigorous quality, integration, and architecture specifications of the AI Developer Tool Ecosystem standard.',
-    ecosystemSpecButton: 'View Specification',
-    ecosystemDecisionLog: 'Decision Log (D-001 - D-023)',
     // Footer strings
     footerBuiltBy: 'Built with TypeScript, Tailwind CSS & Next.js.',
     footerLicense: 'Released under the MIT License.',
@@ -295,7 +286,6 @@ export const I18N_STRINGS = {
   },
   vi: {
     navDocs: 'Tài liệu',
-    navEcosystem: 'Hệ sinh thái',
     navGitHub: 'GitHub',
     heroBadge: 'v0.1.1 · Thuần JavaScript · Không cần WASM',
     heroTitlePre: 'Đo lường mức tiết kiệm token prompt.',
@@ -383,13 +373,6 @@ export const I18N_STRINGS = {
     useCase3Title: 'Chu Trình Tool Call Của AI Agent',
     useCase3Desc:
       'Phân tích JSON envelope ngay trong vòng lặp agent để cắt giảm dữ liệu thừa từ tool responses trước khi nạp lại vào bộ nhớ LLM.',
-    // Ecosystem strings
-    ecosystemBadge: 'Hệ Sinh Thái Công Cụ',
-    ecosystemHeading: 'Thuộc AI Developer Tool Ecosystem',
-    ecosystemSubheading:
-      'Được thiết kế và kiểm thử nghiêm ngặt theo tiêu chuẩn kiến trúc, tích hợp và độ tin cậy của bộ quy chuẩn AI Developer Tool Ecosystem.',
-    ecosystemSpecButton: 'Xem Bản Đặc Tả Kỹ Thuật',
-    ecosystemDecisionLog: 'Nhật Ký Quyết Định (D-001 - D-023)',
     // Footer strings
     footerBuiltBy: 'Xây dựng với TypeScript, Tailwind CSS & Next.js.',
     footerLicense: 'Phát hành theo giấy phép MIT License.',

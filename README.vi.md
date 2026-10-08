@@ -15,8 +15,7 @@
   <a href="docs/CLI_REFERENCE.md">Cẩm nang CLI</a> •
   <a href="docs/SDK_GUIDE.md">Tài liệu SDK</a> •
   <a href="docs/BENCHMARKS.md">Hiệu năng (Benchmarks)</a> •
-  <a href="docs/CONTRIBUTING.md">Đóng góp (Contributing)</a> •
-  <a href="https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs">Tài liệu Ecosystem</a>
+  <a href="docs/CONTRIBUTING.md">Đóng góp (Contributing)</a>
 </p>
 
 <p align="center">
@@ -220,7 +219,7 @@ const jsonStr: string = formatJson(diffReport, 12);
 
 ## Cấu trúc JSON Envelope chuẩn
 
-Khi bật cờ `--json`, dữ liệu luôn được bọc trong cấu trúc envelope chuẩn hóa của [Tài liệu Tổng Hệ sinh thái (Ecosystem Docs)](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs):
+Khi bật cờ `--json`, dữ liệu luôn được bọc trong cấu trúc envelope chuẩn hóa cho AI Agent:
 
 <p align="center"><img src="assets/json-mode.png" alt="JSON envelope output với syntax highlighting" width="100%" /></p>
 

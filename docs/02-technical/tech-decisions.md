@@ -52,7 +52,7 @@ Implement a non-blocking fallback in `readInputContent()`: check if the argument
 ## 3. Decision 03: Standardized API Transport Envelope Specification
 
 - **Status**: Accepted (Implemented in v0.1.0)
-- **Source**: `src/formatter.ts`, `src/types.ts`, Ecosystem Decision `D-023`
+- **Source**: `src/formatter.ts`, `src/types.ts`
 
 ### Context
 Autonomous AI agents require structured tool responses with bounded metadata (schema version, runtime duration, error envelopes) rather than ad-hoc JSON objects or human tabular text.
@@ -65,7 +65,7 @@ Standardize all `--json` outputs under the canonical envelope shape `ApiEnvelope
 2. **Stdout/Stderr Hybrid**: Outputting metadata to stderr and payload to stdout. Rejected because agents prefer consuming a single structured stream.
 
 ### Consequences
-- **Positive**: Full compliance with the AI Developer Tool Ecosystem specification.
+- **Positive**: Full compliance with standardized AI agent tool transport specifications.
 - **Positive**: Enables automated assertions in CI/CD using `jq` (e.g. `jq '.data.diff.token_delta'`).
 
 ---

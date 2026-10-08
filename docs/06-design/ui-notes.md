@@ -81,6 +81,6 @@ graph LR
 ├────────────────────────────────────────────────────────────────────────┤
 │  Feature Cards: Local-first · Pure JS · Agent Ready · POSIX Exit Codes │
 ├────────────────────────────────────────────────────────────────────────┤
-│  Footer: MIT License · AI Developer Tool Ecosystem Link · GitHub       │
+│  Footer: MIT License · Documentation Link · GitHub                     │
 └────────────────────────────────────────────────────────────────────────┘
 ```

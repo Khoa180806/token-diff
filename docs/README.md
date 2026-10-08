@@ -35,8 +35,3 @@ Comprehensive architectural specifications, developer integration guides, operat
 
 ### 07. Notes & Limitations
 - [**Known Issues & Technical Notes**](07-notes/known-issues.md) — Tracked technical limitations, memory considerations, and active TODO items.
-
----
-
-## External References
-- [**AI Developer Tool Ecosystem Docs**](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs) — Global tool catalog, transport standards, and binding ecosystem decisions.

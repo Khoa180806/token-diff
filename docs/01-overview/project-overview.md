@@ -31,7 +31,7 @@ Standard Unix utilities (`wc -l`, `wc -c`, `diff`) fail to measure token impacts
 - **100% Local & Air-Gapped**: Runs entirely in-process with zero network requests and zero API key requirements (source: `src/tokenizer.ts`).
 - **Zero-WASM, Pure JS Portability**: Built on `js-tiktoken` without requiring WebAssembly (`.wasm`) or native C++ addons (source: `package.json`).
 - **Smart Input Detection**: Transparently accepts file paths, raw prompt strings, or stdin pipe streams (`-`) with stderr safety warnings (source: `src/cli.ts#L48`).
-- **Standardized API Transport Envelopes**: Emits structured JSON (`--json`) with runtime execution latency, schema versions, and error envelopes matching AI agent ecosystem specifications (source: `src/formatter.ts`).
+- **Standardized API Transport Envelopes**: Emits structured JSON (`--json`) with runtime execution latency, schema versions, and error envelopes matching AI agent transport specifications (source: `src/formatter.ts`).
 - **In-Memory Vocabulary Cache**: Reuses loaded BPE encoders across calls, keeping warm execution latency under 15ms (source: `docs/BENCHMARKS.md`).
 - **Interactive Web Playground**: Client-side Next.js playground utilizing Web Workers to offload token counting without freezing the browser (source: `web/src/app/page.tsx`).
 

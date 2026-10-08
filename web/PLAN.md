@@ -12,7 +12,7 @@
 | G1 | Người dùng thử `token-diff` mà không cần cài đặt | Playground đếm & diff token **100% client-side**, kết quả khớp CLI cho cùng input/model |
 | G2 | Bảo mật dữ liệu | **0 network request** chứa nội dung prompt (kiểm bằng DevTools Network) |
 | G3 | Nhanh | Lighthouse Performance ≥ 90 (mobile), LCP < 2.5s, JS ban đầu < 150KB gzip (chưa tính rank file) |
-| G4 | Chuyển đổi | CTA rõ ràng: copy lệnh cài đặt, Star GitHub, link Docs & [Ecosystem Docs](https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs) |
+| G4 | Chuyển đổi | CTA rõ ràng: copy lệnh cài đặt, Star GitHub, link Docs |
 | G5 | Không ảnh hưởng gói npm | `npm test`, `npm run build`, `npm pack` ở root không đổi; `web/` không nằm trong `files` |
 
 **Ngoài phạm vi (v1):** đăng nhập, backend/API route, lưu lịch sử, analytics có cookie, i18n đầy đủ (chỉ EN; VI để v2), model ngoài OpenAI.
@@ -58,7 +58,7 @@ web/
 │   │   ├── page.tsx          # ghép các section
 │   │   └── opengraph-image.tsx (tùy chọn)
 │   ├── components/
-│   │   ├── sections/         # Hero, Playground, Features, CliDemo, Ecosystem, Footer
+│   │   ├── sections/         # Hero, Playground, Features, CliDemo, UseCases, Footer
 │   │   ├── playground/       # InputPane, ModelSelect, StatsCards, ResultTabs, JsonView
 │   │   └── ui/               # shadcn components
 │   ├── lib/
@@ -90,8 +90,7 @@ web/
 3. **Features** — 4 card: Local & Private · Pure JS (no node-gyp) · Agent-ready JSON envelope · Deterministic exit codes.
 4. **CLI Demo** — `demo.gif` / ảnh terminal từ `assets/`.
 5. **Use cases** — prompt compression, CI token budget gate, agent loop monitoring (snippet `jq`).
-6. **Ecosystem & Docs** — link `docs/*.md` trên GitHub + Ecosystem Docs.
-7. **Footer** — MIT, GitHub, npm (ẩn/“coming soon” cho tới khi publish).
+6. **Footer** — MIT, GitHub, Docs & Guides.
 
 ---
 
@@ -119,7 +118,7 @@ web/
 ### Giai đoạn 3 — UI
 - [x] **T3.1** Playground (InputPane, ModelSelect, StatsCards, ResultTabs). — `feat(web): interactive playground`
 - [x] **T3.2** Hero + copy-to-clipboard. — `feat(web): hero section with quick install tabs and playground scroll CTA`
-- [ ] **T3.3** Features, CLI Demo, Use cases, Ecosystem, Footer. — từng section 1 commit
+- [ ] **T3.3** Features, CLI Demo, Use cases, Footer. — từng section 1 commit
 - [ ] **T3.4** Responsive (360px → 1440px), a11y (label, focus ring, contrast AA, keyboard). — `fix(web): a11y & responsive`
 
 **✅ Checkpoint 3:** Review UI bằng trình duyệt thật; người dùng duyệt giao diện.

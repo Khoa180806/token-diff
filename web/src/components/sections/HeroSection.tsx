@@ -86,16 +86,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
           </a>
 
           <a
-            href={PROJECT_LINKS.ecosystemDocs}
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs font-mono text-zinc-400 hover:text-zinc-100 transition-colors flex items-center gap-1"
-          >
-            <Cpu className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">{t.navEcosystem}</span>
-          </a>
-
-          <a
             href={PROJECT_LINKS.github}
             target="_blank"
             rel="noreferrer"
