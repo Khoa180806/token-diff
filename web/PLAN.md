@@ -117,7 +117,7 @@ web/
 **✅ Checkpoint 2 (Hoàn thành):** parity test pass 4 encoding; hook tests pass; Next build sạch sẽ.
 
 ### Giai đoạn 3 — UI
-- [ ] **T3.1** Playground (InputPane, ModelSelect, StatsCards, ResultTabs). — `feat(web): interactive playground`
+- [x] **T3.1** Playground (InputPane, ModelSelect, StatsCards, ResultTabs). — `feat(web): interactive playground`
 - [ ] **T3.2** Hero + copy-to-clipboard. — `feat(web): hero section`
 - [ ] **T3.3** Features, CLI Demo, Use cases, Ecosystem, Footer. — từng section 1 commit
 - [ ] **T3.4** Responsive (360px → 1440px), a11y (label, focus ring, contrast AA, keyboard). — `fix(web): a11y & responsive`
