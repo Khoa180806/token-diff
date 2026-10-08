@@ -35,6 +35,17 @@ Standard Unix utilities (`wc -l`, `wc -c`, `diff`) fail to measure token impacts
 - **In-Memory Vocabulary Cache**: Reuses loaded BPE encoders across calls, keeping warm execution latency under 15ms (source: `src/tokenizer.ts`).
 - **Interactive Web Playground**: Client-side Next.js playground utilizing Web Workers to offload token counting without freezing the browser (source: `web/src/app/page.tsx`).
 
+### Feature Highlights
+
+![CLI token diff tabular comparison report](../assets/screenshots/cli-diff-table.png)  
+*Figure 1: Tabular token, character, and line delta calculation between prompt versions.*
+
+![CLI token count output](../assets/screenshots/cli-count-output.png)  
+*Figure 2: Single-file token footprint breakdown and line count metrics.*
+
+![CLI stdin pipe stream integration](../assets/screenshots/cli-stdin-pipe.png)  
+*Figure 3: Unix pipe integration receiving dynamic prompt generator output via stdin.*
+
 ---
 
 ## 4. Technology Stack

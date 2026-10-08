@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="assets/logo.png" alt="token-diff logo" width="128" height="128" />
+  <img src="docs/assets/screenshots/token-diff-logo.png" alt="token-diff brand logo" width="128" height="128" />
+  <br />
+  <sub>token-diff - Deterministic BPE Token Measurement &amp; Context Diff Infrastructure</sub>
 </p>
 
 <h1 align="center">token-diff</h1>
@@ -31,7 +33,9 @@
 </p>
 
 <p align="center">
-  <img src="assets/demo.gif" alt="token-diff terminal demo" width="100%" />
+  <img src="docs/assets/screenshots/cli-diff-demo.gif" alt="Animated demonstration of token-diff real-time terminal token comparison" width="100%" />
+  <br />
+  <sub>Figure 1: Real-time token and context delta calculation in the terminal.</sub>
 </p>
 
 ---
@@ -76,7 +80,9 @@ Whether verifying the efficacy of prompt compression algorithms, monitoring mult
 ## Key Architecture & Capabilities
 
 <p align="center">
-  <img src="assets/architecture.png" alt="token-diff architecture diagram" width="100%" />
+  <img src="docs/assets/diagrams/system-architecture.png" alt="token-diff layered architecture diagram" width="100%" />
+  <br />
+  <sub>Figure 2: Four-stage execution pipeline and in-memory BPE cache architecture.</sub>
 </p>
 
 - **In-Memory Encoder Cache**: Reuses loaded BPE vocabulary instances across repeated invocations, reducing tokenization latency to sub-millisecond ranges for typical prompt sizes.
@@ -152,7 +158,9 @@ td diff [options] <before> <after>
 | `-h, --help` | - | Display help for command |
 
 <p align="center">
-  <img src="assets/demo-diff.png" alt="td diff command output" width="100%" />
+  <img src="docs/assets/screenshots/cli-diff-table.png" alt="token-diff diff command terminal output" width="100%" />
+  <br />
+  <sub>Figure 3: Tabular token comparison output between two file targets.</sub>
 </p>
 
 ---
@@ -175,7 +183,9 @@ td count "You are a senior fullstack engineer."
 ```
 
 <p align="center">
-  <img src="assets/demo-count.png" alt="td count command output" width="100%" />
+  <img src="docs/assets/screenshots/cli-count-output.png" alt="token-diff count command terminal output" width="100%" />
+  <br />
+  <sub>Figure 4: Single-file token, character, and line count statistics.</sub>
 </p>
 
 ---
@@ -196,7 +206,9 @@ cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 ```
 
 <p align="center">
-  <img src="assets/demo-stdin.png" alt="stdin pipe usage" width="100%" />
+  <img src="docs/assets/screenshots/cli-stdin-pipe.png" alt="token-diff standard input pipe command output" width="100%" />
+  <br />
+  <sub>Figure 5: Standard input stream pipelining into token-diff.</sub>
 </p>
 
 ---
@@ -239,7 +251,11 @@ const jsonOutput: string = formatJson(diffReport, 15);
 
 When invoked with `--json`, `token-diff` guarantees structured output conforming to the standardized tool transport envelope:
 
-<p align="center"><img src="assets/json-mode.png" alt="JSON envelope output with syntax highlighting" width="100%" /></p>
+<p align="center">
+  <img src="docs/assets/screenshots/cli-json-envelope.png" alt="token-diff JSON envelope output with metadata" width="100%" />
+  <br />
+  <sub>Figure 6: Standardized API transport envelope output with execution duration metadata.</sub>
+</p>
 
 
 ---

@@ -79,6 +79,9 @@ node dist/cli.js diff package.json tsconfig.json --model gpt-4o
 node dist/cli.js count README.md --json
 ```
 
+![Successful local CLI diff command output](../assets/screenshots/cli-diff-table.png)  
+*Figure 1: Successful local terminal execution comparing prompt and configuration targets.*
+
 ---
 
 ## 5. Running the Web Playground Locally

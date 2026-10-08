@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="assets/logo.png" alt="token-diff logo" width="128" height="128" />
+  <img src="docs/assets/screenshots/token-diff-logo.png" alt="token-diff brand logo" width="128" height="128" />
+  <br />
+  <sub>token-diff - Deterministic BPE Token Measurement &amp; Context Diff Infrastructure</sub>
 </p>
 
 <h1 align="center">token-diff</h1>
@@ -31,7 +33,9 @@
 </p>
 
 <p align="center">
-  <img src="assets/demo.gif" alt="token-diff demo dòng lệnh" width="100%" />
+  <img src="docs/assets/screenshots/cli-diff-demo.gif" alt="Animated demonstration of token-diff real-time terminal token comparison" width="100%" />
+  <br />
+  <sub>Figure 1: Real-time token and context delta calculation in the terminal.</sub>
 </p>
 
 ---
@@ -75,7 +79,11 @@ Khi tối ưu prompt, nén context cho AI agent, hay muốn đặt chặn trần
 
 ## Kiến trúc hoạt động
 
-<p align="center"><img src="assets/architecture.png" alt="Kiến trúc 4 giai đoạn pipeline của token-diff" width="100%" /></p>
+<p align="center">
+  <img src="docs/assets/diagrams/system-architecture.png" alt="token-diff layered architecture diagram" width="100%" />
+  <br />
+  <sub>Figure 2: Four-stage execution pipeline and in-memory BPE cache architecture.</sub>
+</p>
 
 - **Cache bộ từ điển (In-Memory Encoder Cache)**: Giữ lại instance BPE sau lần khởi tạo đầu tiên, giúp các lượt đếm tiếp theo chỉ mất chưa tới 1 mili-giây.
 - **An toàn trước dữ liệu rỗng**: Xử lý mượt mà khi tệp rỗng hoặc 0 token, không bao giờ bị lỗi văng phép chia cho 0 (`NaN` / `Infinity`).
@@ -149,7 +157,11 @@ td diff [tùy_chọn] <before> <after>
 | `--json` | `false` | Xuất kết quả dạng JSON envelope chuẩn |
 | `-h, --help` | - | Xem hướng dẫn lệnh |
 
-<p align="center"><img src="assets/demo-diff.png" alt="Kết quả lệnh td diff" width="100%" /></p>
+<p align="center">
+  <img src="docs/assets/screenshots/cli-diff-table.png" alt="token-diff diff command terminal output" width="100%" />
+  <br />
+  <sub>Figure 3: Tabular token comparison output between two file targets.</sub>
+</p>
 
 ---
 
@@ -170,7 +182,11 @@ td count README.md --model gpt-4o
 td count "Bạn là một kỹ sư phần mềm cao cấp."
 ```
 
-<p align="center"><img src="assets/demo-count.png" alt="Kết quả lệnh td count" width="100%" /></p>
+<p align="center">
+  <img src="docs/assets/screenshots/cli-count-output.png" alt="token-diff count command terminal output" width="100%" />
+  <br />
+  <sub>Figure 4: Single-file token, character, and line count statistics.</sub>
+</p>
 
 ---
 
@@ -189,7 +205,11 @@ git diff HEAD~1 | td count -
 cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 ```
 
-<p align="center"><img src="assets/demo-stdin.png" alt="Dùng stdin pipe với token-diff" width="100%" /></p>
+<p align="center">
+  <img src="docs/assets/screenshots/cli-stdin-pipe.png" alt="token-diff standard input pipe command output" width="100%" />
+  <br />
+  <sub>Figure 5: Standard input stream pipelining into token-diff.</sub>
+</p>
 
 ---
 
@@ -231,7 +251,11 @@ const jsonStr: string = formatJson(diffReport, 12);
 
 Khi bật cờ `--json`, dữ liệu luôn được bọc trong cấu trúc envelope chuẩn hóa cho AI Agent:
 
-<p align="center"><img src="assets/json-mode.png" alt="JSON envelope output với syntax highlighting" width="100%" /></p>
+<p align="center">
+  <img src="docs/assets/screenshots/cli-json-envelope.png" alt="token-diff JSON envelope output with metadata" width="100%" />
+  <br />
+  <sub>Figure 6: Standardized API transport envelope output with execution duration metadata.</sub>
+</p>
 
 
 ---

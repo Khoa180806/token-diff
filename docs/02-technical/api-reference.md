@@ -171,6 +171,9 @@ interface ApiEnvelope<T> {
 }
 ```
 
+![Standardized API JSON transport envelope output](../assets/screenshots/cli-json-envelope.png)  
+*Figure 1: Standardized JSON transport envelope output emitted to stdout when invoked with --json flag.*
+
 ---
 
 ## 4. Error Envelope & Deterministic Exit Codes
