@@ -100,11 +100,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
             size="sm"
             onClick={onToggleLang}
             className="h-8 px-2.5 text-xs font-mono bg-zinc-900/90 border-zinc-800 hover:bg-zinc-800 text-zinc-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
-            title="Toggle language (English / Tiếng Việt)"
-            aria-label={lang === 'en' ? 'Chuyển sang Tiếng Việt' : 'Switch to English'}
+            title={lang === 'en' ? 'Language: English (Click to switch to Tiếng Việt)' : 'Ngôn ngữ: Tiếng Việt (Bấm để chuyển sang English)'}
+            aria-label={lang === 'en' ? 'Switch to Tiếng Việt' : 'Chuyển sang English'}
           >
-            <Globe className="w-3.5 h-3.5 mr-1 text-zinc-400" />
-            {lang === 'en' ? 'VI' : 'EN'}
+            <Globe className="w-3.5 h-3.5 mr-1 text-emerald-400" aria-hidden="true" />
+            <span className="font-semibold">{lang === 'en' ? 'EN' : 'VI'}</span>
           </Button>
         </nav>
       </header>

@@ -18,7 +18,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
     diff: {
       label: t.cliTabDiff,
       cmd: 'td diff prompt_v1.txt prompt_v2.txt',
-      imageSrc: '/demo-diff.png',
+      imageSrc: '/demo-diff-v2.png',
       alt: 'CLI Diff Mode',
       desc:
         lang === 'en'
@@ -28,7 +28,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
     count: {
       label: t.cliTabCount,
       cmd: 'td count README.md',
-      imageSrc: '/demo-count.png',
+      imageSrc: '/demo-count-v2.png',
       alt: 'CLI Count Mode',
       desc:
         lang === 'en'
@@ -38,7 +38,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
     stdin: {
       label: t.cliTabStdin,
       cmd: 'cat prompt_v2.txt | td diff prompt_v1.txt -',
-      imageSrc: '/demo-stdin.png',
+      imageSrc: '/demo-stdin-v2.png',
       alt: 'CLI Stdin Unix Pipeline',
       desc:
         lang === 'en'
@@ -48,7 +48,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
     json: {
       label: t.cliTabJson,
       cmd: 'td diff prompt_v1.txt prompt_v2.txt --json',
-      imageSrc: '/json-mode.png',
+      imageSrc: '/json-mode-v2.png',
       alt: 'CLI JSON Envelope Mode',
       desc:
         lang === 'en'
@@ -145,6 +145,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
                 height={700}
                 className="w-full h-auto object-contain"
                 priority
+                unoptimized
               />
             </div>
             <p className="mt-4 text-xs sm:text-sm text-zinc-400 font-mono text-center px-4">
