@@ -121,31 +121,29 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({ lang }) =>
           </div>
 
           {/* Model Selector Dropdown & Swap/Clear Actions */}
-          <div className="flex flex-wrap items-center gap-2 lg:ml-auto">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 lg:ml-auto">
             {/* Model Selector next to Swap */}
-            <div className="w-[170px] shrink-0">
-              <Select
-                value={selectedModel}
-                onValueChange={(val) => {
-                  if (val) setSelectedModel(val);
-                }}
+            <Select
+              value={selectedModel}
+              onValueChange={(val) => {
+                if (val) setSelectedModel(val);
+              }}
+            >
+              <SelectTrigger
+                aria-label={t.modelSelectLabel}
+                className="h-7 text-xs font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
-                <SelectTrigger
-                  aria-label={t.modelSelectLabel}
-                  className="h-7 text-xs font-mono bg-zinc-900 border-zinc-800 text-zinc-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
-                >
-                  <SelectValue placeholder={t.modelSelectLabel} />
-                </SelectTrigger>
-                <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200 font-mono text-xs">
-                  {AVAILABLE_MODELS.map((m) => (
-                    <SelectItem key={m.value} value={m.value} className="focus:bg-zinc-800 text-xs">
-                      <span className="font-semibold text-zinc-100">{m.label}</span>{' '}
-                      <span className="text-[10px] text-zinc-400">({m.encoding})</span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                <SelectValue placeholder={t.modelSelectLabel} />
+              </SelectTrigger>
+              <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200 font-mono text-xs min-w-[200px]">
+                {AVAILABLE_MODELS.map((m) => (
+                  <SelectItem key={m.value} value={m.value} className="focus:bg-zinc-800 text-xs">
+                    <span className="font-semibold text-zinc-100">{m.label}</span>{' '}
+                    <span className="text-[10px] text-zinc-400">({m.encoding})</span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
             <Button
               variant="outline"
