@@ -1,12 +1,38 @@
 # API & CLI Contract Reference
 
-Comprehensive specifications for the programmatic TypeScript/JavaScript SDK and the command-line CLI transport interface.
+Comprehensive technical contract specifications for the programmatic TypeScript/JavaScript SDK and the command-line CLI transport interface. This document details function signatures, CLI flags, JSON envelope schemas, and deterministic exit codes.
 
 ---
 
-## 1. Programmatic TypeScript SDK Reference
+## 1. CLI Command Interface
 
-The library can be imported directly into Node.js applications, CI test scripts, or agent harnesses (source: `src/index.ts`, `src/types.ts`).
+The CLI executable is registered under the canonical aliases `td`, `token-diff`, and `ai-token-diff` (source: `package.json#L6-L10`, `src/cli.ts`).
+
+### Command: `td diff <before> <after>`
+Calculates token, character, and line count deltas between two inputs (source: `src/cli.ts#L86-L122`).
+
+- **Arguments**:
+  - `<before>`: Path to baseline file, standard input pipe (`-`), or literal prompt string.
+  - `<after>`: Path to comparison file, standard input pipe (`-`), or literal prompt string.
+- **Options**:
+  - `-m, --model <name>`: Model identifier (e.g. `gpt-4o`, `gpt-4`, `o1`) or explicit encoding (e.g. `o200k_base`, `cl100k_base`). Default: `'gpt-4o'`.
+  - `-j, --json`: Emits standardized JSON transport envelope to `stdout`. Default: `false`.
+  - `-h, --help`: Displays command usage guide.
+
+### Command: `td count <target>`
+Counts tokens, characters, and lines for a single input (source: `src/cli.ts#L124-L148`).
+
+- **Arguments**:
+  - `<target>`: Path to target file, standard input pipe (`-`), or literal prompt string.
+- **Options**:
+  - `-m, --model <name>`: Model or encoding identifier. Default: `'gpt-4o'`.
+  - `-j, --json`: Emits standardized JSON count envelope to `stdout`. Default: `false`.
+
+---
+
+## 2. Programmatic TypeScript SDK Reference
+
+The library exposes fully typed ESM and TypeScript declarations for programmatic integration (source: `src/index.ts`, `src/types.ts`).
 
 ### Package Export
 ```typescript
@@ -26,10 +52,8 @@ import {
 } from 'ai-token-diff';
 ```
 
----
-
 ### Function: `countTokens(text, modelOrEncoding?)`
-Tokenizes a given string and calculates exact token counts, character lengths, and line counts (source: `src/tokenizer.ts#L79-L94`).
+Tokenizes a string and returns token counts, character lengths, and line counts (source: `src/tokenizer.ts#L79-L94`).
 
 - **Parameters**:
   - `text` (`string`): Target text string to tokenize.
@@ -46,10 +70,8 @@ Tokenizes a given string and calculates exact token counts, character lengths, a
   }
   ```
 
----
-
 ### Function: `computeDiff(before, after, options?)`
-Computes token differences, character differences, and percentage deltas between two `TokenizerResult` instances (source: `src/diff.ts#L37-L84`).
+Computes token differences, character differences, and percentage deltas between two `TokenizerResult` objects (source: `src/diff.ts#L37-L84`).
 
 - **Parameters**:
   - `before` (`TokenizerResult`): Baseline tokenization result.
@@ -77,8 +99,8 @@ Computes token differences, character differences, and percentage deltas between
       line_count: number;
     };
     diff: {
-      token_delta: number;      // after - before (negative means reduction)
-      token_delta_pct: number;  // rounded to 2 decimal places
+      token_delta: number;      // after - before (negative indicates token reduction)
+      token_delta_pct: number;  // percentage change rounded to 2 decimal places
       char_delta: number;
       char_delta_pct: number;
     };
@@ -86,35 +108,33 @@ Computes token differences, character differences, and percentage deltas between
   }
   ```
 
----
-
 ### Function: `resolveEncodingForModel(modelOrEncoding)`
-Resolves a given model name or encoding string into one of the 4 supported canonical encodings (source: `src/models.ts#L36-L65`).
+Resolves a model name or encoding string into one of the 4 supported canonical encodings (source: `src/models.ts#L36-L65`).
 
 - **Supported Encodings**: `'o200k_base' | 'cl100k_base' | 'p50k_base' | 'r50k_base'`.
 - **Throws**: `TokenDiffError` with code `'UNSUPPORTED_OPERATION'` if unrecognized.
 
 ---
 
-## 2. Standardized API Transport Envelope (`--json`)
+## 3. Standardized API Transport Envelope (`--json`)
 
 When invoked with `--json`, output is wrapped in a standardized transport envelope matching AI agent tool specifications (source: `src/formatter.ts#L4-L32`, `src/types.ts#L51-L54`).
 
-### Success Envelope Schema
+### Envelope Schema
 ```typescript
 interface ApiEnvelope<T> {
   data: T;
   metadata: {
     schema_version: string; // "1.0"
     source: "token-diff";
-    duration_ms: number;   // Execution duration in milliseconds
-    truncated: boolean;    // false
+    duration_ms: number;    // Execution duration in milliseconds
+    truncated: boolean;     // false
     next_cursor: string | null; // null
   };
 }
 ```
 
-### Success Envelope Example (`td diff file1.txt file2.txt --json`)
+### Diff Response Sample
 ```json
 {
   "data": {
@@ -122,13 +142,13 @@ interface ApiEnvelope<T> {
     "model": "gpt-4o",
     "encoding": "o200k_base",
     "before": {
-      "label": "file1.txt",
+      "label": "original.txt",
       "token_count": 1240,
       "char_count": 4820,
       "line_count": 115
     },
     "after": {
-      "label": "file2.txt",
+      "label": "optimized.txt",
       "token_count": 892,
       "char_count": 3410,
       "line_count": 82
@@ -153,7 +173,7 @@ interface ApiEnvelope<T> {
 
 ---
 
-## 3. Error Envelope & Deterministic Exit Codes
+## 4. Error Envelope & Deterministic Exit Codes
 
 All errors map deterministically to standardized POSIX exit codes (source: `src/errors.ts#L3-L13`, `src/cli.ts#L66-L84`).
 
@@ -165,15 +185,13 @@ All errors map deterministically to standardized POSIX exit codes (source: `src/
 | `3` | `NOT_FOUND` | Specified file does not exist (when strict checking applied). |
 | `4` | `PERMISSION_DENIED` | File system read permission denied on target input file. |
 
-### Error Envelope Example (`--json` mode)
+### Error Envelope Sample (`--json` mode)
 ```json
 {
   "error": {
-    "code": "PERMISSION_DENIED",
-    "message": "Permission denied: /root/secret_prompt.txt",
-    "details": {
-      "path": "/root/secret_prompt.txt"
-    }
+    "code": "INVALID_INPUT",
+    "message": "Both inputs cannot be standard input (-).",
+    "details": {}
   },
   "metadata": {
     "schema_version": "1.0",

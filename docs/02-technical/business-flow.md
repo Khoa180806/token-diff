@@ -1,6 +1,6 @@
 # Core Business Flows
 
-Detailed sequence diagrams describing the primary execution flows across CLI and web runtimes.
+Detailed sequence diagrams describing the primary execution flows across CLI and web runtimes. This document covers input ingestion, offline token calculation, and asynchronous browser worker orchestration.
 
 ---
 

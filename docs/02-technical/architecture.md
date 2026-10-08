@@ -1,20 +1,20 @@
 # System Architecture
 
-Deterministic token usage measurement and context diff engine designed for high-performance LLM agent workflows, local prompt optimization, and CI/CD context budgeting.
+Deterministic token usage measurement and context diff engine for local prompt engineering, autonomous agent pipelines, and continuous integration. This document details the layered system architecture, component dependencies, and execution pipeline.
 
 ---
 
 ## 1. Architectural Layers & Separation of Concerns
 
-`token-diff` follows a strict **Functional Core, Imperative Shell** architecture to ensure 100% reproducibility across operating systems (source: `src/tokenizer.ts`, `src/diff.ts`, `src/cli.ts`).
+The project follows a strict Functional Core, Imperative Shell architecture to guarantee deterministic outputs and portable execution across environments (source: `src/tokenizer.ts`, `src/diff.ts`, `src/cli.ts`, `web/src/lib/diff.ts`).
 
 ```mermaid
 graph TD
     subgraph UI_And_Shell["Imperative Shell & User Interfaces"]
         CLI["CLI Interface (Commander)<br/>source: src/cli.ts"]
-        WEB["Web Playground (Next.js 16 App Router)<br/>source: web/src/app/page.tsx"]
+        WEB["Web Application (Next.js 16 App Router)<br/>source: web/src/app/page.tsx"]
         WORKER["Browser Web Worker<br/>source: web/src/lib/tokenizer/worker.ts"]
-        FS["Filesystem / UTF-8 & Stdin Stream<br/>source: src/cli.ts"]
+        FS["Filesystem & Stdin Streams<br/>source: src/cli.ts"]
     end
 
     subgraph Core_Engine["Functional Core (Deterministic & In-Memory)"]
@@ -27,6 +27,7 @@ graph TD
     subgraph Presentation_Layer["Presentation & Serialization"]
         TABULAR["ANSI Color Terminal Formatter<br/>source: src/formatter.ts"]
         ENVELOPE["Standard API JSON Envelope v1.0<br/>source: src/formatter.ts"]
+        WEB_VIEW["React 19 Interactive Dashboard<br/>source: web/src/components/playground/"]
     end
 
     CLI --> FS
@@ -38,23 +39,25 @@ graph TD
 
     WEB --> WORKER
     WORKER --> RESOLVER
-    WORKER --> TOKENIZER
     WORKER --> DIFF
+    WORKER --> WEB_VIEW
 ```
 
 ### Module Responsibilities
-- **`src/models.ts`**: Pure model-to-encoding lookup table (`o200k_base`, `cl100k_base`, `p50k_base`, `r50k_base`) with zero external runtime dependencies.
-- **`src/tokenizer.ts`**: BPE tokenization primitive with in-memory map caching to eliminate dictionary re-instantiation overhead.
-- **`src/diff.ts`**: Pure mathematical delta calculation with zero division-by-zero risk (`calculatePercentage`, `computeDiff`).
-- **`src/formatter.ts`**: Decoupled presentation formatting providing ANSI colored tables for humans and JSON envelopes for AI agents.
-- **`src/cli.ts`**: Command-line orchestration, smart input argument resolution, stream ingestion, and deterministic POSIX exit codes.
-- **`src/errors.ts`**: Typed error taxonomy (`TokenDiffError`) mapping error codes to numeric exit codes and structured JSON diagnostics.
+- `src/models.ts`: Pure model-to-encoding lookup table (`o200k_base`, `cl100k_base`, `p50k_base`, `r50k_base`) with zero external runtime dependencies.
+- `src/tokenizer.ts`: BPE tokenization primitive with in-memory map caching to eliminate dictionary re-instantiation overhead.
+- `src/diff.ts`: Mathematical delta calculation with zero division-by-zero risk (`calculatePercentage`, `computeDiff`).
+- `src/formatter.ts`: Decoupled presentation formatting providing ANSI colored tables for humans and JSON envelopes for AI agents.
+- `src/cli.ts`: Command-line orchestration, smart input argument resolution, stream ingestion, and deterministic POSIX exit codes.
+- `src/errors.ts`: Typed error taxonomy (`TokenDiffError`) mapping error codes to numeric exit codes and structured JSON diagnostics.
+- `web/src/lib/tokenizer/worker.ts`: Dedicated Web Worker thread offloading BPE calculations from the main UI thread.
+- `web/src/lib/diff.ts`: Self-contained mathematical diff engine for the web frontend.
 
 ---
 
 ## 2. Component Pipeline Diagram
 
-Execution progresses through 4 sequential stages with explicit data boundaries (source: `src/cli.ts#L25-L122`, `docs/ARCHITECTURE.md`):
+Execution progresses through 4 sequential stages with explicit data boundaries (source: `src/cli.ts#L25-L122`, `src/diff.ts`):
 
 ```mermaid
 flowchart LR
@@ -100,7 +103,7 @@ flowchart LR
 
 ## 3. Request Flow & Execution Model
 
-The system enforces a synchronous, zero-disk footprint execution model (source: `src/cli.ts`, `src/tokenizer.ts`):
+The CLI enforces a synchronous, zero-disk footprint execution model (source: `src/cli.ts`, `src/tokenizer.ts`):
 
 ```mermaid
 sequenceDiagram
@@ -149,20 +152,21 @@ sequenceDiagram
 
 ## 4. Performance & Memory Profile
 
-Measured on standard developer hardware (x86_64, Node.js v20.x, model: `gpt-4o` / `o200k_base`) (source: `docs/BENCHMARKS.md`):
+Measured on standard developer hardware (x86_64, Node.js v20.x, model: `gpt-4o` / `o200k_base`) (source: `src/tokenizer.ts`, `test/cli.test.ts`):
 
-| Metric | Measured Baseline | Target SLA | Verification |
-|---|:---:|:---:|:---:|
-| **Cold Start Latency** | ~80 ms | < 150 ms | Verified (Node V8 bootstrap) |
-| **Warm Tokenization Latency** | < 15 ms (<10,000 tokens) | < 25 ms | Verified (in-memory BPE) |
-| **In-Memory Cache Lookup** | < 0.5 ms / invocation | < 2.0 ms | Verified (`encoderCache.get`) |
-| **Peak Memory Footprint (RSS)**| < 38 MB | < 60 MB | Verified (`process.memoryUsage()`) |
-| **Persistent Disk Footprint** | 0 Bytes | 0 Bytes | Verified (pure RAM, zero temp files) |
+| Metric | Measured Baseline | Target SLA | Verification Method |
+|---|:---:|:---:|---|
+| Cold Start Latency | ~80 ms | < 150 ms | Process bootstrap |
+| Warm Tokenization Latency | < 15 ms (<10,000 tokens) | < 25 ms | In-memory BPE execution |
+| In-Memory Cache Lookup | < 0.5 ms / call | < 2.0 ms | Map lookup benchmark |
+| Peak Memory Footprint (RSS) | < 38 MB | < 60 MB | `process.memoryUsage()` |
+| Disk Footprint | 0 Bytes | 0 Bytes | In-memory execution, no temp files |
 
 ---
 
 ## 5. Security & Boundary Isolation
 
-- **100% Local / Air-Gapped Execution**: No telemetry, no network calls, no API keys (source: `src/tokenizer.ts`).
-- **Zero Disk Leakage**: Neither prompt contents nor diff reports are written to temporary scratch disks.
-- **Fail-Safe Smart Input**: Non-existent file paths fall back to raw prompt strings with an explicit warning printed strictly to `stderr` to prevent silent misinterpretation (source: `src/cli.ts#L48`).
+- Local Execution: No telemetry, no network calls, and no API keys required (source: `src/tokenizer.ts`).
+- Zero Disk Leakage: Neither prompt contents nor diff reports are written to persistent scratch storage.
+- Input Fallback Protection: Non-existent file paths fall back to raw prompt strings with an explicit warning printed strictly to `stderr` to prevent silent misinterpretation (source: `src/cli.ts#L48`).
+- Browser Sandboxing: Web tokenization runs in isolated Web Workers without server transmission (source: `web/src/lib/tokenizer/worker.ts`).
