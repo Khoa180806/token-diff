@@ -23,7 +23,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
       desc:
         lang === 'en'
           ? 'Side-by-side token delta showing additions, deletions, and savings percentage.'
-          : 'So sánh độ lệch token theo định dạng diff trực quan, hiển thị rõ phần thêm, bớt và tỷ lệ tiết kiệm.',
+          : 'So sánh token delta theo định dạng trực quan, hiển thị rõ phần thêm, bớt và tỷ lệ tiết kiệm.',
     },
     count: {
       label: t.cliTabCount,
@@ -33,7 +33,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
       desc:
         lang === 'en'
           ? 'Instant breakdown of token counts, character lengths, and byte sizes.'
-          : 'Phân tích chi tiết số lượng token, độ dài ký tự và dung lượng byte tức thì.',
+          : 'Thống kê chi tiết token count, số ký tự và dung lượng byte tức thì.',
     },
     stdin: {
       label: t.cliTabStdin,
@@ -43,7 +43,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
       desc:
         lang === 'en'
           ? 'Seamless Unix pipe integration for scripting, grep, and terminal pipelines.'
-          : 'Tích hợp mượt mà với đường ống Unix pipe, phù hợp cho tự động hóa và script shell.',
+          : 'Tích hợp mượt mà với Unix pipeline, tối ưu cho shell script và tự động hóa.',
     },
     json: {
       label: t.cliTabJson,
@@ -53,7 +53,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
       desc:
         lang === 'en'
           ? 'Machine-readable JSON envelope for agent tool loops and CI budget validations.'
-          : 'Định dạng JSON chuẩn hóa máy đọc được, phục vụ tool call của AI agent và kịch bản CI.',
+          : 'JSON envelope chuẩn hóa máy đọc được, phục vụ agent tool call và CI budget check.',
     },
   };
 
@@ -82,7 +82,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
         </div>
 
         {/* Tab Controls */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="CLI Demonstration views">
+        <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label={lang === 'vi' ? 'Chế độ xem demo CLI' : 'CLI Demonstration views'}>
           {(Object.keys(demoItems) as Array<keyof typeof demoItems>).map((key) => {
             const item = demoItems[key];
             const isActive = activeTab === key;
@@ -116,7 +116,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
               <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/70 inline-block"></span>
               <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/70 inline-block"></span>
               <span className="ml-2 text-xs font-mono text-zinc-400 hidden sm:inline select-none">
-                token-diff — {lang === 'vi' ? 'xem trước dòng lệnh' : 'terminal preview'}
+                token-diff — terminal preview
               </span>
             </div>
 
@@ -126,8 +126,8 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
               </div>
               <button
                 onClick={handleCopyCmd}
-                title={copied ? "Command copied" : "Copy command"}
-                aria-label={copied ? "Command copied to clipboard" : "Copy command"}
+                title={copied ? t.copiedCommand : t.copyCommand}
+                aria-label={copied ? t.copiedCommand : t.copyCommand}
                 className="p-1.5 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 transition-colors shrink-0 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
                 {copied ? <Check className="w-4 h-4 text-emerald-400" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}

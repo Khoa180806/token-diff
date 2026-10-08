@@ -112,7 +112,7 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({ lang }) =>
                 variant="outline"
                 size="sm"
                 onClick={() => handleLoadExample(idx)}
-                aria-label={`Load example: ${ex.name[lang]}`}
+                aria-label={`${t.loadExample}: ${ex.name[lang]}`}
                 className="h-7 text-[11px] font-mono bg-zinc-950/70 border-zinc-800/80 hover:bg-zinc-800/80 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
                 {ex.name[lang]}
@@ -151,7 +151,7 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({ lang }) =>
               variant="outline"
               size="sm"
               onClick={handleSwap}
-              aria-label="Swap before and after prompt inputs"
+              aria-label={t.swapInputs}
               className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               title={t.swapInputs}
             >

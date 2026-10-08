@@ -92,10 +92,10 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
                   <span className="text-emerald-400 font-semibold">
                     {lang === 'vi'
                       ? diff.diff.token_delta < 0
-                        ? `Đã tiết kiệm ${Math.abs(diff.diff.token_delta)} token (-${Math.abs(diff.diff.token_delta_pct)}%) từ ${diff.before.token_count} xuống ${diff.after.token_count} (ký tự: ${diff.before.char_count} → ${diff.after.char_count}, ${diff.diff.char_delta_pct}%)`
+                        ? `Tiết kiệm ${Math.abs(diff.diff.token_delta)} tokens (-${Math.abs(diff.diff.token_delta_pct)}%) từ ${diff.before.token_count} xuống ${diff.after.token_count} (ký tự: ${diff.before.char_count} → ${diff.after.char_count}, ${diff.diff.char_delta_pct}%)`
                         : diff.diff.token_delta > 0
-                        ? `Tăng thêm ${diff.diff.token_delta} token (+${diff.diff.token_delta_pct}%) từ ${diff.before.token_count} lên ${diff.after.token_count} (ký tự: ${diff.before.char_count} → ${diff.after.char_count}, +${diff.diff.char_delta_pct}%)`
-                        : `Số lượng token không đổi (${diff.before.token_count} token)`
+                        ? `Tăng thêm ${diff.diff.token_delta} tokens (+${diff.diff.token_delta_pct}%) từ ${diff.before.token_count} lên ${diff.after.token_count} (ký tự: ${diff.before.char_count} → ${diff.after.char_count}, +${diff.diff.char_delta_pct}%)`
+                        : `Token count không đổi (${diff.before.token_count} tokens)`
                       : diff.summary}
                   </span>
                 </div>
