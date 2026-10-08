@@ -36,7 +36,7 @@
     "type": "git",
     "url": "git+https://github.com/Khoa180806/token-diff.git"
   },
-  "homepage": "https://github.com/Khoa180806/token-diff#readme",
+  "homepage": "https://token-diff.vercel.app",
   "bugs": {
     "url": "https://github.com/Khoa180806/token-diff/issues"
   },

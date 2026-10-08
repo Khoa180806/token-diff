@@ -9,16 +9,19 @@
 </p>
 
 <p align="center">
+  <a href="https://token-diff.vercel.app"><strong>🌐 Trải nghiệm trực tuyến (Live Web Playground)</strong></a>
+  <br />
   <a href="README.md">English</a> • <a href="README.vi.md">Tiếng Việt</a>
   <br />
-  <a href="docs/ARCHITECTURE.md">Kiến trúc (Architecture)</a> •
-  <a href="docs/CLI_REFERENCE.md">Cẩm nang CLI</a> •
-  <a href="docs/SDK_GUIDE.md">Tài liệu SDK</a> •
-  <a href="docs/BENCHMARKS.md">Hiệu năng (Benchmarks)</a> •
-  <a href="docs/CONTRIBUTING.md">Đóng góp (Contributing)</a>
+  <a href="docs/README.md">Tài liệu dự án</a> •
+  <a href="docs/02-technical/architecture.md">Kiến trúc</a> •
+  <a href="docs/02-technical/api-reference.md">Cẩm nang CLI & API</a> •
+  <a href="docs/01-overview/getting-started.md">Bắt đầu nhanh</a> •
+  <a href="docs/01-overview/development-workflow.md">Đóng góp</a>
 </p>
 
 <p align="center">
+  <a href="https://token-diff.vercel.app"><img src="https://img.shields.io/badge/playground-trực_tuyến-success.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Playground" /></a>
   <img src="https://img.shields.io/badge/version-0.1.1-blue.svg?style=for-the-badge" alt="Phiên bản 0.1.1" />
   <img src="https://img.shields.io/badge/node-%3E%3D18.0.0-339933.svg?style=for-the-badge&logo=node.js&logoColor=white" alt="Node >= 18.0.0" />
   <img src="https://img.shields.io/badge/typescript-5.6-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
@@ -106,6 +109,13 @@ td --help
 ```bash
 npm install -D ai-token-diff
 ```
+
+### Trải nghiệm trực quan qua Web Playground (Không cần cài đặt):
+Bạn thích giao diện đồ họa trực quan thay vì gõ lệnh terminal?
+Truy cập ngay ứng dụng web client-side: **[https://token-diff.vercel.app](https://token-diff.vercel.app)**
+- ⚡ **100% Client-Side**: Tokenize chạy trực tiếp bằng Web Worker trên trình duyệt, tốc độ phản hồi tính bằng mili-giây.
+- 🔒 **Bảo mật tuyệt đối**: Dữ liệu prompt không bao giờ gửi ra máy chủ hay dịch vụ bên thứ ba.
+- 📋 **Xuất lệnh CLI & JSON**: Tự động sinh lệnh `td diff` tương ứng và API envelope để nhúng vào pipeline agent.
 
 ---
 

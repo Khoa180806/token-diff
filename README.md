@@ -9,6 +9,8 @@
 </p>
 
 <p align="center">
+  <a href="https://token-diff.vercel.app"><strong>🌐 Try Live Web Playground</strong></a>
+  <br />
   <a href="README.md">English</a> • <a href="README.vi.md">Tiếng Việt</a>
   <br />
   <a href="docs/README.md">Documentation</a> •
@@ -19,6 +21,7 @@
 </p>
 
 <p align="center">
+  <a href="https://token-diff.vercel.app"><img src="https://img.shields.io/badge/playground-online-success.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Playground" /></a>
   <img src="https://img.shields.io/badge/version-0.1.1-blue.svg?style=for-the-badge" alt="Version 0.1.1" />
   <img src="https://img.shields.io/badge/node-%3E%3D18.0.0-339933.svg?style=for-the-badge&logo=node.js&logoColor=white" alt="Node >= 18.0.0" />
   <img src="https://img.shields.io/badge/typescript-5.6-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
@@ -108,6 +111,13 @@ td --help
 ```bash
 npm install -D ai-token-diff
 ```
+
+### Interactive Web Playground (Browser GUI):
+Prefer an interactive visual interface without touching the terminal?
+Use the online client-side playground: **[https://token-diff.vercel.app](https://token-diff.vercel.app)**
+- ⚡ **100% Client-Side**: Tokenization executes in a dedicated Web Worker thread in your browser.
+- 🔒 **Zero Data Leakage**: Your prompts never leave your device.
+- 📋 **CLI & Envelope Export**: Instantly generate equivalent `td diff` commands and JSON API envelopes.
 
 ---
 
