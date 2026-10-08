@@ -1,22 +1,25 @@
 # Changelog
 
-All notable changes to `token-diff` (`ai-token-diff`) documented chronologically from git history.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes to `token-diff` (`ai-token-diff`) documented chronologically from git history. This file adheres strictly to Keep a Changelog and Semantic Versioning standards.
 
 ---
 
-## [Unreleased] - Web Playground Phase
+## [0.2.0] - 2026-10-08
 
 ### Added
-- Scaffolded modern Next.js 16 Web Playground in `web/` using React 19, Tailwind CSS v4, and `shadcn/ui` (`792286c`, `fbab546`).
-- Integrated Web Worker thread (`web/src/lib/tokenizer/worker.ts`) and dynamic BPE rank loaders (`ranks.ts`) using `js-tiktoken/lite` (`05aaafa`).
-- Created 20 browser-to-core tokenizer parity tests verifying identical token counts across 4 encodings (`a42db68`).
-- Implemented React hook `useTokenDiff` with 200ms debounce and derived loading state (`48d2a5f`, `65e9185`).
+- **Next.js 16 Web Application**: Interactive client-side web application in `web/` using React 19, Tailwind CSS v4, and `shadcn/ui` (`792286c`, `fbab546`).
+- **Interactive Playground Component**: Dual-pane text editors, model switcher, live delta calculation, token count statistics, and JSON envelope output (`b866b4a`).
+- **Background Web Worker**: Offloaded BPE tokenization to dedicated Web Worker thread with lazy-loaded dynamic rank modules (`05aaafa`).
+- **Self-Contained Client Core**: Created independent browser-safe diff engine (`web/src/lib/diff.ts`) and JSON formatter (`web/src/lib/formatter.ts`) eliminating Node CLI dependencies from browser bundles (`4efed28`).
+- **SEO & Social Metadata**: Implemented dynamic OpenGraph preview images, robots.txt, sitemap.xml, and brand favicon suite (`4bf5fd5`).
+- **Image Optimization**: Configured AVIF and WebP format support, responsive sizes, and lazy loading (`7e8c04f`).
+- **Vercel Production Deployment**: Configured `vercel.json` with security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) and deployed to `https://token-diff.vercel.app` (`a04c142`).
+- **NPM Distribution**: Published official package `ai-token-diff` to the public npm registry.
 
 ### Changed
 - Refactored model mappings out of `tokenizer.ts` into pure `src/models.ts` for safe isomorphic reuse in browsers (`b72c0f2`).
 - Consolidated Git repository to track a single canonical `main` branch (`9c09b8b`).
+- Excluded test files from Next.js build compilation in `web/tsconfig.json` to prevent type-checking non-browser test fixtures (`4efed28`).
 
 ---
 

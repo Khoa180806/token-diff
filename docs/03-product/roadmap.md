@@ -1,6 +1,6 @@
 # Product Roadmap
 
-Current implementation status, active deliverables, and planned development milestones based strictly on actual project plans and task tracking.
+Current implementation status, completed deliverables, and planned development milestones for future iterations. This document tracks delivered features and outlines future architectural expansions.
 
 ---
 
@@ -8,55 +8,56 @@ Current implementation status, active deliverables, and planned development mile
 
 ```mermaid
 pie title Feature Delivery Status
-    "Completed" : 90
-    "Planned" : 10
+    "Completed" : 85
+    "Planned Future" : 15
 ```
 
 ---
 
 ## 2. Completed Milestones (Shipped)
 
-### Phase 1–4: Core Tokenizer Engine & CLI Distribution (v0.1.0)
-- [x] In-memory Byte Pair Encoding (BPE) engine powered by `js-tiktoken` (source: `src/tokenizer.ts`).
-- [x] Mathematical difference calculator with zero-division safety (source: `src/diff.ts`).
-- [x] Canonical API Transport Envelope (`data` + `metadata`) for AI agents (source: `src/formatter.ts`).
-- [x] Deterministic POSIX exit code mappings (0, 1, 2, 3, 4) (source: `src/errors.ts`).
-- [x] Standard input streaming pipe ingestion (`-`) (source: `src/cli.ts#L26`).
-- [x] Comprehensive 20-test Vitest suite covering edge cases (source: `test/`).
+### Core Tokenizer Engine & CLI Distribution (v0.1.0)
+- In-memory Byte Pair Encoding (BPE) engine powered by `js-tiktoken` (source: `src/tokenizer.ts`).
+- Mathematical difference calculator with zero-division safety (source: `src/diff.ts`).
+- Canonical API Transport Envelope (`data` + `metadata`) for AI agents (source: `src/formatter.ts`).
+- Deterministic POSIX exit code mappings (0, 1, 2, 3, 4) (source: `src/errors.ts`).
+- Standard input streaming pipe ingestion (`-`) (source: `src/cli.ts#L26`).
+- Comprehensive 20-test Vitest suite covering edge cases (source: `test/`).
 
-### Phase 5: CLI Polish & Enhancements (v0.1.1)
-- [x] Concise `td` command shorthand alias registered in `package.json` (source: `package.json#L9`).
-- [x] Smart Input detection with non-blocking `[WARN]` to stderr (source: `src/cli.ts#L48`).
-- [x] Terminal ANSI colorization using `picocolors` (source: `src/formatter.ts`).
-- [x] Multi-platform CI pipeline on GitHub Actions (Ubuntu/Windows, Node 18/20/22) (source: `.github/workflows/ci.yml`).
-- [x] Refined terminal demo assets and comprehensive visual suite (source: `assets/`).
+### CLI Polish & Enhancements (v0.1.1)
+- Concise `td` command shorthand alias registered in `package.json` (source: `package.json#L9`).
+- Smart Input detection with non-blocking `[WARN]` to stderr (source: `src/cli.ts#L48`).
+- Terminal ANSI colorization using `picocolors` (source: `src/formatter.ts`).
+- Multi-platform CI pipeline on GitHub Actions (Ubuntu/Windows, Node 18/20/22) (source: `.github/workflows/ci.yml`).
+- Standardized demo assets and visual documentation suite (source: `assets/`).
 
-### Phase 6 & Web Phase: Web Architecture & Browser Tokenizer (Checkpoint 1 & 2)
-- [x] Extracted model resolution to isomorphic module `src/models.ts` (source: `src/models.ts`).
-- [x] Next.js 16 App Router scaffold with Tailwind CSS v4 and `shadcn/ui` dark theme (source: `web/`).
-- [x] Browser tokenizer using `js-tiktoken/lite` and dynamic rank imports (`ranks.ts`) (source: `web/src/lib/tokenizer/ranks.ts`).
-- [x] 20/20 tokenizer parity test suite asserting 100% fidelity between browser and core (source: `web/test/parity.test.ts`).
-- [x] Offloaded Web Worker thread (`worker.ts`) with client fallback (`client.ts`) (source: `web/src/lib/tokenizer/worker.ts`).
-- [x] Debounced `useTokenDiff` React hook with derived non-cascading loading state (source: `web/src/hooks/useTokenDiff.ts`).
-
----
-
-## 3. In Progress (Active Sprint)
-
-### Phase 6 (Cont.): Interactive Web Playground UI (`web/PLAN.md` Stage 3)
-- [x] Build interactive Playground layout with Before / After text panes, character/line/token counters, and model selector (source: `web/PLAN.md#L119`).
-- [x] Implement result inspection tabs (Summary table, JSON ApiEnvelope view, and CLI command generator) (source: `web/PLAN.md#L120`).
-- [x] Implement responsive layout across desktop and mobile screen sizes (source: `web/PLAN.md#L123`).
-- [x] Integrate bilingual UI toggle (English & Vietnamese) as confirmed during planning (source: `web/PLAN.md#L155`).
+### Interactive Web Application & Production Deployment (v0.2.0)
+- Client-side Next.js 16 Web Application with Tailwind CSS v4 and `shadcn/ui` (source: `web/`).
+- Interactive Playground with Before/After editors, model switcher, and live stats (source: `web/src/components/playground/`).
+- Dedicated Web Worker execution offloading with lazy dynamic rank loading (source: `web/src/lib/tokenizer/worker.ts`).
+- 22 web tests asserting 100% token count parity and hook debounce correctness (source: `web/test/`).
+- SEO metadata, dynamic OpenGraph image, robots.txt, sitemap.xml, and brand icons (source: `web/src/app/`).
+- Production deployment on Vercel (`https://token-diff.vercel.app`) with custom security headers (source: `web/vercel.json`).
+- Package published to public npm registry as `ai-token-diff` (source: `package.json`).
 
 ---
 
-## 4. Planned Milestones (Upcoming)
+## 3. Planned Future Milestones
 
-### Web Deployment & SEO (`web/PLAN.md` Stage 4 & 5)
-- [x] Configure OpenGraph social preview cards, favicon and SEO metadata (source: `web/PLAN.md#L127`).
-- [x] Add web CI verification job to `.github/workflows/ci.yml` (source: `web/PLAN.md#L131`).
-- [x] Deploy Next.js Web Playground to Vercel targeting default `https://token-diff.vercel.app` domain (source: `web/PLAN.md#L132`).
+### Milestone 1: Multi-Model & Open Weights Tokenizer Support
+- Add support for Llama 3 and Mistral BPE / SentencePiece tokenizers.
+- Add heuristic estimation and official tokenizer integration for Anthropic Claude and Google Gemini models.
+- Abstract the tokenizer interface to allow plugging custom tokenizer vocabularies via JSON config.
 
-### NPM Public Release
-- [ ] Publish `ai-token-diff` to public npm registry once 2FA account lock period expires (source: `package.json`).
+### Milestone 2: GitHub Action & Automated PR Context Budgeting
+- Develop an official `token-diff-action` for GitHub Actions.
+- Enable automated comments on Pull Requests that modify prompt templates or documentation, showing exact token deltas.
+- Provide configurable threshold budgets that fail CI if a prompt change increases tokens by more than a specified percentage.
+
+### Milestone 3: Batch Directory Comparison
+- Implement `td diff-dir <dir1> <dir2>` command to recursively calculate cumulative token changes across entire prompt folders.
+- Emit aggregate summary tables and machine-readable JSON envelopes containing file-by-file breakdowns.
+
+### Milestone 4: Web Playground Shareable Permalinks & Export
+- Add URL state encoding (e.g. gzip-compressed hash in URL) to enable sharing prompt comparison permalinks.
+- Add export buttons to download comparison cards as PNG images, SVG badges, or Markdown summary tables.
