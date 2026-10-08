@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "token-diff System Architecture",
+    "output": ".archify/architecture-token-diff-20261008-232932/token-diff.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/Khoa180806/token-diff",
+      "provider": "github",
+      "revision": "4b1a5abcb6b9f28e0e5d03be43de3ece67dd9c59"
+    }
+  },
+  "components": [
+    {
+      "id": "cli",
+      "type": "external",
+      "label": "CLI Interface",
+      "sublabel": "Commander :node",
+      "tag": "stdio / stdin pipe",
+      "pos": [60, 80],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "src/cli.ts",
+          "line": 25,
+          "end_line": 52,
+          "label": "Smart Input & CLI"
+        }
+      ]
+    },
+    {
+      "id": "web_ui",
+      "type": "frontend",
+      "label": "Web Playground",
+      "sublabel": "Next.js 16 :react19",
+      "tag": "Client GUI",
+      "pos": [520, 80],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "web/src/app/page.tsx",
+          "line": 12,
+          "end_line": 35,
+          "label": "Playground View"
+        }
+      ]
+    },
+    {
+      "id": "web_worker",
+      "type": "backend",
+      "label": "Web Worker",
+      "sublabel": "Background Thread",
+      "tag": "Isolated Event Loop",
+      "pos": [770, 80],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "web/src/lib/tokenizer/worker.ts",
+          "line": 22,
+          "end_line": 35,
+          "label": "Worker Message Loop"
+        }
+      ]
+    },
+    {
+      "id": "resolver",
+      "type": "backend",
+      "label": "Model Resolver",
+      "sublabel": "Encoding Lookup",
+      "tag": "4 Encodings",
+      "pos": [60, 240],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "src/models.ts",
+          "line": 36,
+          "end_line": 64,
+          "label": "Model Mapping"
+        }
+      ]
+    },
+    {
+      "id": "tokenizer",
+      "type": "backend",
+      "label": "Tokenizer Engine",
+      "sublabel": "js-tiktoken Pure JS",
+      "tag": "BPE Tokenizer",
+      "pos": [350, 240],
+      "size": [180, 64],
+      "sources": [
+        {
+          "path": "src/tokenizer.ts",
+          "line": 19,
+          "end_line": 34,
+          "label": "BPE Counting"
+        }
+      ]
+    },
+    {
+      "id": "diff_engine",
+      "type": "backend",
+      "label": "Diff & Math Engine",
+      "sublabel": "Delta & Ratio Calc",
+      "tag": "Zero-Div-Safe",
+      "pos": [770, 240],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "src/diff.ts",
+          "line": 9,
+          "end_line": 45,
+          "label": "Token Diff Math"
+        }
+      ]
+    },
+    {
+      "id": "bpe_cache",
+      "type": "database",
+      "label": "Encoder Cache",
+      "sublabel": "In-Memory Map",
+      "tag": "<15ms warm latency",
+      "pos": [350, 400],
+      "size": [180, 64],
+      "sources": [
+        {
+          "path": "src/tokenizer.ts",
+          "line": 8,
+          "end_line": 17,
+          "label": "In-Memory Map Cache"
+        }
+      ]
+    },
+    {
+      "id": "terminal_fmt",
+      "type": "frontend",
+      "label": "Terminal Formatter",
+      "sublabel": "Picocolors ANSI",
+      "tag": "Tabular Report",
+      "pos": [650, 400],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "src/formatter.ts",
+          "line": 34,
+          "end_line": 55,
+          "label": "Human Formatter"
+        }
+      ]
+    },
+    {
+      "id": "envelope_fmt",
+      "type": "backend",
+      "label": "JSON Envelope",
+      "sublabel": "ApiEnvelope v1.0",
+      "tag": "Agent Contract",
+      "pos": [870, 400],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "src/formatter.ts",
+          "line": 4,
+          "end_line": 32,
+          "label": "JSON Envelope"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Functional Core (Deterministic & In-Memory)",
+      "wraps": ["resolver", "tokenizer", "bpe_cache", "diff_engine"]
+    },
+    {
+      "kind": "security-group",
+      "label": "Browser Sandbox (Non-blocking Web Worker)",
+      "wraps": ["web_ui", "web_worker"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "cli-to-resolver",
+      "from": "cli",
+      "to": "resolver",
+      "label": "model flag"
+    },
+    {
+      "id": "cli-to-tokenizer",
+      "from": "cli",
+      "to": "tokenizer",
+      "label": "input stream"
+    },
+    {
+      "id": "web-to-worker",
+      "from": "web_ui",
+      "to": "web_worker",
+      "label": "postMessage"
+    },
+    {
+      "id": "worker-to-diff",
+      "from": "web_worker",
+      "to": "diff_engine",
+      "label": "diff task"
+    },
+    {
+      "id": "tokenizer-to-cache",
+      "from": "tokenizer",
+      "to": "bpe_cache",
+      "label": "lookup / store",
+      "variant": "emphasis"
+    },
+    {
+      "id": "tokenizer-to-diff",
+      "from": "tokenizer",
+      "to": "diff_engine",
+      "label": "token stats"
+    },
+    {
+      "id": "diff-to-terminal",
+      "from": "diff_engine",
+      "to": "terminal_fmt",
+      "label": "human report"
+    },
+    {
+      "id": "diff-to-envelope",
+      "from": "diff_engine",
+      "to": "envelope_fmt",
+      "label": "--json report"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Dual Runtime Interface",
+      "items": [
+        "Commander CLI with Smart Input file/string fallback and Unix stdin piping",
+        "Next.js 16 Web Playground running 100% client-side in the browser"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Deterministic Functional Core",
+      "items": [
+        "Pure JavaScript BPE (js-tiktoken) without C++ native compilation",
+        "In-memory encoder cache ensures sub-millisecond warm tokenization",
+        "Safe division-by-zero math handles empty inputs and baseline deltas"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Presentation & Integration",
+      "items": [
+        "ANSI colored tabular report for direct terminal inspection",
+        "Standardized ApiEnvelope<T> v1.0 with duration_ms for AI agent tool calls"
+      ]
+    }
+  ]
+}

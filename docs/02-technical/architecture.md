@@ -8,6 +8,9 @@ Deterministic token usage measurement and context diff engine for local prompt e
 
 The project follows a strict Functional Core, Imperative Shell architecture to guarantee deterministic outputs and portable execution across environments (source: `src/tokenizer.ts`, `src/diff.ts`, `src/cli.ts`, `web/src/lib/diff.ts`).
 
+![token-diff layered architecture diagram](../assets/diagrams/system-architecture.png)  
+*Figure 1: Layered system architecture diagram generated with Archify. An interactive standalone version is available at [system-architecture.html](../assets/diagrams/system-architecture.html) (vector SVG: [system-architecture.svg](../assets/diagrams/system-architecture.svg)).*
+
 ```mermaid
 graph TD
     subgraph UI_And_Shell["Imperative Shell & User Interfaces"]
