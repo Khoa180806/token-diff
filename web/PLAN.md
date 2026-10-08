@@ -129,7 +129,7 @@ web/
 
 ### Giai đoạn 5 — CI & Deploy
 - [x] **T5.1** Thêm job `web` vào `.github/workflows/ci.yml` (install, lint, test, build trong `web/`). — `ci: add web verification job to GitHub Actions workflow`
-- [ ] **T5.2** Vercel: import repo → Root Directory `web`, Framework Next.js, bật "Include files outside root directory" (cần cho alias `../src`), Production Branch `main`.
+- [x] **T5.2** Vercel: cấu hình `vercel.json` (Next.js framework, security & cache headers), Turbopack workspace root, sẵn sàng deploy Vercel (Root Directory `web`, Framework Next.js, "Include files outside root directory", Production Branch `main`). — `feat(web): add vercel deployment configuration and headers`
 - [ ] **T5.3** Cập nhật `homepage` trong `package.json`, thêm link website vào `README.md`, `README.vi.md`, GitHub About.
 
 **✅ Checkpoint 5 (DoD):** URL production hoạt động; G1–G5 đạt; push nhánh `main` duy nhất.
