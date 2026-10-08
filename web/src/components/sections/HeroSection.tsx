@@ -78,7 +78,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
           <a
             href={PROJECT_LINKS.docs}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="text-xs font-mono text-zinc-400 hover:text-zinc-100 transition-colors flex items-center gap-1"
           >
             <BookOpen className="w-3.5 h-3.5" />
@@ -88,7 +88,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
           <a
             href={PROJECT_LINKS.github}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="text-xs font-mono text-zinc-400 hover:text-zinc-100 transition-colors flex items-center gap-1"
           >
             <Star className="w-3.5 h-3.5 text-amber-400/90 fill-amber-400/20" />
@@ -230,7 +230,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
           <a
             href={PROJECT_LINKS.github}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className={buttonVariants({
               variant: 'outline',
               size: 'lg',
@@ -246,7 +246,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
           <a
             href={PROJECT_LINKS.docs}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className={buttonVariants({
               variant: 'ghost',
               size: 'lg',

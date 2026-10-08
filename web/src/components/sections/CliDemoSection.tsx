@@ -144,8 +144,8 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
                 width={1200}
                 height={700}
                 className="w-full h-auto object-contain"
-                priority
-                unoptimized
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 768px, 800px"
               />
             </div>
             <p className="mt-4 text-xs sm:text-sm text-zinc-400 font-mono text-center px-4">

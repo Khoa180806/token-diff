@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { PlaygroundSection } from '@/components/playground/PlaygroundSection';
 import { FeaturesSection } from '@/components/sections/FeaturesSection';
@@ -11,6 +11,10 @@ import { Language } from '@/lib/constants';
 
 export default function Home() {
   const [lang, setLang] = useState<Language>('en');
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const toggleLanguage = () => {
     setLang((prev) => (prev === 'en' ? 'vi' : 'en'));

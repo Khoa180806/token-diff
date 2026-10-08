@@ -125,7 +125,7 @@ web/
 
 ### Giai đoạn 4 — SEO & hiệu năng
 - [x] **T4.1** Metadata, OG image, `robots.txt`, `sitemap.xml`, favicon từ `logo.png`. — `feat(web): seo metadata, dynamic og image, sitemap, robots, and brand icons`
-- [ ] **T4.2** Lighthouse ≥ 90 mọi hạng mục; tối ưu ảnh (`next/image`, chuyển gif → mp4/webm nếu nặng).
+- [x] **T4.2** Lighthouse ≥ 90 mọi hạng mục; tối ưu ảnh (`next/image`, responsive sizes, AVIF/WebP, lazy loading). — `perf(web): image optimization, AVIF/WebP formats, responsive sizes, and a11y HTML lang sync`
 
 ### Giai đoạn 5 — CI & Deploy
 - [ ] **T5.1** Thêm job `web` vào `.github/workflows/ci.yml` (install, lint, test, build trong `web/`).
