@@ -56,8 +56,8 @@ pie title Feature Delivery Status
 
 ### Web Deployment & SEO (`web/PLAN.md` Stage 4 & 5)
 - [x] Configure OpenGraph social preview cards, favicon and SEO metadata (source: `web/PLAN.md#L127`).
+- [x] Add web CI verification job to `.github/workflows/ci.yml` (source: `web/PLAN.md#L131`).
 - [ ] Deploy Next.js Web Playground to Vercel targeting default `*.vercel.app` domain (source: `web/PLAN.md#L133`).
-- [ ] Add web CI verification job to `.github/workflows/ci.yml` (source: `web/PLAN.md#L132`).
 
 ### NPM Public Release
 - [ ] Publish `ai-token-diff` to public npm registry once 2FA account lock period expires (source: `package.json`).

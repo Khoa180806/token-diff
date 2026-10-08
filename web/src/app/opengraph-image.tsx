@@ -133,7 +133,7 @@ export default async function Image() {
             }}
           >
             <span style={{ color: '#71717a', marginRight: '10px' }}>$</span>
-            <span>npx ai-token-diff diff "Original prompt" "Optimized prompt"</span>
+            <span>{'npx ai-token-diff diff "Original prompt" "Optimized prompt"'}</span>
           </div>
         </div>
 

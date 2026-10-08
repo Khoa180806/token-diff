@@ -37,3 +37,42 @@ jobs:
 
       - name: Run test suite
         run: npm test
+
+  web:
+    name: Web App (Node 20 on ubuntu-latest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+          cache-dependency-path:
+            - 'package-lock.json'
+            - 'web/package-lock.json'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Build core library
+        run: npm run build
+
+      - name: Install web dependencies
+        working-directory: web
+        run: npm ci
+
+      - name: Lint web application
+        working-directory: web
+        run: npm run lint
+
+      - name: Run web tests (Vitest)
+        working-directory: web
+        run: npm test
+
+      - name: Build Next.js web application
+        working-directory: web
+        run: npm run build
+

@@ -128,7 +128,7 @@ web/
 - [x] **T4.2** Lighthouse ≥ 90 mọi hạng mục; tối ưu ảnh (`next/image`, responsive sizes, AVIF/WebP, lazy loading). — `perf(web): image optimization, AVIF/WebP formats, responsive sizes, and a11y HTML lang sync`
 
 ### Giai đoạn 5 — CI & Deploy
-- [ ] **T5.1** Thêm job `web` vào `.github/workflows/ci.yml` (install, lint, test, build trong `web/`).
+- [x] **T5.1** Thêm job `web` vào `.github/workflows/ci.yml` (install, lint, test, build trong `web/`). — `ci: add web verification job to GitHub Actions workflow`
 - [ ] **T5.2** Vercel: import repo → Root Directory `web`, Framework Next.js, bật "Include files outside root directory" (cần cho alias `../src`), Production Branch `main`.
 - [ ] **T5.3** Cập nhật `homepage` trong `package.json`, thêm link website vào `README.md`, `README.vi.md`, GitHub About.
 
