@@ -1,16 +1,16 @@
 # Configuration Reference
 
-Reference guide for CLI flags, model parameter mappings, and runtime execution flags.
+Technical reference guide for CLI options, runtime configuration flags, environment variables, and model parameter mappings. This document details all configurable properties across the CLI and web application runtimes.
 
 ---
 
 ## 1. Zero-Secret Architecture
 
-`token-diff` is designed from the ground up as a **100% offline, local compute engine** (source: `src/tokenizer.ts`).
+`token-diff` is designed as a 100% offline, local compute engine (source: `src/tokenizer.ts`).
 
 - **No API Keys**: Does not require `OPENAI_API_KEY` or third-party credentials.
-- **No Network Endpoints**: Does not configure HTTP endpoints or external telemetry.
-- **No Database Credentials**: Requires zero database connection strings.
+- **No Network Endpoints**: Does not configure HTTP backends or external telemetry.
+- **No Database Credentials**: Requires zero database connection strings or stateful persistence.
 
 ---
 
@@ -21,7 +21,7 @@ Command-line parameters accepted across subcommands (source: `src/cli.ts#L86-L16
 | Option Flag | Shorthand | Default Value | Applicable Subcommands | Description |
 |---|:---:|:---:|:---:|---|
 | `--model <model>` | `-m` | `gpt-4o` | `diff`, `count` | Target model name or explicit encoding string. |
-| `--json` | - | `false` | `diff`, `count` | Serializes machine-readable JSON ApiEnvelope to stdout. |
+| `--json` | `-j` | `false` | `diff`, `count` | Serializes machine-readable JSON ApiEnvelope to stdout. |
 | `--help` | `-h` | - | All | Displays command-line help manual. |
 | `--version` | `-V` | - | Root | Emits package semantic version (`0.1.1`). |
 
