@@ -1,19 +1,19 @@
 # Project Overview
 
-High-performance token usage measurement and context diff infrastructure designed for LLM workflows, autonomous agent loops, and prompt engineering pipelines.
+Deterministic token usage measurement and context diff infrastructure designed for LLM workflows, autonomous agent loops, and prompt engineering pipelines. This document describes the core problem statement, target audience, feature scope, and technology stack.
 
 ---
 
 ## 1. Problem Statement
 
-Modern Large Language Models (LLMs) charge fees and enforce hard context window limits based on sub-word **Byte Pair Encoding (BPE) tokens**, not words, characters, or line counts. 
+Modern Large Language Models (LLMs) charge fees and enforce strict context window limits based on sub-word Byte Pair Encoding (BPE) tokens, not words, characters, or line counts.
 
 Standard Unix utilities (`wc -l`, `wc -c`, `diff`) fail to measure token impacts:
-- A 10-character edit may save or consume anywhere between 1 and 8 tokens depending on model dictionary prefixes.
+- A 10-character edit may save or consume anywhere between 1 and 8 tokens depending on model vocabulary prefixes.
 - Different model generations (`gpt-4o` vs. `gpt-4` vs. `davinci`) use entirely distinct token vocabularies (`o200k_base` vs. `cl100k_base` vs. `r50k_base`).
-- Traditional cloud tokenizer APIs require network calls, rate limits, and transmitting sensitive proprietary prompt code across the WAN.
+- Traditional cloud tokenizer APIs require network calls, enforce rate limits, and risk leaking proprietary prompt instructions across the WAN.
 
-`token-diff` solves this by delivering 100% offline, deterministic BPE token counting and delta reporting with zero native dependencies (source: `src/tokenizer.ts`, `docs/ARCHITECTURE.md`).
+`token-diff` solves this problem by delivering 100% offline, deterministic BPE token counting and delta reporting with zero native dependencies (source: `src/tokenizer.ts`, `src/diff.ts`).
 
 ---
 
@@ -28,11 +28,11 @@ Standard Unix utilities (`wc -l`, `wc -c`, `diff`) fail to measure token impacts
 
 ## 3. Key Features
 
-- **100% Local & Air-Gapped**: Runs entirely in-process with zero network requests and zero API key requirements (source: `src/tokenizer.ts`).
-- **Zero-WASM, Pure JS Portability**: Built on `js-tiktoken` without requiring WebAssembly (`.wasm`) or native C++ addons (source: `package.json`).
+- **100% Local Execution**: Runs entirely in-process with zero network requests and zero API key requirements (source: `src/tokenizer.ts`).
+- **Pure JavaScript Portability**: Built on `js-tiktoken` without requiring WebAssembly (`.wasm`) or native C++ addons (source: `package.json`).
 - **Smart Input Detection**: Transparently accepts file paths, raw prompt strings, or stdin pipe streams (`-`) with stderr safety warnings (source: `src/cli.ts#L48`).
 - **Standardized API Transport Envelopes**: Emits structured JSON (`--json`) with runtime execution latency, schema versions, and error envelopes matching AI agent transport specifications (source: `src/formatter.ts`).
-- **In-Memory Vocabulary Cache**: Reuses loaded BPE encoders across calls, keeping warm execution latency under 15ms (source: `docs/BENCHMARKS.md`).
+- **In-Memory Vocabulary Cache**: Reuses loaded BPE encoders across calls, keeping warm execution latency under 15ms (source: `src/tokenizer.ts`).
 - **Interactive Web Playground**: Client-side Next.js playground utilizing Web Workers to offload token counting without freezing the browser (source: `web/src/app/page.tsx`).
 
 ---
@@ -47,7 +47,7 @@ Standard Unix utilities (`wc -l`, `wc -c`, `diff`) fail to measure token impacts
 - **Terminal Styling**: `picocolors` 1.1+ (source: `package.json`)
 - **Test Framework**: `vitest` 2.1+ (source: `package.json`)
 
-### Web Playground (`web/`)
+### Web Application (`web/`)
 - **Framework**: Next.js 16 (App Router with Turbopack) (source: `web/package.json`)
 - **UI & Styling**: React 19, Tailwind CSS v4, `shadcn/ui` (source: `web/package.json`)
 - **Execution Offloading**: Web Workers with `js-tiktoken/lite` dynamic rank loaders (source: `web/src/lib/tokenizer/worker.ts`)

@@ -1,16 +1,16 @@
 # Getting Started
 
-Step-by-step setup, execution, testing, and development guide for developers and evaluators.
+Step-by-step setup, execution, testing, and development guide for developers and evaluators. This document covers installation methods for the CLI and instructions for running the local web development server.
 
 ---
 
 ## 1. Prerequisites
 
-- **Node.js**: `>= 18.0.0` (tested on Node 18, 20, and 22) (source: `package.json#L57`)
+- **Node.js**: `>= 18.0.0` (tested on Node 18, 20, and 22) (source: `package.json#L68`)
 - **npm**: `>= 9.0.0`
 - **Git**
 
-No native build tools, C++ compilers, Python installations, or API keys are needed (source: `docs/BENCHMARKS.md`).
+No native build tools, C++ compilers, Python installations, or API keys are required (source: `package.json`).
 
 ---
 

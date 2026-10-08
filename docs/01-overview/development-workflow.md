@@ -1,6 +1,6 @@
 # Development Workflow
 
-Branching standards, commit message conventions, Test-Driven Development (TDD), and pull request guidelines.
+Branching standards, commit message conventions, Test-Driven Development (TDD), and pull request guidelines. This document outlines the engineering practices required for contributing code and documentation to the repository.
 
 ---
 
@@ -19,7 +19,7 @@ All changes must pass automated GitHub Actions CI before merging into `main` (so
 
 ## 2. Commit Message Conventions
 
-We strictly enforce the **Conventional Commits** standard (source: `docs/CONTRIBUTING.md#L74-L100`):
+We strictly enforce the Conventional Commits standard (source: `package.json`):
 
 ```text
 <type>(<scope>): <short description in imperative present tense>
@@ -43,7 +43,7 @@ We strictly enforce the **Conventional Commits** standard (source: `docs/CONTRIB
 
 ## 3. Test-Driven Development (TDD) Discipline
 
-All new features and bug fixes follow the **Red-Green-Refactor** cycle:
+All new features and bug fixes follow the Red-Green-Refactor cycle:
 
 1. **Red**: Write a failing unit or integration test in `test/` (or `web/test/`) reproducing the bug or specifying the new feature before writing production code.
 2. **Verify Red**: Run `npm test` to confirm the test fails for the expected reason.
