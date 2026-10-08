@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://token-diff.vercel.app"><strong>🌐 Trải nghiệm trực tuyến (Live Web Playground)</strong></a>
+  <a href="https://token-diff.vercel.app"><strong>Trải nghiệm trực tuyến (Live Web Playground)</strong></a>
   <br />
   <a href="README.md">English</a> • <a href="README.vi.md">Tiếng Việt</a>
   <br />
@@ -81,7 +81,7 @@ Khi tối ưu prompt, nén context cho AI agent, hay muốn đặt chặn trần
 - **An toàn trước dữ liệu rỗng**: Xử lý mượt mà khi tệp rỗng hoặc 0 token, không bao giờ bị lỗi văng phép chia cho 0 (`NaN` / `Infinity`).
 - **Terminal trực quan**: Tự động căn lề thẳng hàng các cột thông tin và hỗ trợ nhận luồng dữ liệu pipe (`-`) chuẩn phong cách Unix.
 
-> 📖 *Xem phân tích chi tiết về pipeline 4 giai đoạn, cache in-memory và ranh giới hệ thống tại [Tài liệu Kiến trúc (Architecture)](docs/ARCHITECTURE.md).*
+> *Lưu ý: Xem phân tích chi tiết về pipeline 4 giai đoạn, cache in-memory và ranh giới hệ thống tại [Tài liệu Kiến trúc (Architecture)](docs/02-technical/architecture.md).*
 
 ---
 
@@ -113,9 +113,9 @@ npm install -D ai-token-diff
 ### Trải nghiệm trực quan qua Web Playground (Không cần cài đặt):
 Bạn thích giao diện đồ họa trực quan thay vì gõ lệnh terminal?
 Truy cập ngay ứng dụng web client-side: **[https://token-diff.vercel.app](https://token-diff.vercel.app)**
-- ⚡ **100% Client-Side**: Tokenize chạy trực tiếp bằng Web Worker trên trình duyệt, tốc độ phản hồi tính bằng mili-giây.
-- 🔒 **Bảo mật tuyệt đối**: Dữ liệu prompt không bao giờ gửi ra máy chủ hay dịch vụ bên thứ ba.
-- 📋 **Xuất lệnh CLI & JSON**: Tự động sinh lệnh `td diff` tương ứng và API envelope để nhúng vào pipeline agent.
+- **100% Client-Side**: Tokenize chạy trực tiếp bằng Web Worker trên trình duyệt, tốc độ phản hồi tính bằng mili-giây.
+- **Bảo mật tuyệt đối**: Dữ liệu prompt không bao giờ gửi ra máy chủ hay dịch vụ bên thứ ba.
+- **Xuất lệnh CLI & JSON**: Tự động sinh lệnh `td diff` tương ứng và API envelope để nhúng vào pipeline agent.
 
 ---
 
@@ -123,7 +123,7 @@ Truy cập ngay ứng dụng web client-side: **[https://token-diff.vercel.app](
 
 Bạn có thể dùng lệnh rút gọn **`td`** hoặc tên đầy đủ **`token-diff`** / **`ai-token-diff`**.
 
-> 📖 *Xem đầy đủ danh sách cờ tùy chọn, cú pháp pipe nâng cao và kịch bản tự động hóa tại [Cẩm nang CLI Reference](docs/CLI_REFERENCE.md).*
+> *Lưu ý: Xem đầy đủ danh sách cờ tùy chọn, cú pháp pipe nâng cao và kịch bản tự động hóa tại [Cẩm nang CLI Reference](docs/02-technical/api-reference.md).*
 
 ### 1. `td diff` (hoặc `token-diff diff`)
 
@@ -197,7 +197,7 @@ cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 
 Gói `token-diff` hỗ trợ đầy đủ type TypeScript:
 
-> 📖 *Xem hướng dẫn chi tiết kiểu dữ liệu TypeScript, code mẫu và tối ưu batch tại [Tài liệu SDK Guide](docs/SDK_GUIDE.md).*
+> *Lưu ý: Xem hướng dẫn chi tiết kiểu dữ liệu TypeScript, code mẫu và tối ưu batch tại [Tài liệu API & SDK Guide](docs/02-technical/api-reference.md).*
 
 ```typescript
 import {
@@ -288,7 +288,7 @@ Bạn có thể truyền tên model phổ biến hoặc trực tiếp tên bộ 
 - **Bộ nhớ tiêu hao**: <40MB RAM.
 - **Thuần tính toán trong bộ nhớ**: Tuyệt đối không tạo hay ghi tệp tạm ra ổ cứng.
 
-> 📖 *Xem bảng đo kiểm chi tiết theo kích cỡ payload và so sánh kiến trúc tại [Tài liệu Benchmarks & Hiệu năng](docs/BENCHMARKS.md).*
+> *Lưu ý: Xem bảng đo kiểm chi tiết theo kích cỡ payload và so sánh kiến trúc tại [Tài liệu Kiến trúc & Hiệu năng](docs/02-technical/architecture.md).*
 
 ---
 
@@ -328,7 +328,7 @@ Khi kết hợp cùng cờ `--json`, kết quả được xuất dưới dạng 
 
 ## Phát triển và đóng góp
 
-> 📖 *Xem hướng dẫn chi tiết quy trình đóng góp mã nguồn, phương pháp kiểm thử TDD và quy chuẩn commit tại [Tài liệu Hướng dẫn Đóng góp](docs/CONTRIBUTING.md).*
+> *Lưu ý: Xem hướng dẫn chi tiết quy trình đóng góp mã nguồn, phương pháp kiểm thử TDD và quy chuẩn commit tại [Tài liệu Quy trình Phát triển](docs/01-overview/development-workflow.md).*
 
 ```bash
 # Clone mã nguồn

@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://token-diff.vercel.app"><strong>🌐 Try Live Web Playground</strong></a>
+  <a href="https://token-diff.vercel.app"><strong>Try Live Web Playground</strong></a>
   <br />
   <a href="README.md">English</a> • <a href="README.vi.md">Tiếng Việt</a>
   <br />
@@ -83,7 +83,7 @@ Whether verifying the efficacy of prompt compression algorithms, monitoring mult
 - **Zero Div-by-Zero Hazards**: Handles empty initial prompts and zero-token states gracefully with strict edge-case safety.
 - **Streamlined CLI UX**: Automatic alignment for tabular terminal reporting and standardized Unix hyphen (`-`) pipe resolution.
 
-> 📖 *For a deep dive into the 4-stage pipeline, in-memory cache, and error boundaries, see [System Architecture & Technical Design](docs/02-technical/architecture.md).*
+> *Note: For a deep dive into the 4-stage pipeline, in-memory cache, and error boundaries, see [System Architecture & Technical Design](docs/02-technical/architecture.md).*
 
 ---
 
@@ -115,9 +115,9 @@ npm install -D ai-token-diff
 ### Interactive Web Playground (Browser GUI):
 Prefer an interactive visual interface without touching the terminal?
 Use the online client-side playground: **[https://token-diff.vercel.app](https://token-diff.vercel.app)**
-- ⚡ **100% Client-Side**: Tokenization executes in a dedicated Web Worker thread in your browser.
-- 🔒 **Zero Data Leakage**: Your prompts never leave your device.
-- 📋 **CLI & Envelope Export**: Instantly generate equivalent `td diff` commands and JSON API envelopes.
+- **100% Client-Side**: Tokenization executes in a dedicated Web Worker thread in your browser.
+- **Zero Data Leakage**: Your prompts never leave your device.
+- **CLI & Envelope Export**: Instantly generate equivalent `td diff` commands and JSON API envelopes.
 
 ---
 
@@ -125,7 +125,7 @@ Use the online client-side playground: **[https://token-diff.vercel.app](https:/
 
 You can use either the concise alias **`td`** or the canonical binary names **`token-diff`** / **`ai-token-diff`**.
 
-> 📖 *For complete command flags, advanced piping recipes, and scripting examples, see the [API & CLI Reference](docs/02-technical/api-reference.md).*
+> *Note: For complete command flags, advanced piping recipes, and scripting examples, see the [API & CLI Reference](docs/02-technical/api-reference.md).*
 
 ### 1. `td diff` (or `token-diff diff`)
 
@@ -205,7 +205,7 @@ cat prompt.txt | td diff base.txt - --json | jq .data.diff.token_delta
 
 `token-diff` is distributed with complete ESM and TypeScript definitions:
 
-> 📖 *For complete type definitions, recipes, and batch tokenization patterns, see the [API & SDK Guide](docs/02-technical/api-reference.md).*
+> *Note: For complete type definitions, recipes, and batch tokenization patterns, see the [API & SDK Guide](docs/02-technical/api-reference.md).*
 
 ```typescript
 import {
@@ -298,7 +298,7 @@ When `--json` is enabled and an error occurs, the error details are serialized t
 - **Memory Footprint**: <40MB RSS under active tokenization.
 - **Pure In-Memory Operations**: Zero temporary files written to disk.
 
-> 📖 *For complete scaling benchmarks, payload matrices, and architectural trade-off comparisons, see [Architecture & Performance](docs/02-technical/architecture.md).*
+> *Note: For complete scaling benchmarks, payload matrices, and architectural trade-off comparisons, see [Architecture & Performance](docs/02-technical/architecture.md).*
 
 ---
 
@@ -306,7 +306,7 @@ When `--json` is enabled and an error occurs, the error details are serialized t
 
 Full architectural specifications, developer workflows, operations, and technical decision records are available in the dedicated documentation directory:
 
-👉 **[Explore Full Technical Documentation (docs/README.md)](docs/README.md)**
+**[Explore Full Technical Documentation (docs/README.md)](docs/README.md)**
 
 - [**01. Overview**](docs/README.md#01-overview): [Project Overview](docs/01-overview/project-overview.md) • [Project Structure](docs/01-overview/project-structure.md) • [Getting Started](docs/01-overview/getting-started.md) • [Development Workflow](docs/01-overview/development-workflow.md)
 - [**02. Technical**](docs/README.md#02-technical-architecture--specifications): [System Architecture](docs/02-technical/architecture.md) • [Core Business Flows](docs/02-technical/business-flow.md) • [API & CLI Reference](docs/02-technical/api-reference.md) • [Technical Decisions (ADRs)](docs/02-technical/tech-decisions.md)
@@ -354,7 +354,7 @@ Combined with `--json`, it produces standardized JSON envelopes that can be pars
 
 ## Development & Contributing
 
-> 📖 *For detailed contribution guidelines, test-driven development (TDD) workflow, and commit standards, see the [Development Workflow Guide](docs/01-overview/development-workflow.md).*
+> *Note: For detailed contribution guidelines, test-driven development (TDD) workflow, and commit standards, see the [Development Workflow Guide](docs/01-overview/development-workflow.md).*
 
 ```bash
 # Clone the repository
