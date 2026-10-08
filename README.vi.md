@@ -125,10 +125,10 @@ td diff [tùy_chọn] <before> <after>
 
 #### Cơ chế nhận diện đầu vào thông minh (Smart Input)
 `token-diff` tự động phân biệt xem tham số `<before>` và `<after>` là đường dẫn tệp hay là chuỗi văn bản (prompt):
-- **So sánh 2 tệp TypeScript**: `td diff formatter.ts formatter.v2.ts`
+- **So sánh 2 tệp văn bản/prompt**: `td diff prompt_v1.txt prompt_v2.txt`
 - **So sánh 2 đoạn prompt trực tiếp**: `td diff "Hãy viết một hàm python tính fibonacci" "Viết python fibonacci"`
 - **So sánh giữa tệp và prompt thô**: `td diff base_prompt.txt "Viết ngắn gọn súc tích"`
-- **Nhận luồng dữ liệu từ pipe (`-`)**: `cat prompt_moi.txt | td diff prompt_cu.txt -`
+- **Nhận luồng dữ liệu từ pipe (`-`)**: `cat prompt_v2.txt | td diff prompt_v1.txt -`
 
 > **Lưu ý**: Nếu đường dẫn không tồn tại trên máy, công cụ sẽ tự động coi đó là chuỗi prompt thô và in kèm một cảnh báo nhẹ `[WARN]` ra terminal để bạn không bị nhầm lẫn khi gõ sai tên tệp.
 

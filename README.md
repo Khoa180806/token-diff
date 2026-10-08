@@ -127,10 +127,10 @@ td diff [options] <before> <after>
 
 #### Smart Input Detection (Files or Raw Strings)
 `token-diff` automatically detects whether `<before>` and `<after>` are file paths or raw text strings:
-- **File vs File**: `td diff formatter.ts formatter.v2.ts`
+- **File vs File**: `td diff prompt_v1.txt prompt_v2.txt`
 - **Raw String vs Raw String**: `td diff "Please write a python function to calculate fibonacci" "Write python fibonacci"`
 - **File vs Raw String**: `td diff base_system_prompt.txt "You are a concise code assistant."`
-- **Standard Input (`-`)**: `cat new_prompt.txt | td diff old_prompt.txt -`
+- **Standard Input (`-`)**: `cat prompt_v2.txt | td diff prompt_v1.txt -`
 
 > **Note**: If an input does not exist on disk, `token-diff` seamlessly falls back to treating it as raw text and displays a subtle `[WARN]` to prevent mistyped filename errors.
 

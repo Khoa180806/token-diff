@@ -17,7 +17,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
   const demoItems = {
     diff: {
       label: t.cliTabDiff,
-      cmd: 'token-diff prompt_v1.txt prompt_v2.txt --model gpt-4o',
+      cmd: 'td diff prompt_v1.txt prompt_v2.txt',
       imageSrc: '/demo-diff.png',
       alt: 'CLI Diff Mode',
       desc:
@@ -27,7 +27,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
     },
     count: {
       label: t.cliTabCount,
-      cmd: 'token-diff count "Analyze this codebase architecture" --model gpt-4o',
+      cmd: 'td count README.md',
       imageSrc: '/demo-count.png',
       alt: 'CLI Count Mode',
       desc:
@@ -37,7 +37,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
     },
     stdin: {
       label: t.cliTabStdin,
-      cmd: 'cat system_prompt.txt | token-diff stdin --model cl100k_base',
+      cmd: 'cat prompt_v2.txt | td diff prompt_v1.txt -',
       imageSrc: '/demo-stdin.png',
       alt: 'CLI Stdin Unix Pipeline',
       desc:
@@ -47,7 +47,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
     },
     json: {
       label: t.cliTabJson,
-      cmd: 'token-diff prompt_v1.txt prompt_v2.txt --json',
+      cmd: 'td diff prompt_v1.txt prompt_v2.txt --json',
       imageSrc: '/json-mode.png',
       alt: 'CLI JSON Envelope Mode',
       desc:
