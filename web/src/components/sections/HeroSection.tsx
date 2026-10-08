@@ -99,8 +99,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
             variant="outline"
             size="sm"
             onClick={onToggleLang}
-            className="h-8 px-2.5 text-xs font-mono bg-zinc-900/90 border-zinc-800 hover:bg-zinc-800 text-zinc-200"
+            className="h-8 px-2.5 text-xs font-mono bg-zinc-900/90 border-zinc-800 hover:bg-zinc-800 text-zinc-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
             title="Toggle language (English / Tiếng Việt)"
+            aria-label={lang === 'en' ? 'Chuyển sang Tiếng Việt' : 'Switch to English'}
           >
             <Globe className="w-3.5 h-3.5 mr-1 text-zinc-400" />
             {lang === 'en' ? 'VI' : 'EN'}
@@ -154,31 +155,34 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
         <div className="w-full max-w-xl mx-auto space-y-2 text-left">
           {/* Snippet Tabs */}
           <div className="flex items-center justify-between px-1">
-            <div className="flex items-center gap-1">
+            <div className="flex flex-wrap items-center gap-1" role="tablist" aria-label="Installation methods">
               {INSTALL_SNIPPETS.map((snippet) => (
                 <button
                   key={snippet.id}
+                  role="tab"
+                  aria-selected={selectedSnippetId === snippet.id}
+                  aria-label={snippet.label}
                   onClick={() => setSelectedSnippetId(snippet.id)}
-                  className={`text-[11px] font-mono px-2.5 py-1 rounded-md transition-colors ${
+                  className={`text-[11px] font-mono px-2.5 py-1 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none ${
                     selectedSnippetId === snippet.id
                       ? 'bg-zinc-800 text-emerald-400 font-semibold'
-                      : 'text-zinc-500 hover:text-zinc-300'
+                      : 'text-zinc-400 hover:text-zinc-200'
                   }`}
                 >
                   {snippet.label}
                 </button>
               ))}
             </div>
-            <span className="text-[10px] font-mono text-zinc-600 hidden sm:inline">
+            <span className="text-[10px] font-mono text-zinc-500 hidden sm:inline select-none">
               terminal
             </span>
           </div>
 
           {/* Terminal Command Bar */}
-          <div className="relative group rounded-lg border border-zinc-800 bg-zinc-900/90 shadow-2xl p-3 flex items-center justify-between font-mono text-xs text-zinc-200">
-            <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pr-3">
-              <Terminal className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span className="text-zinc-600 select-none">$</span>
+          <div className="relative group rounded-lg border border-zinc-800 bg-zinc-900/90 shadow-2xl p-3 flex items-center justify-between font-mono text-xs text-zinc-200 gap-2">
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pr-2 min-w-0 flex-1">
+              <Terminal className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+              <span className="text-zinc-500 select-none">$</span>
               <span className="text-zinc-100 whitespace-nowrap">
                 {activeSnippet.command}
               </span>
@@ -188,37 +192,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
               variant="outline"
               size="sm"
               onClick={handleCopyCommand}
-              className="h-7 text-xs font-mono bg-zinc-950 border-zinc-800 hover:bg-zinc-800 text-zinc-300 shrink-0"
+              className="h-7 px-2.5 text-xs font-mono bg-zinc-950 border-zinc-800 hover:bg-zinc-800 text-zinc-300 shrink-0 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               title={t.copyCommand}
+              aria-label={copied ? t.copiedCommand : t.copyCommand}
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400 mr-1.5" />
+                  <Check className="w-3.5 h-3.5 text-emerald-400 mr-1.5" aria-hidden="true" />
                   <span>{t.copiedCommand}</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 mr-1.5" />
+                  <Copy className="w-3.5 h-3.5 mr-1.5" aria-hidden="true" />
                   <span>{t.copyCommand}</span>
                 </>
               )}
             </Button>
           </div>
 
-          <p className="text-[11px] font-mono text-zinc-500 px-1">
+          <p className="text-[11px] font-mono text-zinc-400 px-1">
             💡 {activeSnippet.description[lang]}
           </p>
         </div>
 
         {/* Action CTAs */}
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <Button
             size="lg"
             onClick={scrollToPlayground}
-            className="h-11 px-6 text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 shadow-lg shadow-emerald-500/20 font-mono"
+            className="w-full sm:w-auto h-11 px-6 text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-zinc-950 shadow-lg shadow-emerald-500/20 font-mono focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
           >
             <span>{t.heroCtaPlayground}</span>
-            <ArrowRight className="w-4 h-4 ml-2" />
+            <ArrowRight className="w-4 h-4 ml-2" aria-hidden="true" />
           </Button>
 
           <a
@@ -229,12 +234,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
               variant: 'outline',
               size: 'lg',
               className:
-                'h-11 px-5 text-sm font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-200 inline-flex items-center cursor-pointer',
+                'w-full sm:w-auto h-11 px-5 text-sm font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-200 inline-flex items-center justify-center cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none',
             })}
           >
-            <Star className="w-4 h-4 mr-2 text-amber-400 fill-amber-400/20" />
+            <Star className="w-4 h-4 mr-2 text-amber-400 fill-amber-400/20" aria-hidden="true" />
             <span>{t.heroCtaGithub}</span>
-            <ExternalLink className="w-3 h-3 ml-1.5 text-zinc-500" />
+            <ExternalLink className="w-3 h-3 ml-1.5 text-zinc-400" aria-hidden="true" />
           </a>
 
           <a
@@ -245,10 +250,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
               variant: 'ghost',
               size: 'lg',
               className:
-                'h-11 px-4 text-sm font-mono text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900 inline-flex items-center cursor-pointer',
+                'w-full sm:w-auto h-11 px-4 text-sm font-mono text-zinc-300 hover:text-zinc-100 hover:bg-zinc-900 inline-flex items-center justify-center cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none',
             })}
           >
-            <BookOpen className="w-4 h-4 mr-2" />
+            <BookOpen className="w-4 h-4 mr-2" aria-hidden="true" />
             <span>{t.heroCtaDocs}</span>
           </a>
         </div>

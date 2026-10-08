@@ -62,22 +62,27 @@ export function UseCasesSection({ lang }: UseCasesSectionProps) {
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className="p-3 rounded-lg border border-zinc-800 bg-zinc-950 text-blue-400 group-hover:border-blue-500/40 transition-colors">
-                      <Icon className="w-5 h-5" />
+                      <Icon className="w-5 h-5" aria-hidden="true" />
                     </div>
-                    <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full border border-zinc-700 bg-zinc-800/80 text-zinc-300">
+                    <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full border border-zinc-700 bg-zinc-800/80 text-zinc-200">
                       {uc.tag}
                     </span>
                   </div>
                   <h3 className="text-base sm:text-lg font-semibold text-zinc-100 mb-2 group-hover:text-blue-300 transition-colors">
                     {uc.title}
                   </h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed mb-6 font-sans">
+                  <p className="text-sm text-zinc-300 leading-relaxed mb-6 font-sans">
                     {uc.description}
                   </p>
                 </div>
 
-                <div className="rounded-lg border border-zinc-800/80 bg-zinc-950 p-3 font-mono text-xs text-zinc-300 overflow-x-auto">
-                  <div className="text-[10px] text-zinc-400 uppercase tracking-wider mb-1 font-semibold">
+                <div
+                  tabIndex={0}
+                  role="region"
+                  aria-label={`${uc.title} snippet`}
+                  className="rounded-lg border border-zinc-800/80 bg-zinc-950 p-3 font-mono text-xs text-zinc-200 overflow-x-auto focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+                >
+                  <div className="text-[10px] text-zinc-400 uppercase tracking-wider mb-1 font-semibold select-none">
                     Snippet
                   </div>
                   <pre className="text-emerald-400 whitespace-pre-wrap">{uc.codeSnippet}</pre>

@@ -82,18 +82,20 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
         </div>
 
         {/* Tab Controls */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="CLI Demonstration views">
           {(Object.keys(demoItems) as Array<keyof typeof demoItems>).map((key) => {
             const item = demoItems[key];
             const isActive = activeTab === key;
             return (
               <button
                 key={key}
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => {
                   setActiveTab(key);
                   setCopied(false);
                 }}
-                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-mono font-medium transition-all ${
+                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-mono font-medium transition-all focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none ${
                   isActive
                     ? 'bg-zinc-800 text-emerald-400 border border-emerald-500/40 shadow-sm'
                     : 'bg-zinc-900/60 text-zinc-400 border border-zinc-800 hover:bg-zinc-900 hover:text-zinc-200'
@@ -108,26 +110,27 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
         {/* Terminal Window Preview */}
         <div className="max-w-4xl mx-auto rounded-xl border border-zinc-800 bg-zinc-900/90 shadow-2xl overflow-hidden">
           {/* Terminal Title Bar */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-950/80">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500/70 inline-block"></span>
-              <span className="w-3 h-3 rounded-full bg-amber-500/70 inline-block"></span>
-              <span className="w-3 h-3 rounded-full bg-emerald-500/70 inline-block"></span>
-              <span className="ml-2 text-xs font-mono text-zinc-400 hidden sm:inline">
+          <div className="flex items-center justify-between px-3 sm:px-4 py-3 border-b border-zinc-800 bg-zinc-950/80 gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/70 inline-block"></span>
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/70 inline-block"></span>
+              <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/70 inline-block"></span>
+              <span className="ml-2 text-xs font-mono text-zinc-400 hidden sm:inline select-none">
                 token-diff — terminal preview
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="text-[11px] font-mono text-zinc-400 bg-zinc-900 px-2 py-1 rounded border border-zinc-800 truncate max-w-[200px] sm:max-w-none">
-                <span className="text-emerald-400">$</span> {current.cmd}
+            <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+              <div className="text-[11px] font-mono text-zinc-300 bg-zinc-900 px-2 py-1 rounded border border-zinc-800 truncate max-w-[150px] xs:max-w-[220px] sm:max-w-none">
+                <span className="text-emerald-400 select-none">$</span> {current.cmd}
               </div>
               <button
                 onClick={handleCopyCmd}
-                title="Copy command"
-                className="p-1.5 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 transition-colors"
+                title={copied ? "Command copied" : "Copy command"}
+                aria-label={copied ? "Command copied to clipboard" : "Copy command"}
+                className="p-1.5 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 transition-colors shrink-0 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
-                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                {copied ? <Check className="w-4 h-4 text-emerald-400" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}
               </button>
             </div>
           </div>

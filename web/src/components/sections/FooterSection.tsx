@@ -25,12 +25,12 @@ export function FooterSection({ lang }: FooterSectionProps) {
           <span className="text-xs text-zinc-400">{t.footerBuiltBy}</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-6 text-xs font-mono">
+        <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-6 text-xs font-mono">
           <a
             href={PROJECT_LINKS.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-zinc-200 transition-colors"
+            className="text-zinc-300 hover:text-zinc-100 transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none rounded px-1"
           >
             {t.footerGithub}
           </a>
@@ -38,7 +38,7 @@ export function FooterSection({ lang }: FooterSectionProps) {
             href={PROJECT_LINKS.docs}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-zinc-200 transition-colors"
+            className="text-zinc-300 hover:text-zinc-100 transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none rounded px-1"
           >
             {t.footerDocumentation}
           </a>
@@ -46,15 +46,16 @@ export function FooterSection({ lang }: FooterSectionProps) {
             href={PROJECT_LINKS.license}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-zinc-400 hover:text-zinc-200 transition-colors"
+            className="text-zinc-300 hover:text-zinc-100 transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none rounded px-1"
           >
             {t.footerLicense}
           </a>
           <button
             onClick={scrollToTop}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-zinc-800 hover:border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-zinc-100 transition-colors cursor-pointer"
+            aria-label={t.footerBackToTop}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-zinc-800 hover:border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-zinc-100 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
           >
-            <ArrowUp className="w-3.5 h-3.5" />
+            <ArrowUp className="w-3.5 h-3.5" aria-hidden="true" />
             <span>{t.footerBackToTop}</span>
           </button>
         </div>

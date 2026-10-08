@@ -68,7 +68,7 @@ export function FeaturesSection({ lang }: FeaturesSectionProps) {
               >
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="p-3 rounded-lg border border-zinc-800 bg-zinc-950 text-emerald-400 group-hover:border-emerald-500/40 group-hover:scale-105 transition-all">
-                    <Icon className="w-6 h-6" />
+                    <Icon className="w-6 h-6" aria-hidden="true" />
                   </div>
                   <span
                     className={`text-[11px] font-mono px-2.5 py-0.5 rounded-full border ${feature.badgeColor}`}
@@ -79,7 +79,7 @@ export function FeaturesSection({ lang }: FeaturesSectionProps) {
                 <h3 className="text-lg font-semibold text-zinc-100 mb-2 group-hover:text-emerald-300 transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-zinc-400 leading-relaxed font-sans">
+                <p className="text-sm text-zinc-300 leading-relaxed font-sans">
                   {feature.description}
                 </p>
               </div>

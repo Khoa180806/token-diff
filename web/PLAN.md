@@ -119,9 +119,9 @@ web/
 - [x] **T3.1** Playground (InputPane, ModelSelect, StatsCards, ResultTabs). — `feat(web): interactive playground`
 - [x] **T3.2** Hero + copy-to-clipboard. — `feat(web): hero section with quick install tabs and playground scroll CTA`
 - [x] **T3.3** Features, CLI Demo, Use cases, Footer. — `feat(web): landing sections (features, cli demo, use cases, footer)`
-- [ ] **T3.4** Responsive (360px → 1440px), a11y (label, focus ring, contrast AA, keyboard). — `fix(web): a11y & responsive`
+- [x] **T3.4** Responsive (360px → 1440px), a11y (label, focus ring, contrast AA, keyboard). — `fix(web): a11y & responsive`
 
-**✅ Checkpoint 3:** Review UI bằng trình duyệt thật; người dùng duyệt giao diện.
+**✅ Checkpoint 3 (Hoàn thành UI):** Đạt chuẩn a11y WCAG 2.1 AA, responsive 360px-1440px; người dùng duyệt giao diện.
 
 ### Giai đoạn 4 — SEO & hiệu năng
 - [ ] **T4.1** Metadata, OG image, `robots.txt`, `sitemap.xml`, favicon từ `logo.png`.

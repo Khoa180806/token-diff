@@ -71,20 +71,22 @@ export const InputPane: React.FC<InputPaneProps> = ({
             size="sm"
             onClick={handleCopy}
             disabled={!value}
-            className="h-6 w-6 p-0 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+            className="h-6 w-6 p-0 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
             title="Copy content"
+            aria-label={copied ? "Copied content" : `Copy ${title}`}
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" /> : <Copy className="w-3.5 h-3.5" aria-hidden="true" />}
           </Button>
           <Button
             variant="ghost"
             size="sm"
             onClick={onClear}
             disabled={!value}
-            className="h-6 w-6 p-0 text-zinc-400 hover:text-rose-400 hover:bg-zinc-800"
+            className="h-6 w-6 p-0 text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none"
             title={t.clearAll}
+            aria-label={`${t.clearAll} - ${title}`}
           >
-            <Trash2 className="w-3.5 h-3.5" />
+            <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
           </Button>
         </div>
       </div>
@@ -95,11 +97,12 @@ export const InputPane: React.FC<InputPaneProps> = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 min-h-[220px] max-h-[480px] md:min-h-[280px] resize-y p-3.5 font-mono text-xs text-zinc-200 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 leading-relaxed placeholder:text-zinc-600 rounded-none"
+          aria-label={title}
+          className="flex-1 min-h-[200px] max-h-[480px] md:min-h-[280px] resize-y p-3.5 font-mono text-xs text-zinc-100 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 leading-relaxed placeholder:text-zinc-500 rounded-none"
         />
 
         {/* Footer info bar */}
-        <div className="flex items-center justify-between px-3.5 py-1.5 border-t border-zinc-800/60 bg-zinc-950/30 text-[11px] font-mono text-zinc-500">
+        <div className="flex items-center justify-between px-3.5 py-1.5 border-t border-zinc-800/60 bg-zinc-950/30 text-[11px] font-mono text-zinc-400">
           <div className="flex items-center gap-3">
             <span>{stats?.charCount ?? 0} chars</span>
             <span>{stats?.lineCount ?? 0} lines</span>
@@ -110,7 +113,7 @@ export const InputPane: React.FC<InputPaneProps> = ({
                 {t.statusCalculating}
               </span>
             ) : (
-              <span className="text-zinc-600 text-[10px]">
+              <span className="text-zinc-400 text-[10px]">
                 {stats?.encoding ?? 'ready'}
               </span>
             )}

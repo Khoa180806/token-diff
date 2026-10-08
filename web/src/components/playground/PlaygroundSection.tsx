@@ -117,10 +117,11 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
             variant="outline"
             size="sm"
             onClick={toggleLanguage}
-            className="h-9 px-3 text-xs font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-200"
+            aria-label={lang === 'en' ? 'Chuyển sang Tiếng Việt' : 'Switch to English'}
+            className="h-9 px-3 text-xs font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
             title="Toggle English / Tiếng Việt"
           >
-            <Globe className="w-3.5 h-3.5 mr-1.5 text-zinc-400" />
+            <Globe className="w-3.5 h-3.5 mr-1.5 text-zinc-400" aria-hidden="true" />
             {lang === 'en' ? 'VI / EN' : 'EN / VI'}
           </Button>
 
@@ -132,14 +133,17 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
                 if (val) setSelectedModel(val);
               }}
             >
-              <SelectTrigger className="h-9 text-xs font-mono bg-zinc-900 border-zinc-800 text-zinc-200">
+              <SelectTrigger
+                aria-label="Select OpenAI model for tokenization"
+                className="h-9 text-xs font-mono bg-zinc-900 border-zinc-800 text-zinc-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+              >
                 <SelectValue placeholder="Model" />
               </SelectTrigger>
               <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200 font-mono text-xs">
                 {AVAILABLE_MODELS.map((m) => (
                   <SelectItem key={m.value} value={m.value} className="focus:bg-zinc-800 text-xs">
                     <span className="font-semibold text-zinc-100">{m.label}</span>{' '}
-                    <span className="text-[10px] text-zinc-500">({m.encoding})</span>
+                    <span className="text-[10px] text-zinc-400">({m.encoding})</span>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -150,9 +154,9 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
 
       {/* Toolbar: Example Pickers & Swap */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-zinc-500 font-mono text-[11px] mr-1 flex items-center gap-1">
-            <BookOpen className="w-3.5 h-3.5" />
+        <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Example prompts">
+          <span className="text-zinc-400 font-mono text-[11px] mr-1 flex items-center gap-1 select-none">
+            <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
             {t.loadExample}:
           </span>
           {EXAMPLE_PROMPTS.map((ex, idx) => (
@@ -161,7 +165,8 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
               variant="outline"
               size="sm"
               onClick={() => handleLoadExample(idx)}
-              className="h-7 text-[11px] font-mono bg-zinc-950/70 border-zinc-800/80 hover:bg-zinc-800/80 text-zinc-300"
+              aria-label={`Load example: ${ex.name[lang]}`}
+              className="h-7 text-[11px] font-mono bg-zinc-950/70 border-zinc-800/80 hover:bg-zinc-800/80 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
             >
               {ex.name[lang]}
             </Button>
@@ -173,20 +178,22 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
             variant="outline"
             size="sm"
             onClick={handleSwap}
-            className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-300"
+            aria-label="Swap before and after prompt inputs"
+            className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
             title="Swap before and after"
           >
-            <ArrowLeftRight className="w-3 h-3 mr-1" />
+            <ArrowLeftRight className="w-3 h-3 mr-1" aria-hidden="true" />
             {t.swapInputs}
           </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={handleClear}
-            className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-rose-950/30 hover:text-rose-400 text-zinc-400"
+            aria-label="Clear all prompt inputs"
+            className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-rose-950/30 hover:text-rose-400 text-zinc-400 focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none"
             title="Clear all text"
           >
-            <RotateCcw className="w-3 h-3 mr-1" />
+            <RotateCcw className="w-3 h-3 mr-1" aria-hidden="true" />
             {t.clearAll}
           </Button>
         </div>

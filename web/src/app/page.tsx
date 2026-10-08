@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-emerald-500/20 selection:text-emerald-300">
       <HeroSection lang={lang} onToggleLang={toggleLanguage} />
-      <main className="flex-1 flex flex-col">
+      <main id="main-content" className="flex-1 flex flex-col">
         <PlaygroundSection lang={lang} onToggleLang={toggleLanguage} />
         <FeaturesSection lang={lang} />
         <CliDemoSection lang={lang} />

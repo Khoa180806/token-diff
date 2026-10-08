@@ -48,34 +48,34 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
       <CardContent className="p-4">
         <Tabs defaultValue="summary" className="w-full">
           <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
-            <TabsList className="bg-zinc-950/60 border border-zinc-800/80 p-0.5">
+            <TabsList aria-label="Result format views" className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex bg-zinc-950/60 border border-zinc-800/80 p-0.5">
               <TabsTrigger
                 value="summary"
-                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center gap-1.5"
+                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
-                <AlignLeft className="w-3.5 h-3.5" />
-                {t.tabSummary}
+                <AlignLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>{t.tabSummary}</span>
               </TabsTrigger>
               <TabsTrigger
                 value="json"
-                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center gap-1.5"
+                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
-                <Code className="w-3.5 h-3.5" />
-                {t.tabJson}
+                <Code className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>{t.tabJson}</span>
               </TabsTrigger>
               <TabsTrigger
                 value="cli"
-                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center gap-1.5"
+                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
-                <Terminal className="w-3.5 h-3.5" />
-                {t.tabCli}
+                <Terminal className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>{t.tabCli}</span>
               </TabsTrigger>
             </TabsList>
 
-            <div className="text-xs text-zinc-500 font-mono hidden sm:block">
+            <div className="text-xs text-zinc-400 font-mono hidden sm:block">
               {diff ? (
                 <span className="flex items-center gap-1 text-emerald-400/90">
-                  <Sparkles className="w-3 h-3" />
+                  <Sparkles className="w-3 h-3" aria-hidden="true" />
                   {diff.encoding}
                 </span>
               ) : (
@@ -93,25 +93,25 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
                 </div>
 
                 {/* Table representation matching CLI output */}
-                <div className="overflow-x-auto rounded-md border border-zinc-800/80 bg-zinc-950/50">
-                  <table className="w-full text-left font-mono text-xs">
+                <div className="overflow-x-auto rounded-md border border-zinc-800/80 bg-zinc-950/50" tabIndex={0} aria-label="Token comparison table container" role="region">
+                  <table className="w-full text-left font-mono text-xs" aria-label="Token difference breakdown table">
                     <thead>
-                      <tr className="border-b border-zinc-800 text-zinc-400 bg-zinc-900/50">
-                        <th className="py-2 px-3 font-semibold">Target</th>
-                        <th className="py-2 px-3 font-semibold">Tokens</th>
-                        <th className="py-2 px-3 font-semibold">Chars</th>
-                        <th className="py-2 px-3 font-semibold">Lines</th>
+                      <tr className="border-b border-zinc-800 text-zinc-300 bg-zinc-900/50">
+                        <th scope="col" className="py-2 px-3 font-semibold">Target</th>
+                        <th scope="col" className="py-2 px-3 font-semibold">Tokens</th>
+                        <th scope="col" className="py-2 px-3 font-semibold">Chars</th>
+                        <th scope="col" className="py-2 px-3 font-semibold">Lines</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-800/60 text-zinc-300">
                       <tr>
-                        <td className="py-2 px-3 text-zinc-400 font-medium">{diff.before.label}</td>
+                        <td className="py-2 px-3 text-zinc-300 font-medium">{diff.before.label}</td>
                         <td className="py-2 px-3">{diff.before.token_count}</td>
                         <td className="py-2 px-3">{diff.before.char_count}</td>
                         <td className="py-2 px-3">{diff.before.line_count}</td>
                       </tr>
                       <tr>
-                        <td className="py-2 px-3 text-zinc-400 font-medium">{diff.after.label}</td>
+                        <td className="py-2 px-3 text-zinc-300 font-medium">{diff.after.label}</td>
                         <td className="py-2 px-3">{diff.after.token_count}</td>
                         <td className="py-2 px-3">{diff.after.char_count}</td>
                         <td className="py-2 px-3">{diff.after.line_count}</td>
@@ -124,15 +124,15 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
                               ? 'text-emerald-400'
                               : diff.diff.token_delta > 0
                               ? 'text-rose-400'
-                              : 'text-zinc-400'
+                              : 'text-zinc-300'
                           }`}
                         >
                           {diff.diff.token_delta > 0 ? `+${diff.diff.token_delta}` : diff.diff.token_delta} ({diff.diff.token_delta > 0 ? `+${diff.diff.token_delta_pct}` : diff.diff.token_delta_pct}%)
                         </td>
-                        <td className="py-2 px-3 text-zinc-400">
+                        <td className="py-2 px-3 text-zinc-300">
                           {diff.diff.char_delta > 0 ? `+${diff.diff.char_delta}` : diff.diff.char_delta} ({diff.diff.char_delta_pct}%)
                         </td>
-                        <td className="py-2 px-3 text-zinc-400">
+                        <td className="py-2 px-3 text-zinc-300">
                           {diff.after.line_count - diff.before.line_count}
                         </td>
                       </tr>
@@ -141,7 +141,7 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
                 </div>
               </div>
             ) : (
-              <div className="py-8 text-center text-xs font-mono text-zinc-500">
+              <div className="py-8 text-center text-xs font-mono text-zinc-400">
                 {t.emptyPromptNotice}
               </div>
             )}
@@ -150,30 +150,36 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
           {/* TAB 2: JSON Transport Envelope */}
           <TabsContent value="json" className="mt-4 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-zinc-400">
+              <span className="text-[11px] font-mono text-zinc-300">
                 Standard v1.0 AI Agent Transport Envelope:
               </span>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleCopyJson}
-                className="h-7 text-xs font-mono bg-zinc-950 border-zinc-800 hover:bg-zinc-800 text-zinc-300"
+                aria-label={copiedJson ? t.copiedJson : t.copyJson}
+                className="h-7 px-2.5 text-xs font-mono bg-zinc-950 border-zinc-800 hover:bg-zinc-800 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
                 {copiedJson ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400 mr-1.5" />
-                    {t.copiedJson}
+                    <Check className="w-3.5 h-3.5 text-emerald-400 mr-1.5" aria-hidden="true" />
+                    <span>{t.copiedJson}</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5 mr-1.5" />
-                    {t.copyJson}
+                    <Copy className="w-3.5 h-3.5 mr-1.5" aria-hidden="true" />
+                    <span>{t.copyJson}</span>
                   </>
                 )}
               </Button>
             </div>
 
-            <pre className="p-3.5 rounded-md bg-zinc-950 border border-zinc-800/80 font-mono text-xs text-zinc-300 overflow-x-auto max-h-[320px] scrollbar-thin">
+            <pre
+              tabIndex={0}
+              role="region"
+              aria-label="JSON format output"
+              className="p-3.5 rounded-md bg-zinc-950 border border-zinc-800/80 font-mono text-xs text-zinc-200 overflow-x-auto max-h-[320px] scrollbar-thin focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+            >
               <code>{jsonEnvelopeString}</code>
             </pre>
           </TabsContent>
@@ -181,30 +187,36 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
           {/* TAB 3: CLI Equivalent Command */}
           <TabsContent value="cli" className="mt-4 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-zinc-400">
+              <span className="text-[11px] font-mono text-zinc-300">
                 {t.cliHelpNote}
               </span>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleCopyCli}
-                className="h-7 text-xs font-mono bg-zinc-950 border-zinc-800 hover:bg-zinc-800 text-zinc-300"
+                aria-label={copiedCli ? t.copiedCli : t.copyCli}
+                className="h-7 px-2.5 text-xs font-mono bg-zinc-950 border-zinc-800 hover:bg-zinc-800 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
                 {copiedCli ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400 mr-1.5" />
-                    {t.copiedCli}
+                    <Check className="w-3.5 h-3.5 text-emerald-400 mr-1.5" aria-hidden="true" />
+                    <span>{t.copiedCli}</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5 mr-1.5" />
-                    {t.copyCli}
+                    <Copy className="w-3.5 h-3.5 mr-1.5" aria-hidden="true" />
+                    <span>{t.copyCli}</span>
                   </>
                 )}
               </Button>
             </div>
 
-            <div className="p-3.5 rounded-md bg-zinc-950 border border-zinc-800/80 flex items-center justify-between font-mono text-xs text-emerald-400 overflow-x-auto">
+            <div
+              tabIndex={0}
+              role="region"
+              aria-label="CLI command invocation"
+              className="p-3.5 rounded-md bg-zinc-950 border border-zinc-800/80 flex items-center justify-between font-mono text-xs text-emerald-400 overflow-x-auto focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+            >
               <code>$ {cliCommandString}</code>
             </div>
           </TabsContent>
