@@ -188,6 +188,59 @@ export const I18N_STRINGS = {
     heroInstallTabNpx: 'Run via npx',
     heroInstallTabLocal: 'Local Dev',
     heroCopiedCommand: 'Copied to clipboard!',
+    // Features strings
+    featuresBadge: 'Architecture & Guarantees',
+    featuresHeading: 'Engineered for Deterministic Agent Systems',
+    featuresSubheading:
+      'Zero bloated dependencies. Strictly local token diffing designed for developer speed, agent pipelines, and automated CI assertions.',
+    featurePrivacyTitle: '100% Local & Air-Gapped',
+    featurePrivacyDesc:
+      'Runs completely on your local CPU or in-browser WASM/JS. Zero external HTTP requests, zero telemetry, and zero prompt leakage.',
+    featureAddonTitle: 'Zero Native Addons',
+    featureAddonDesc:
+      'Powered by js-tiktoken. Runs identically on Linux, macOS, Windows, Docker, and Web Workers without node-gyp or C++ compilation barriers.',
+    featureEnvelopeTitle: 'Agent-First JSON Envelope',
+    featureEnvelopeDesc:
+      'Adheres strictly to RFC 3339, semantic versioning, and standard exit codes (0 for unchanged, 1 for diff found, 2 for syntax/system error).',
+    featureSpeedTitle: 'Sub-Millisecond Execution',
+    featureSpeedDesc:
+      'Lightweight memory footprint and instant BPE parsing. Benchmark baseline frozen with consistent sub-millisecond diff generation.',
+    // CLI Demo strings
+    cliBadge: 'Terminal Experience',
+    cliHeading: 'Live Terminal & Visual Diffing',
+    cliSubheading:
+      'Clear ANSI color coding and visual token diffs right in your CLI. Inspect additions, removals, and precise byte counts.',
+    cliTabCount: 'Count & Inspect',
+    cliTabDiff: 'Diffing Contexts',
+    cliTabStdin: 'Unix Pipelines',
+    cliTabJson: 'JSON Mode',
+    // Use Cases strings
+    useCasesBadge: 'Production Workflows',
+    useCasesHeading: 'Where token-diff Fits in Your Stack',
+    useCasesSubheading:
+      'From reducing prompt engineering iteration cycles to hard CI token budgeting, token-diff brings precision to LLM operations.',
+    useCase1Title: 'System Prompt Optimization',
+    useCase1Desc:
+      'Rapidly test condensed prompts, measure token reduction delta, and avoid hitting context window boundaries before production deployment.',
+    useCase2Title: 'CI/CD Token Budget Gates',
+    useCase2Desc:
+      'Enforce non-regression token budget rules in GitHub Actions. Halt PRs if prompt changes increase context consumption beyond threshold limits.',
+    useCase3Title: 'Autonomous Agent Tool Loops',
+    useCase3Desc:
+      'Parse JSON envelopes directly inside agent reasoning loops to audit and prune bloated tool call responses before feeding back into LLM memory.',
+    // Ecosystem strings
+    ecosystemBadge: 'Tools Ecosystem',
+    ecosystemHeading: 'Part of the AI Developer Tool Ecosystem',
+    ecosystemSubheading:
+      'Built according to the rigorous quality, integration, and architecture specifications of the AI Developer Tool Ecosystem standard.',
+    ecosystemSpecButton: 'View Specification',
+    ecosystemDecisionLog: 'Decision Log (D-001 - D-023)',
+    // Footer strings
+    footerBuiltBy: 'Built with TypeScript, Tailwind CSS & Next.js.',
+    footerLicense: 'Released under the MIT License.',
+    footerGithub: 'GitHub Repository',
+    footerDocumentation: 'Docs & Guides',
+    footerBackToTop: 'Back to top',
   },
   vi: {
     playgroundBadge: 'Playground Tương Tác Trực Tiếp',
@@ -235,5 +288,58 @@ export const I18N_STRINGS = {
     heroInstallTabNpx: 'Chạy Với npx',
     heroInstallTabLocal: 'Gói Dự Án',
     heroCopiedCommand: 'Đã sao chép vào bộ nhớ tạm!',
+    // Features strings
+    featuresBadge: 'Kiến Trúc & Cam Kết Chất Lượng',
+    featuresHeading: 'Được Tối Ưu Cho Hệ Thống Agent Tự Trị',
+    featuresSubheading:
+      'Loại bỏ thư viện cồng kềnh. Đo lường và so sánh token 100% nội bộ, tối ưu cho tốc độ của lập trình viên và tích hợp CI tự động.',
+    featurePrivacyTitle: '100% Cục Bộ & Bảo Mật Tuyệt Đối',
+    featurePrivacyDesc:
+      'Chạy hoàn toàn trên CPU máy hoặc Web Worker trên trình duyệt. Không gửi request HTTP ra ngoài, không gửi telemetry và không rò rỉ prompt.',
+    featureAddonTitle: 'Không Phụ Thuộc Native Addon',
+    featureAddonDesc:
+      'Dựa trên nền tảng js-tiktoken chuẩn. Hoạt động đồng nhất trên Linux, macOS, Windows, Docker mà không gặp rào cản biên dịch C++ hay node-gyp.',
+    featureEnvelopeTitle: 'Chuẩn JSON Envelope Cho Agent',
+    featureEnvelopeDesc:
+      'Tuân thủ chặt chẽ RFC 3339, Semantic Versioning và mã thoát (exit code 0: không đổi, 1: có độ lệch, 2: lỗi cú pháp/hệ thống).',
+    featureSpeedTitle: 'Xử Lý Tốc Độ Dưới Một Mili-giây',
+    featureSpeedDesc:
+      'Chiếm dụng RAM tối thiểu và phân tích BPE siêu nhanh. Benchmark ổn định, tạo diff nhất quán và cực kỳ nhẹ nhàng.',
+    // CLI Demo strings
+    cliBadge: 'Trải Nghiệm Terminal',
+    cliHeading: 'Giao Diện Dòng Lệnh & Diff Trực Quan',
+    cliSubheading:
+      'Màu sắc chuẩn ANSI rõ nét và biểu đồ so sánh token ngay trên terminal của bạn. Dễ dàng quan sát phần thêm, bớt và số byte chính xác.',
+    cliTabCount: 'Đếm & Kiểm tra',
+    cliTabDiff: 'So sánh Context',
+    cliTabStdin: 'Đường ống Unix Pip',
+    cliTabJson: 'Chế độ JSON',
+    // Use Cases strings
+    useCasesBadge: 'Ứng Dụng Thực Tế',
+    useCasesHeading: 'token-diff Phục Vụ Gì Trong Dự Án Của Bạn?',
+    useCasesSubheading:
+      'Từ việc rút ngắn chu kỳ tối ưu prompt đến thiết lập rào chắn ngân sách token trên CI, token-diff mang lại sự chuẩn xác tối đa.',
+    useCase1Title: 'Tối Ưu Hóa System Prompt',
+    useCase1Desc:
+      'Thử nghiệm và đo lường tức thì tỷ lệ rút gọn prompt, giúp giảm lượng token tiêu hao mà không vượt quá giới hạn cửa sổ ngữ cảnh (context window).',
+    useCase2Title: 'Rào Chắn Ngân Sách Token Trên CI/CD',
+    useCase2Desc:
+      'Thiết lập kiểm tra tự động trong GitHub Actions. Chặn các Pull Request làm phình to context prompt vượt ngưỡng quy định.',
+    useCase3Title: 'Chu Trình Tool Call Của AI Agent',
+    useCase3Desc:
+      'Phân tích JSON envelope ngay trong vòng lặp agent để cắt giảm dữ liệu thừa từ tool responses trước khi nạp lại vào bộ nhớ LLM.',
+    // Ecosystem strings
+    ecosystemBadge: 'Hệ Sinh Thái Công Cụ',
+    ecosystemHeading: 'Thuộc AI Developer Tool Ecosystem',
+    ecosystemSubheading:
+      'Được thiết kế và kiểm thử nghiêm ngặt theo tiêu chuẩn kiến trúc, tích hợp và độ tin cậy của bộ quy chuẩn AI Developer Tool Ecosystem.',
+    ecosystemSpecButton: 'Xem Bản Đặc Tả Kỹ Thuật',
+    ecosystemDecisionLog: 'Nhật Ký Quyết Định (D-001 - D-023)',
+    // Footer strings
+    footerBuiltBy: 'Xây dựng với TypeScript, Tailwind CSS & Next.js.',
+    footerLicense: 'Phát hành theo giấy phép MIT License.',
+    footerGithub: 'Mã nguồn GitHub',
+    footerDocumentation: 'Tài liệu hướng dẫn',
+    footerBackToTop: 'Lên đầu trang',
   },
 };

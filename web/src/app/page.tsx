@@ -3,6 +3,11 @@
 import React, { useState } from 'react';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { PlaygroundSection } from '@/components/playground/PlaygroundSection';
+import { FeaturesSection } from '@/components/sections/FeaturesSection';
+import { CliDemoSection } from '@/components/sections/CliDemoSection';
+import { UseCasesSection } from '@/components/sections/UseCasesSection';
+import { EcosystemSection } from '@/components/sections/EcosystemSection';
+import { FooterSection } from '@/components/sections/FooterSection';
 import { Language } from '@/lib/constants';
 
 export default function Home() {
@@ -24,7 +29,12 @@ export default function Home() {
       <main className="flex-1 flex flex-col">
         <HeroSection lang={lang} onExplorePlayground={scrollToPlayground} />
         <PlaygroundSection lang={lang} onToggleLang={toggleLanguage} />
+        <FeaturesSection lang={lang} />
+        <CliDemoSection lang={lang} />
+        <UseCasesSection lang={lang} />
+        <EcosystemSection lang={lang} />
       </main>
+      <FooterSection lang={lang} />
     </div>
   );
 }
