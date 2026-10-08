@@ -16,21 +16,21 @@ export function UseCasesSection({ lang }: UseCasesSectionProps) {
       icon: Sparkles,
       title: t.useCase1Title,
       description: t.useCase1Desc,
-      tag: 'Prompt Engineering',
+      tag: t.useCaseTag1,
       codeSnippet: 'token-diff system_v1.prompt system_v2.prompt',
     },
     {
       icon: GitPullRequest,
       title: t.useCase2Title,
       description: t.useCase2Desc,
-      tag: 'CI / GitHub Actions',
+      tag: t.useCaseTag2,
       codeSnippet: `token-diff base.prompt head.prompt --json \\\n  | jq -e '.delta.token_delta <= 0'`,
     },
     {
       icon: Bot,
       title: t.useCase3Title,
       description: t.useCase3Desc,
-      tag: 'Autonomous Agents',
+      tag: t.useCaseTag3,
       codeSnippet: 'import { computeDiff } from "ai-token-diff";',
     },
   ];
@@ -83,7 +83,7 @@ export function UseCasesSection({ lang }: UseCasesSectionProps) {
                   className="rounded-lg border border-zinc-800/80 bg-zinc-950 p-3 font-mono text-xs text-zinc-200 overflow-x-auto focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
                 >
                   <div className="text-[10px] text-zinc-400 uppercase tracking-wider mb-1 font-semibold select-none">
-                    Snippet
+                    {t.snippetLabel}
                   </div>
                   <pre className="text-emerald-400 whitespace-pre-wrap">{uc.codeSnippet}</pre>
                 </div>

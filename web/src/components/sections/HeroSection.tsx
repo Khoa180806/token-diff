@@ -155,7 +155,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
         <div className="w-full max-w-xl mx-auto space-y-2 text-left">
           {/* Snippet Tabs */}
           <div className="flex items-center justify-between px-1">
-            <div className="flex flex-wrap items-center gap-1" role="tablist" aria-label="Installation methods">
+            <div className="flex flex-wrap items-center gap-1" role="tablist" aria-label={t.installMethodsLabel}>
               {INSTALL_SNIPPETS.map((snippet) => (
                 <button
                   key={snippet.id}
@@ -163,18 +163,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
                   aria-selected={selectedSnippetId === snippet.id}
                   aria-label={snippet.label}
                   onClick={() => setSelectedSnippetId(snippet.id)}
-                  className={`text-[11px] font-mono px-2.5 py-1 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none ${
+                  className={`text-[11px] font-mono px-2 sm:px-2.5 py-1 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none ${
                     selectedSnippetId === snippet.id
                       ? 'bg-zinc-800 text-emerald-400 font-semibold'
                       : 'text-zinc-400 hover:text-zinc-200'
                   }`}
                 >
-                  {snippet.label}
+                  <span className="hidden xs:inline">{snippet.label}</span>
+                  <span className="xs:hidden">{snippet.shortLabel}</span>
                 </button>
               ))}
             </div>
             <span className="text-[10px] font-mono text-zinc-500 hidden sm:inline select-none">
-              terminal
+              {t.terminalLabel}
             </span>
           </div>
 

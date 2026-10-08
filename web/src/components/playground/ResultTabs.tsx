@@ -51,24 +51,24 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
             <TabsList aria-label="Result format views" className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex bg-zinc-950/60 border border-zinc-800/80 p-0.5">
               <TabsTrigger
                 value="summary"
-                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+                className="text-[11px] sm:text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1 sm:gap-1.5 px-1.5 sm:px-3 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
-                <AlignLeft className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>{t.tabSummary}</span>
+                <AlignLeft className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                <span className="truncate">{t.tabSummary}</span>
               </TabsTrigger>
               <TabsTrigger
                 value="json"
-                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+                className="text-[11px] sm:text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1 sm:gap-1.5 px-1.5 sm:px-3 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
-                <Code className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>{t.tabJson}</span>
+                <Code className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                <span className="truncate">{t.tabJson}</span>
               </TabsTrigger>
               <TabsTrigger
                 value="cli"
-                className="text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+                className="text-[11px] sm:text-xs font-mono data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100 flex items-center justify-center gap-1 sm:gap-1.5 px-1.5 sm:px-3 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
               >
-                <Terminal className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>{t.tabCli}</span>
+                <Terminal className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                <span className="truncate">{t.tabCli}</span>
               </TabsTrigger>
             </TabsList>
 
@@ -79,7 +79,7 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
                   {diff.encoding}
                 </span>
               ) : (
-                <span>idle</span>
+                <span>{t.statusIdle}</span>
               )}
             </div>
           </div>
@@ -89,7 +89,15 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
             {diff ? (
               <div className="space-y-3">
                 <div className="p-3.5 rounded-md bg-zinc-950/70 border border-zinc-800/80 font-mono text-xs text-zinc-200 leading-relaxed">
-                  <span className="text-emerald-400 font-semibold">{diff.summary}</span>
+                  <span className="text-emerald-400 font-semibold">
+                    {lang === 'vi'
+                      ? diff.diff.token_delta < 0
+                        ? `Đã tiết kiệm ${Math.abs(diff.diff.token_delta)} token (-${Math.abs(diff.diff.token_delta_pct)}%) từ ${diff.before.token_count} xuống ${diff.after.token_count} (ký tự: ${diff.before.char_count} → ${diff.after.char_count}, ${diff.diff.char_delta_pct}%)`
+                        : diff.diff.token_delta > 0
+                        ? `Tăng thêm ${diff.diff.token_delta} token (+${diff.diff.token_delta_pct}%) từ ${diff.before.token_count} lên ${diff.after.token_count} (ký tự: ${diff.before.char_count} → ${diff.after.char_count}, +${diff.diff.char_delta_pct}%)`
+                        : `Số lượng token không đổi (${diff.before.token_count} token)`
+                      : diff.summary}
+                  </span>
                 </div>
 
                 {/* Table representation matching CLI output */}
@@ -97,27 +105,31 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
                   <table className="w-full text-left font-mono text-xs" aria-label="Token difference breakdown table">
                     <thead>
                       <tr className="border-b border-zinc-800 text-zinc-300 bg-zinc-900/50">
-                        <th scope="col" className="py-2 px-3 font-semibold">Target</th>
-                        <th scope="col" className="py-2 px-3 font-semibold">Tokens</th>
-                        <th scope="col" className="py-2 px-3 font-semibold">Chars</th>
-                        <th scope="col" className="py-2 px-3 font-semibold">Lines</th>
+                        <th scope="col" className="py-2 px-3 font-semibold">{t.tableTarget}</th>
+                        <th scope="col" className="py-2 px-3 font-semibold">{t.tableTokens}</th>
+                        <th scope="col" className="py-2 px-3 font-semibold">{t.tableChars}</th>
+                        <th scope="col" className="py-2 px-3 font-semibold">{t.tableLines}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-800/60 text-zinc-300">
                       <tr>
-                        <td className="py-2 px-3 text-zinc-300 font-medium">{diff.before.label}</td>
+                        <td className="py-2 px-3 text-zinc-300 font-medium">
+                          {diff.before.label === 'Before' ? t.beforeLabel : diff.before.label}
+                        </td>
                         <td className="py-2 px-3">{diff.before.token_count}</td>
                         <td className="py-2 px-3">{diff.before.char_count}</td>
                         <td className="py-2 px-3">{diff.before.line_count}</td>
                       </tr>
                       <tr>
-                        <td className="py-2 px-3 text-zinc-300 font-medium">{diff.after.label}</td>
+                        <td className="py-2 px-3 text-zinc-300 font-medium">
+                          {diff.after.label === 'After' ? t.afterLabel : diff.after.label}
+                        </td>
                         <td className="py-2 px-3">{diff.after.token_count}</td>
                         <td className="py-2 px-3">{diff.after.char_count}</td>
                         <td className="py-2 px-3">{diff.after.line_count}</td>
                       </tr>
                       <tr className="bg-zinc-900/30 font-semibold">
-                        <td className="py-2 px-3 text-zinc-100">Diff</td>
+                        <td className="py-2 px-3 text-zinc-100">{t.tableDiff}</td>
                         <td
                           className={`py-2 px-3 ${
                             diff.diff.token_delta < 0
@@ -151,7 +163,7 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ diff, model, lang }) => 
           <TabsContent value="json" className="mt-4 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-mono text-zinc-300">
-                Standard v1.0 AI Agent Transport Envelope:
+                {t.transportEnvelopeHeader}
               </span>
               <Button
                 variant="outline"

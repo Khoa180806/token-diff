@@ -144,6 +144,7 @@ I would like you to cover multi-stage builds, layer caching optimization, securi
 export interface InstallSnippet {
   id: string;
   label: string;
+  shortLabel: string;
   command: string;
   description: {
     en: string;
@@ -155,6 +156,7 @@ export const INSTALL_SNIPPETS: InstallSnippet[] = [
   {
     id: 'npx',
     label: 'npx (Zero install)',
+    shortLabel: 'npx',
     command: 'npx ai-token-diff diff "Original prompt" "Optimized prompt"',
     description: {
       en: 'Run immediately in any terminal without installing',
@@ -164,6 +166,7 @@ export const INSTALL_SNIPPETS: InstallSnippet[] = [
   {
     id: 'global',
     label: 'npm global (td alias)',
+    shortLabel: 'npm -g',
     command: 'npm install -g ai-token-diff',
     description: {
       en: 'Installs globally to unlock the concise td command',
@@ -173,6 +176,7 @@ export const INSTALL_SNIPPETS: InstallSnippet[] = [
   {
     id: 'sdk',
     label: 'npm dependency (SDK)',
+    shortLabel: 'npm i',
     command: 'npm install ai-token-diff',
     description: {
       en: 'Add to your Node.js or TypeScript project',
@@ -283,6 +287,33 @@ export const I18N_STRINGS = {
     footerGithub: 'GitHub Repository',
     footerDocumentation: 'Docs & Guides',
     footerBackToTop: 'Back to top',
+    // Newly added translations
+    tableTarget: 'Target',
+    tableTokens: 'Tokens',
+    tableChars: 'Chars',
+    tableLines: 'Lines',
+    tableDiff: 'Diff',
+    statusIdle: 'idle',
+    transportEnvelopeHeader: 'Standard v1.0 AI Agent Transport Envelope:',
+    charsSuffix: 'chars',
+    linesSuffix: 'lines',
+    tokensSuffix: 'tokens',
+    copyContent: 'Copy content',
+    copiedContent: 'Copied content',
+    savedWord: 'saved',
+    reductionWord: 'reduction',
+    featureTag1: 'Zero Telemetry',
+    featureTag2: 'Pure JS BPE',
+    featureTag3: 'RFC 3339 · v1.0',
+    featureTag4: '< 1ms Latency',
+    useCaseTag1: 'Prompt Engineering',
+    useCaseTag2: 'CI / GitHub Actions',
+    useCaseTag3: 'Autonomous Agents',
+    snippetLabel: 'Snippet',
+    terminalLabel: 'terminal',
+    installMethodsLabel: 'Installation methods',
+    beforeLabel: 'Original',
+    afterLabel: 'Optimized',
   },
   vi: {
     navDocs: 'Tài liệu',
@@ -379,6 +410,33 @@ export const I18N_STRINGS = {
     footerGithub: 'Mã nguồn GitHub',
     footerDocumentation: 'Tài liệu hướng dẫn',
     footerBackToTop: 'Lên đầu trang',
+    // Newly added translations
+    tableTarget: 'Đối tượng',
+    tableTokens: 'Token',
+    tableChars: 'Ký tự',
+    tableLines: 'Dòng',
+    tableDiff: 'Độ lệch',
+    statusIdle: 'chờ dữ liệu',
+    transportEnvelopeHeader: 'Chuẩn Transport Envelope cho AI Agent v1.0:',
+    charsSuffix: 'ký tự',
+    linesSuffix: 'dòng',
+    tokensSuffix: 'token',
+    copyContent: 'Sao chép nội dung',
+    copiedContent: 'Đã sao chép',
+    savedWord: 'tiết kiệm',
+    reductionWord: 'giảm',
+    featureTag1: 'Không Telemetry',
+    featureTag2: 'BPE Thuần JS',
+    featureTag3: 'RFC 3339 · v1.0',
+    featureTag4: 'Độ trễ < 1ms',
+    useCaseTag1: 'Kỹ nghệ Prompt',
+    useCaseTag2: 'CI / GitHub Actions',
+    useCaseTag3: 'Agent Tự Trị',
+    snippetLabel: 'Đoạn mã',
+    terminalLabel: 'dòng lệnh',
+    installMethodsLabel: 'Phương thức cài đặt',
+    beforeLabel: 'Bản gốc',
+    afterLabel: 'Sau tối ưu',
   },
 };
 

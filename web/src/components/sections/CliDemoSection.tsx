@@ -95,7 +95,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
                   setActiveTab(key);
                   setCopied(false);
                 }}
-                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-mono font-medium transition-all focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none ${
+                className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-mono font-medium transition-all focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none ${
                   isActive
                     ? 'bg-zinc-800 text-emerald-400 border border-emerald-500/40 shadow-sm'
                     : 'bg-zinc-900/60 text-zinc-400 border border-zinc-800 hover:bg-zinc-900 hover:text-zinc-200'
@@ -116,7 +116,7 @@ export function CliDemoSection({ lang }: CliDemoSectionProps) {
               <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/70 inline-block"></span>
               <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/70 inline-block"></span>
               <span className="ml-2 text-xs font-mono text-zinc-400 hidden sm:inline select-none">
-                token-diff — terminal preview
+                token-diff — {lang === 'vi' ? 'xem trước dòng lệnh' : 'terminal preview'}
               </span>
             </div>
 

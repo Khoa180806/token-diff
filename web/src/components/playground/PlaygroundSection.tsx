@@ -75,102 +75,102 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({ lang }) =>
   return (
     <section id="playground" className="w-full border-b border-zinc-800/80 bg-zinc-950 py-12 md:py-16">
       <div className="w-full max-w-6xl mx-auto px-4 space-y-6">
-        {/* Section Header with Controls */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-zinc-800/80">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <Badge
-                variant="outline"
-                className="text-emerald-400 border-emerald-500/30 bg-emerald-500/10 text-xs px-2.5 py-0.5 font-mono"
-              >
-                <Zap className="w-3 h-3 mr-1 inline" />
-                {t.playgroundBadge}
-              </Badge>
-              <span className="flex items-center gap-1 text-[11px] text-zinc-400 font-mono">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                {t.privacyNotice}
-              </span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-100">
-              {t.playgroundHeading}
-            </h2>
-            <p className="text-xs md:text-sm text-zinc-400 max-w-2xl">
-              {t.playgroundSubheading}
-            </p>
-          </div>
-
-          {/* Model Selector */}
-          <div className="w-full sm:w-[200px] self-start md:self-end">
-            <Select
-              value={selectedModel}
-              onValueChange={(val) => {
-                if (val) setSelectedModel(val);
-              }}
+        {/* Section Header */}
+        <div className="space-y-1.5 pb-2 border-b border-zinc-800/80">
+          <div className="flex items-center gap-2">
+            <Badge
+              variant="outline"
+              className="text-emerald-400 border-emerald-500/30 bg-emerald-500/10 text-xs px-2.5 py-0.5 font-mono"
             >
-              <SelectTrigger
-                aria-label="Select OpenAI model for tokenization"
-                className="h-9 text-xs font-mono bg-zinc-900 border-zinc-800 text-zinc-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
-              >
-                <SelectValue placeholder="Model" />
-              </SelectTrigger>
-              <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200 font-mono text-xs">
-                {AVAILABLE_MODELS.map((m) => (
-                  <SelectItem key={m.value} value={m.value} className="focus:bg-zinc-800 text-xs">
-                    <span className="font-semibold text-zinc-100">{m.label}</span>{' '}
-                    <span className="text-[10px] text-zinc-400">({m.encoding})</span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <Zap className="w-3 h-3 mr-1 inline" />
+              {t.playgroundBadge}
+            </Badge>
+            <span className="flex items-center gap-1 text-[11px] text-zinc-400 font-mono">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              {t.privacyNotice}
+            </span>
           </div>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-100">
+            {t.playgroundHeading}
+          </h2>
+          <p className="text-xs md:text-sm text-zinc-400 max-w-2xl">
+            {t.playgroundSubheading}
+          </p>
         </div>
 
-      {/* Toolbar: Example Pickers & Swap */}
-      <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-        <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Example prompts">
-          <span className="text-zinc-400 font-mono text-[11px] mr-1 flex items-center gap-1 select-none">
-            <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
-            {t.loadExample}:
-          </span>
-          {EXAMPLE_PROMPTS.map((ex, idx) => (
+        {/* Toolbar: Example Pickers (Left) & Model Dropdown + Actions (Right) */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs">
+          {/* Example Prompts */}
+          <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label={t.loadExample}>
+            <span className="text-zinc-400 font-mono text-[11px] mr-1 flex items-center gap-1 select-none">
+              <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
+              {t.loadExample}:
+            </span>
+            {EXAMPLE_PROMPTS.map((ex, idx) => (
+              <Button
+                key={idx}
+                variant="outline"
+                size="sm"
+                onClick={() => handleLoadExample(idx)}
+                aria-label={`Load example: ${ex.name[lang]}`}
+                className="h-7 text-[11px] font-mono bg-zinc-950/70 border-zinc-800/80 hover:bg-zinc-800/80 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+              >
+                {ex.name[lang]}
+              </Button>
+            ))}
+          </div>
+
+          {/* Model Selector Dropdown & Swap/Clear Actions */}
+          <div className="flex flex-wrap items-center gap-2 lg:ml-auto">
+            {/* Model Selector next to Swap */}
+            <div className="w-[170px] shrink-0">
+              <Select
+                value={selectedModel}
+                onValueChange={(val) => {
+                  if (val) setSelectedModel(val);
+                }}
+              >
+                <SelectTrigger
+                  aria-label={t.modelSelectLabel}
+                  className="h-7 text-xs font-mono bg-zinc-900 border-zinc-800 text-zinc-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+                >
+                  <SelectValue placeholder={t.modelSelectLabel} />
+                </SelectTrigger>
+                <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200 font-mono text-xs">
+                  {AVAILABLE_MODELS.map((m) => (
+                    <SelectItem key={m.value} value={m.value} className="focus:bg-zinc-800 text-xs">
+                      <span className="font-semibold text-zinc-100">{m.label}</span>{' '}
+                      <span className="text-[10px] text-zinc-400">({m.encoding})</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             <Button
-              key={idx}
               variant="outline"
               size="sm"
-              onClick={() => handleLoadExample(idx)}
-              aria-label={`Load example: ${ex.name[lang]}`}
-              className="h-7 text-[11px] font-mono bg-zinc-950/70 border-zinc-800/80 hover:bg-zinc-800/80 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+              onClick={handleSwap}
+              aria-label="Swap before and after prompt inputs"
+              className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+              title={t.swapInputs}
             >
-              {ex.name[lang]}
+              <ArrowLeftRight className="w-3 h-3 mr-1" aria-hidden="true" />
+              {t.swapInputs}
             </Button>
-          ))}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleClear}
+              aria-label={t.clearAll}
+              className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-rose-950/30 hover:text-rose-400 text-zinc-400 focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none"
+              title={t.clearAll}
+            >
+              <RotateCcw className="w-3 h-3 mr-1" aria-hidden="true" />
+              {t.clearAll}
+            </Button>
+          </div>
         </div>
-
-        <div className="flex items-center gap-1.5 ml-auto">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleSwap}
-            aria-label="Swap before and after prompt inputs"
-            className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-zinc-800 text-zinc-300 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
-            title="Swap before and after"
-          >
-            <ArrowLeftRight className="w-3 h-3 mr-1" aria-hidden="true" />
-            {t.swapInputs}
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleClear}
-            aria-label="Clear all prompt inputs"
-            className="h-7 text-[11px] font-mono bg-zinc-900 border-zinc-800 hover:bg-rose-950/30 hover:text-rose-400 text-zinc-400 focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none"
-            title="Clear all text"
-          >
-            <RotateCcw className="w-3 h-3 mr-1" aria-hidden="true" />
-            {t.clearAll}
-          </Button>
-        </div>
-      </div>
 
       {/* Error Banner (if any) */}
       {error && (

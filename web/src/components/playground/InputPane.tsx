@@ -60,7 +60,7 @@ export const InputPane: React.FC<InputPaneProps> = ({
               variant="secondary"
               className="font-mono text-[10px] bg-zinc-800 text-zinc-300 border-zinc-700/60 px-1.5 py-0"
             >
-              {stats.tokenCount} tokens
+              {stats.tokenCount} {t.tokensSuffix}
             </Badge>
           )}
         </div>
@@ -72,8 +72,8 @@ export const InputPane: React.FC<InputPaneProps> = ({
             onClick={handleCopy}
             disabled={!value}
             className="h-6 w-6 p-0 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
-            title="Copy content"
-            aria-label={copied ? "Copied content" : `Copy ${title}`}
+            title={t.copyContent}
+            aria-label={copied ? t.copiedContent : `${t.copyContent} - ${title}`}
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" /> : <Copy className="w-3.5 h-3.5" aria-hidden="true" />}
           </Button>
@@ -104,8 +104,8 @@ export const InputPane: React.FC<InputPaneProps> = ({
         {/* Footer info bar */}
         <div className="flex items-center justify-between px-3.5 py-1.5 border-t border-zinc-800/60 bg-zinc-950/30 text-[11px] font-mono text-zinc-400">
           <div className="flex items-center gap-3">
-            <span>{stats?.charCount ?? 0} chars</span>
-            <span>{stats?.lineCount ?? 0} lines</span>
+            <span>{stats?.charCount ?? 0} {t.charsSuffix}</span>
+            <span>{stats?.lineCount ?? 0} {t.linesSuffix}</span>
           </div>
           <div>
             {loading ? (
@@ -114,7 +114,7 @@ export const InputPane: React.FC<InputPaneProps> = ({
               </span>
             ) : (
               <span className="text-zinc-400 text-[10px]">
-                {stats?.encoding ?? 'ready'}
+                {stats?.encoding ?? t.statusReady}
               </span>
             )}
           </div>

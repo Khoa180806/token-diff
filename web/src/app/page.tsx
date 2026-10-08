@@ -17,7 +17,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-emerald-500/20 selection:text-emerald-300">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-emerald-500/20 selection:text-emerald-300 overflow-x-hidden">
       <HeroSection lang={lang} onToggleLang={toggleLanguage} />
       <main id="main-content" className="flex-1 flex flex-col">
         <PlaygroundSection lang={lang} />
