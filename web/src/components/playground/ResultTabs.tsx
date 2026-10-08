@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import type { TokenDiffReport } from '@core/types';
+import type { TokenDiffReport } from '@/lib/types';
 import { formatJson } from '@/lib/formatter';
 import { Language, I18N_STRINGS } from '@/lib/constants';
 import { Terminal, Code, AlignLeft, Copy, Check, Sparkles } from 'lucide-react';

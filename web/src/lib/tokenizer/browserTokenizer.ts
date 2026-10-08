@@ -1,5 +1,5 @@
 import { Tiktoken } from 'js-tiktoken/lite';
-import type { SupportedEncoding, TokenizerResult } from '@core/types';
+import type { SupportedEncoding, TokenizerResult } from '@/lib/types';
 import { resolveEncodingForModel } from '@/lib/models';
 import { loadRankForEncoding } from './ranks';
 

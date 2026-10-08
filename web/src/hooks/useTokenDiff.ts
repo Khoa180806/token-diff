@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { TokenizerResult, TokenDiffReport } from '@core/types';
+import type { TokenizerResult, TokenDiffReport } from '@/lib/types';
 import { requestTokenDiff } from '@/lib/tokenizer/client';
 
 export interface UseTokenDiffOptions {

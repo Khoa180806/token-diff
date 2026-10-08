@@ -1,4 +1,4 @@
-import type { SupportedEncoding } from '@core/types';
+import type { SupportedEncoding } from '@/lib/types';
 
 export const MODEL_TO_ENCODING: Record<string, SupportedEncoding> = {
   // o200k_base models

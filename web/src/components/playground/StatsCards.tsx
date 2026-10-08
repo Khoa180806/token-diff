@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import type { TokenDiffReport, TokenizerResult } from '@core/types';
+import type { TokenDiffReport, TokenizerResult } from '@/lib/types';
 import { Language, I18N_STRINGS } from '@/lib/constants';
 import { ArrowDownRight, ArrowUpRight, Minus, Hash, FileText, CheckCircle2 } from 'lucide-react';
 

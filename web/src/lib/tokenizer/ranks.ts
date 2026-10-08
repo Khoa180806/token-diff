@@ -1,4 +1,4 @@
-import type { SupportedEncoding } from '@core/types';
+import type { SupportedEncoding } from '@/lib/types';
 
 export type RankModule = {
   default: {

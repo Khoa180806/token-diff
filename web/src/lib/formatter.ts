@@ -1,4 +1,4 @@
-import type { ApiEnvelope, TokenDiffReport } from '@core/types';
+import type { ApiEnvelope, TokenDiffReport } from '@/lib/types';
 
 /**
  * Standardized API transport envelope JSON formatter for browser playground.

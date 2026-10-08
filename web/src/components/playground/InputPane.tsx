@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import type { TokenizerResult } from '@core/types';
+import type { TokenizerResult } from '@/lib/types';
 import { Language, I18N_STRINGS } from '@/lib/constants';
 import { Copy, Check, Trash2 } from 'lucide-react';
 

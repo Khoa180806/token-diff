@@ -1,5 +1,5 @@
-import type { TokenizerResult, TokenDiffReport } from '@core/types';
-import { computeDiff } from '@core/diff';
+import type { TokenizerResult, TokenDiffReport } from '@/lib/types';
+import { computeDiff } from '@/lib/diff';
 import { browserCountTokens } from './browserTokenizer';
 
 export type TokenizeWorkerRequest = {
