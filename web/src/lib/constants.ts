@@ -175,6 +175,19 @@ export const I18N_STRINGS = {
     linesComparison: 'Lines',
     cliHelpNote: 'Run this exact comparison locally on your terminal:',
     emptyPromptNotice: 'Type or paste text above to see live token measurements.',
+    // Hero strings
+    heroBadge: 'Zero Native Dependencies · 100% Local BPE',
+    heroTitlePart1: 'Measure Prompt Token Savings.',
+    heroTitlePart2: 'Locally. Instantly.',
+    heroSubtitle:
+      'Ultra-fast CLI tool & TypeScript library for deterministic token measurement, context diffing, and prompt compression across LLM and agent workflows.',
+    heroTryPlayground: 'Try Interactive Playground',
+    heroViewOnGitHub: 'Star on GitHub',
+    heroDocumentation: 'Documentation',
+    heroInstallTabGlobal: 'Global CLI',
+    heroInstallTabNpx: 'Run via npx',
+    heroInstallTabLocal: 'Local Dev',
+    heroCopiedCommand: 'Copied to clipboard!',
   },
   vi: {
     playgroundBadge: 'Playground Tương Tác Trực Tiếp',
@@ -209,5 +222,18 @@ export const I18N_STRINGS = {
     linesComparison: 'Dòng',
     cliHelpNote: 'Chạy câu lệnh tương đương này ngay trên terminal của bạn:',
     emptyPromptNotice: 'Nhập hoặc dán văn bản vào ô phía trên để bắt đầu phân tích token.',
+    // Hero strings
+    heroBadge: 'Không Native Dependencies · Thuần BPE Nội Bộ 100%',
+    heroTitlePart1: 'Đo Lường Độ Lệch Token Prompt.',
+    heroTitlePart2: 'Ngay Tại Máy. Tức Thì.',
+    heroSubtitle:
+      'Công cụ CLI siêu nhẹ và thư viện TypeScript chuẩn xác chuyên đo lường lượng token tiêu thụ, so sánh độ nén prompt và giám sát context cho các luồng LLM & Agent.',
+    heroTryPlayground: 'Trải Nghiệm Playground',
+    heroViewOnGitHub: 'Xem Trên GitHub',
+    heroDocumentation: 'Xem Tài Liệu',
+    heroInstallTabGlobal: 'Cài Đặt Toàn Cục',
+    heroInstallTabNpx: 'Chạy Với npx',
+    heroInstallTabLocal: 'Gói Dự Án',
+    heroCopiedCommand: 'Đã sao chép vào bộ nhớ tạm!',
   },
 };

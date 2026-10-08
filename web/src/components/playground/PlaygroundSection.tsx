@@ -30,13 +30,16 @@ import {
 } from 'lucide-react';
 
 interface PlaygroundSectionProps {
-  initialLang?: Language;
+  lang?: Language;
+  onToggleLang?: () => void;
 }
 
 export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
-  initialLang = 'en',
+  lang: controlledLang,
+  onToggleLang,
 }) => {
-  const [lang, setLang] = useState<Language>(initialLang);
+  const [internalLang, setInternalLang] = useState<Language>('en');
+  const lang = controlledLang ?? internalLang;
   const t = I18N_STRINGS[lang];
 
   // Default initial example
@@ -77,7 +80,11 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
   };
 
   const toggleLanguage = () => {
-    setLang((prev) => (prev === 'en' ? 'vi' : 'en'));
+    if (onToggleLang) {
+      onToggleLang();
+    } else {
+      setInternalLang((prev) => (prev === 'en' ? 'vi' : 'en'));
+    }
   };
 
   return (
