@@ -141,8 +141,72 @@ I would like you to cover multi-stage builds, layer caching optimization, securi
   },
 ];
 
+export interface InstallSnippet {
+  id: string;
+  label: string;
+  command: string;
+  description: {
+    en: string;
+    vi: string;
+  };
+}
+
+export const INSTALL_SNIPPETS: InstallSnippet[] = [
+  {
+    id: 'npx',
+    label: 'npx (Zero install)',
+    command: 'npx ai-token-diff diff "Original prompt" "Optimized prompt"',
+    description: {
+      en: 'Run immediately in any terminal without installing',
+      vi: 'Chạy tức thì trên mọi terminal mà không cần cài đặt',
+    },
+  },
+  {
+    id: 'global',
+    label: 'npm global (td alias)',
+    command: 'npm install -g ai-token-diff',
+    description: {
+      en: 'Installs globally to unlock the concise td command',
+      vi: 'Cài đặt global để kích hoạt lệnh viết tắt siêu ngắn td',
+    },
+  },
+  {
+    id: 'sdk',
+    label: 'npm dependency (SDK)',
+    command: 'npm install ai-token-diff',
+    description: {
+      en: 'Add to your Node.js or TypeScript project',
+      vi: 'Tích hợp vào dự án Node.js hoặc TypeScript',
+    },
+  },
+];
+
+export const PROJECT_LINKS = {
+  github: 'https://github.com/Khoa180806/token-diff',
+  docs: 'https://github.com/Khoa180806/token-diff/tree/main/docs',
+  ecosystemDocs: 'https://github.com/Khoa180806/AI_Developer_Tool_Ecosystem/tree/master/docs',
+  license: 'https://github.com/Khoa180806/token-diff/blob/main/LICENSE',
+};
+
 export const I18N_STRINGS = {
   en: {
+    navDocs: 'Docs',
+    navEcosystem: 'Ecosystem',
+    navGitHub: 'GitHub',
+    heroBadge: 'v0.1.1 · Pure JavaScript · Zero WASM',
+    heroTitlePre: 'Measure prompt token savings.',
+    heroTitleHighlight: 'Locally. Instantly.',
+    heroSubtitle: 'High-precision BPE token measurement and context diff infrastructure for LLMs, prompt engineering, and autonomous agent control planes. Zero cloud calls, 100% offline privacy.',
+    heroCtaPlayground: 'Try Interactive Playground',
+    heroCtaGithub: 'Star on GitHub',
+    heroCtaDocs: 'Read Docs',
+    quickInstallTitle: 'Quick Install & Run',
+    pillLocal: '100% Local & Offline',
+    pillPureJs: 'Zero Native C++ / No node-gyp',
+    pillFast: 'Sub-15ms Execution',
+    pillAgent: 'AI Agent Transport Envelope',
+    copyCommand: 'Copy command',
+    copiedCommand: 'Copied!',
     playgroundBadge: 'Interactive Web Playground',
     playgroundHeading: 'Compare Prompt Tokens in Real-Time',
     playgroundSubheading: 'Tokenize inputs purely client-side with zero cloud calls, zero latency, and zero data leakage.',
@@ -175,36 +239,23 @@ export const I18N_STRINGS = {
     linesComparison: 'Lines',
     cliHelpNote: 'Run this exact comparison locally on your terminal:',
     emptyPromptNotice: 'Type or paste text above to see live token measurements.',
-    // Hero strings
-    heroBadge: 'Zero Native Dependencies · 100% Local BPE',
-    heroTitlePart1: 'Measure Prompt Token Savings.',
-    heroTitlePart2: 'Locally. Instantly.',
-    heroSubtitle:
-      'Ultra-fast CLI tool & TypeScript library for deterministic token measurement, context diffing, and prompt compression across LLM and agent workflows.',
-    heroTryPlayground: 'Try Interactive Playground',
-    heroViewOnGitHub: 'Star on GitHub',
-    heroDocumentation: 'Documentation',
-    heroInstallTabGlobal: 'Global CLI',
-    heroInstallTabNpx: 'Run via npx',
-    heroInstallTabLocal: 'Local Dev',
-    heroCopiedCommand: 'Copied to clipboard!',
     // Features strings
     featuresBadge: 'Architecture & Guarantees',
-    featuresHeading: 'Engineered for Deterministic Agent Systems',
+    featuresHeading: 'Engineered for Autonomous AI Systems',
     featuresSubheading:
-      'Zero bloated dependencies. Strictly local token diffing designed for developer speed, agent pipelines, and automated CI assertions.',
-    featurePrivacyTitle: '100% Local & Air-Gapped',
+      'Zero bloat, deterministic local execution, and developer velocity. Designed to run offline in CLI pipelines, GitHub Actions, and Web Workers.',
+    featurePrivacyTitle: '100% Local & Zero Telemetry',
     featurePrivacyDesc:
-      'Runs completely on your local CPU or in-browser WASM/JS. Zero external HTTP requests, zero telemetry, and zero prompt leakage.',
-    featureAddonTitle: 'Zero Native Addons',
+      'All tokenization and diffing executes locally on your CPU or in-browser Web Worker. Zero HTTP requests, zero telemetry, zero prompt leakage.',
+    featureAddonTitle: 'Zero Native Addons (No node-gyp)',
     featureAddonDesc:
-      'Powered by js-tiktoken. Runs identically on Linux, macOS, Windows, Docker, and Web Workers without node-gyp or C++ compilation barriers.',
-    featureEnvelopeTitle: 'Agent-First JSON Envelope',
+      'Powered by pure js-tiktoken. Install effortlessly across Linux, macOS, Windows, Docker, and Web without C++ compilers or python build tools.',
+    featureEnvelopeTitle: 'Agent-Ready JSON Envelope',
     featureEnvelopeDesc:
-      'Adheres strictly to RFC 3339, semantic versioning, and standard exit codes (0 for unchanged, 1 for diff found, 2 for syntax/system error).',
-    featureSpeedTitle: 'Sub-Millisecond Execution',
+      'Strict schema with ISO timestamps, semver compatibility, and deterministic exit codes (0: clean, 1: diff found, 2: execution/syntax error).',
+    featureSpeedTitle: 'Sub-Millisecond Latency',
     featureSpeedDesc:
-      'Lightweight memory footprint and instant BPE parsing. Benchmark baseline frozen with consistent sub-millisecond diff generation.',
+      'Low memory footprint and cached BPE tokenizer instances ensure rapid benchmarking, instant CI checks, and lightweight CLI execution.',
     // CLI Demo strings
     cliBadge: 'Terminal Experience',
     cliHeading: 'Live Terminal & Visual Diffing',
@@ -243,6 +294,23 @@ export const I18N_STRINGS = {
     footerBackToTop: 'Back to top',
   },
   vi: {
+    navDocs: 'Tài liệu',
+    navEcosystem: 'Hệ sinh thái',
+    navGitHub: 'GitHub',
+    heroBadge: 'v0.1.1 · Thuần JavaScript · Không cần WASM',
+    heroTitlePre: 'Đo lường mức tiết kiệm token prompt.',
+    heroTitleHighlight: 'Cục bộ. Tức thì.',
+    heroSubtitle: 'Hạ tầng đo lường context và độ lệch token BPE độ chính xác cao cho các luồng LLM, prompt engineering và AI Agent Control Plane. 100% bảo mật offline, không gọi API qua mạng.',
+    heroCtaPlayground: 'Thử nghiệm Playground',
+    heroCtaGithub: 'Star trên GitHub',
+    heroCtaDocs: 'Xem tài liệu',
+    quickInstallTitle: 'Cài đặt & Chạy nhanh',
+    pillLocal: '100% Cục bộ & Bảo mật',
+    pillPureJs: 'Thuần JS / Không lỗi node-gyp',
+    pillFast: 'Độ trễ xử lý < 15ms',
+    pillAgent: 'Chuẩn Envelope AI Agent',
+    copyCommand: 'Sao chép lệnh',
+    copiedCommand: 'Đã chép!',
     playgroundBadge: 'Playground Tương Tác Trực Tiếp',
     playgroundHeading: 'So Sánh Token Thời Gian Thực',
     playgroundSubheading: 'Phân tích và đếm token 100% trên trình duyệt. Không gọi API, không độ trễ mạng, an toàn dữ liệu tuyệt đối.',
@@ -275,19 +343,6 @@ export const I18N_STRINGS = {
     linesComparison: 'Dòng',
     cliHelpNote: 'Chạy câu lệnh tương đương này ngay trên terminal của bạn:',
     emptyPromptNotice: 'Nhập hoặc dán văn bản vào ô phía trên để bắt đầu phân tích token.',
-    // Hero strings
-    heroBadge: 'Không Native Dependencies · Thuần BPE Nội Bộ 100%',
-    heroTitlePart1: 'Đo Lường Độ Lệch Token Prompt.',
-    heroTitlePart2: 'Ngay Tại Máy. Tức Thì.',
-    heroSubtitle:
-      'Công cụ CLI siêu nhẹ và thư viện TypeScript chuẩn xác chuyên đo lường lượng token tiêu thụ, so sánh độ nén prompt và giám sát context cho các luồng LLM & Agent.',
-    heroTryPlayground: 'Trải Nghiệm Playground',
-    heroViewOnGitHub: 'Xem Trên GitHub',
-    heroDocumentation: 'Xem Tài Liệu',
-    heroInstallTabGlobal: 'Cài Đặt Toàn Cục',
-    heroInstallTabNpx: 'Chạy Với npx',
-    heroInstallTabLocal: 'Gói Dự Án',
-    heroCopiedCommand: 'Đã sao chép vào bộ nhớ tạm!',
     // Features strings
     featuresBadge: 'Kiến Trúc & Cam Kết Chất Lượng',
     featuresHeading: 'Được Tối Ưu Cho Hệ Thống Agent Tự Trị',
@@ -343,3 +398,4 @@ export const I18N_STRINGS = {
     footerBackToTop: 'Lên đầu trang',
   },
 };
+

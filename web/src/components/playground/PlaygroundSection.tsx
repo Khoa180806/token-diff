@@ -32,14 +32,19 @@ import {
 interface PlaygroundSectionProps {
   lang?: Language;
   onToggleLang?: () => void;
+  initialLang?: Language;
 }
 
 export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
   lang: controlledLang,
   onToggleLang,
+  initialLang = 'en',
 }) => {
-  const [internalLang, setInternalLang] = useState<Language>('en');
+  const [internalLang, setInternalLang] = useState<Language>(initialLang);
   const lang = controlledLang ?? internalLang;
+  const toggleLanguage =
+    onToggleLang ??
+    (() => setInternalLang((prev) => (prev === 'en' ? 'vi' : 'en')));
   const t = I18N_STRINGS[lang];
 
   // Default initial example
@@ -76,14 +81,6 @@ export const PlaygroundSection: React.FC<PlaygroundSectionProps> = ({
     if (example) {
       setBeforeText(example.before);
       setAfterText(example.after);
-    }
-  };
-
-  const toggleLanguage = () => {
-    if (onToggleLang) {
-      onToggleLang();
-    } else {
-      setInternalLang((prev) => (prev === 'en' ? 'vi' : 'en'));
     }
   };
 

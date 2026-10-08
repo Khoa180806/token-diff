@@ -118,8 +118,8 @@ web/
 
 ### Giai đoạn 3 — UI
 - [x] **T3.1** Playground (InputPane, ModelSelect, StatsCards, ResultTabs). — `feat(web): interactive playground`
-- [x] **T3.2** Hero + copy-to-clipboard. — `feat(web): hero section`
-- [x] **T3.3** Features, CLI Demo, Use cases, Ecosystem, Footer. — `feat(web): landing sections (features, cli demo, use cases, ecosystem, footer)`
+- [x] **T3.2** Hero + copy-to-clipboard. — `feat(web): hero section with quick install tabs and playground scroll CTA`
+- [ ] **T3.3** Features, CLI Demo, Use cases, Ecosystem, Footer. — từng section 1 commit
 - [ ] **T3.4** Responsive (360px → 1440px), a11y (label, focus ring, contrast AA, keyboard). — `fix(web): a11y & responsive`
 
 **✅ Checkpoint 3:** Review UI bằng trình duyệt thật; người dùng duyệt giao diện.
