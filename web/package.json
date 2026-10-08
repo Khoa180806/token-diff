@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
-    "ai-token-diff": "file:..",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "js-tiktoken": "^1.0.21",

@@ -1,5 +1,6 @@
 import { Tiktoken } from 'js-tiktoken/lite';
-import { SupportedEncoding, TokenizerResult, resolveEncodingForModel } from 'ai-token-diff';
+import type { SupportedEncoding, TokenizerResult } from '@core/types';
+import { resolveEncodingForModel } from '@/lib/models';
 import { loadRankForEncoding } from './ranks';
 
 // In-memory cache for Tiktoken instances in the client/worker thread

@@ -1,4 +1,4 @@
-import { SupportedEncoding } from 'ai-token-diff';
+import type { SupportedEncoding } from '@core/types';
 
 export type RankModule = {
   default: {

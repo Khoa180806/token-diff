@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { countTokens as coreCountTokens } from 'ai-token-diff';
+import { countTokens as coreCountTokens } from '@core/tokenizer';
 // Sẽ import browser tokenize implementation từ @/lib/tokenizer/browserTokenizer
 import { browserCountTokens } from '@/lib/tokenizer/browserTokenizer';
 

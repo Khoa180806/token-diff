@@ -1,4 +1,5 @@
-import { TokenizerResult, TokenDiffReport, computeDiff } from 'ai-token-diff';
+import type { TokenizerResult, TokenDiffReport } from '@core/types';
+import { computeDiff } from '@core/diff';
 import { browserCountTokens } from './browserTokenizer';
 
 /**
