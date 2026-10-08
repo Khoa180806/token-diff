@@ -7,7 +7,7 @@ Operational limitations, technical trade-offs, and tracked debt based on actual 
 ## 1. Resolved Historical Holds
 
 ### NPM Registry Publication (Resolved)
-- **Status**: Resolved (Published v0.1.1 on npm as `ai-token-diff`).
+- **Status**: Resolved (Published official v1.0.0 on npm as `ai-token-diff`).
 - **Resolution**: Package is now live and installable via `npm install -g ai-token-diff` or runnable via `npx ai-token-diff` (source: `package.json`).
 
 ### Web UI Implementation & Bilingual Localization (Resolved)

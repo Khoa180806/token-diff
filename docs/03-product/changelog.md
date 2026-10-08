@@ -4,6 +4,16 @@ All notable changes to `token-diff` (`ai-token-diff`) documented chronologically
 
 ---
 
+## [1.0.0] - 2026-10-08
+
+### Added
+- **Official Production Release**: Consolidated CLI, TypeScript SDK, and Web Playground into official v1.0.0 production release.
+- **Archify Architecture Visualization**: Designed and exported interactive layered system architecture diagram with Archify (`docs/assets/diagrams/system-architecture.html` and vector SVG).
+- **Consolidated Documentation Assets**: Structured all repository media into `docs/assets/screenshots/` and `docs/assets/diagrams/` with verified relative links.
+- **Landing Page Navigation**: Added npm package links, updated landing page version indicators to v1.0.0, and synchronized documentation hubs.
+
+---
+
 ## [0.2.0] - 2026-10-08
 
 ### Added

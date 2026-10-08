@@ -40,6 +40,12 @@ pie title Feature Delivery Status
 - Production deployment on Vercel (`https://token-diff.vercel.app`) with custom security headers (source: `web/vercel.json`).
 - Package published to public npm registry as `ai-token-diff` (source: `package.json`).
 
+### Official Production Release & Architecture Specs (v1.0.0)
+- Unified release of CLI, TypeScript SDK, and Web Playground under version 1.0.0 (source: `package.json`).
+- Interactive system architecture visualization generated via Archify (`system-architecture.html`, SVG, and PNG) (source: `docs/assets/diagrams/`).
+- Reorganized documentation asset structure under `docs/assets/` with verified relative linking (source: `docs/assets/`).
+- Integrated public npm registry distribution and synchronized landing page navigation (source: `web/src/lib/constants.ts`).
+
 ---
 
 ## 3. Planned Future Milestones

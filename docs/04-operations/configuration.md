@@ -23,7 +23,7 @@ Command-line parameters accepted across subcommands (source: `src/cli.ts#L86-L16
 | `--model <model>` | `-m` | `gpt-4o` | `diff`, `count` | Target model name or explicit encoding string. |
 | `--json` | `-j` | `false` | `diff`, `count` | Serializes machine-readable JSON ApiEnvelope to stdout. |
 | `--help` | `-h` | - | All | Displays command-line help manual. |
-| `--version` | `-V` | - | Root | Emits package semantic version (`0.1.1`). |
+| `--version` | `-V` | - | Root | Emits package semantic version (`1.0.0`). |
 
 ---
 

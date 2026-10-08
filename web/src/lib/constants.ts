@@ -189,13 +189,14 @@ export const PROJECT_LINKS = {
   github: 'https://github.com/Khoa180806/token-diff',
   docs: 'https://github.com/Khoa180806/token-diff/tree/main/docs',
   license: 'https://github.com/Khoa180806/token-diff/blob/main/LICENSE',
+  npm: 'https://www.npmjs.com/package/ai-token-diff',
 };
 
 export const I18N_STRINGS = {
   en: {
     navDocs: 'Docs',
     navGitHub: 'GitHub',
-    heroBadge: 'v0.1.1 · Pure JavaScript · Zero WASM',
+    heroBadge: 'v1.0.0 · Pure JavaScript · Zero WASM',
     heroTitlePre: 'Measure prompt token savings.',
     heroTitleHighlight: 'Locally. Instantly.',
     heroSubtitle: 'High-precision BPE token measurement and context diff infrastructure for LLMs, prompt engineering, and autonomous agent control planes. Zero cloud calls, 100% offline privacy.',
@@ -318,7 +319,7 @@ export const I18N_STRINGS = {
   vi: {
     navDocs: 'Docs',
     navGitHub: 'GitHub',
-    heroBadge: 'v0.1.1 · Pure JavaScript · Zero WASM',
+    heroBadge: 'v1.0.0 · Pure JavaScript · Zero WASM',
     heroTitlePre: 'Đo lường token prompt tiết kiệm.',
     heroTitleHighlight: 'Local. Tức thì.',
     heroSubtitle: 'Hạ tầng đo lường context và token diff BPE độ chính xác cao cho LLM, prompt engineering và AI agent control plane. 100% offline privacy, zero API call.',

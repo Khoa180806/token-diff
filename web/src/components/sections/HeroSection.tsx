@@ -20,6 +20,7 @@ import {
   Star,
   BookOpen,
   Cpu,
+  Package,
 } from 'lucide-react';
 
 interface HeroSectionProps {
@@ -70,7 +71,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
             <span className="font-mono font-bold text-base tracking-tight text-zinc-100">
               token-diff
             </span>
-            <span className="text-[11px] font-mono text-zinc-500">v0.1.1</span>
+            <span className="text-[11px] font-mono text-zinc-500">v1.0.0</span>
           </div>
         </div>
 
@@ -83,6 +84,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
           >
             <BookOpen className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">{t.navDocs}</span>
+          </a>
+
+          <a
+            href={PROJECT_LINKS.npm}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-mono text-zinc-400 hover:text-zinc-100 transition-colors flex items-center gap-1"
+          >
+            <Package className="w-3.5 h-3.5 text-rose-400" />
+            <span className="hidden sm:inline">npm</span>
           </a>
 
           <a
@@ -212,7 +223,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ lang, onToggleLang }) 
           </div>
 
           <p className="text-[11px] font-mono text-zinc-400 px-1">
-            💡 {activeSnippet.description[lang]}
+            {activeSnippet.description[lang]}
           </p>
         </div>
 

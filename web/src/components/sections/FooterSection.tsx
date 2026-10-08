@@ -35,6 +35,14 @@ export function FooterSection({ lang }: FooterSectionProps) {
             {t.footerGithub}
           </a>
           <a
+            href={PROJECT_LINKS.npm}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-zinc-300 hover:text-zinc-100 transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none rounded px-1"
+          >
+            npm
+          </a>
+          <a
             href={PROJECT_LINKS.docs}
             target="_blank"
             rel="noopener noreferrer"
