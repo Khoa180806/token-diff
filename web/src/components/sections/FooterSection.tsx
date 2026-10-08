@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
-import { I18N_STRINGS, Language } from '@/lib/constants';
+import { I18N_STRINGS, Language, PROJECT_LINKS } from '@/lib/constants';
 
 interface FooterSectionProps {
   lang: Language;
@@ -27,7 +27,7 @@ export function FooterSection({ lang }: FooterSectionProps) {
 
         <div className="flex flex-wrap items-center gap-6 text-xs font-mono">
           <a
-            href="https://github.com/Khoa180806/token-diff"
+            href={PROJECT_LINKS.github}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-zinc-200 transition-colors"
@@ -35,14 +35,21 @@ export function FooterSection({ lang }: FooterSectionProps) {
             {t.footerGithub}
           </a>
           <a
-            href="https://github.com/Khoa180806/token-diff#readme"
+            href={PROJECT_LINKS.docs}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-zinc-200 transition-colors"
           >
             {t.footerDocumentation}
           </a>
-          <span className="text-zinc-400">{t.footerLicense}</span>
+          <a
+            href={PROJECT_LINKS.license}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-zinc-400 hover:text-zinc-200 transition-colors"
+          >
+            {t.footerLicense}
+          </a>
           <button
             onClick={scrollToTop}
             className="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-zinc-800 hover:border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-zinc-100 transition-colors cursor-pointer"
