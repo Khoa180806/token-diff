@@ -124,7 +124,7 @@ web/
 **✅ Checkpoint 3 (Hoàn thành UI):** Đạt chuẩn a11y WCAG 2.1 AA, responsive 360px-1440px; người dùng duyệt giao diện.
 
 ### Giai đoạn 4 — SEO & hiệu năng
-- [ ] **T4.1** Metadata, OG image, `robots.txt`, `sitemap.xml`, favicon từ `logo.png`.
+- [x] **T4.1** Metadata, OG image, `robots.txt`, `sitemap.xml`, favicon từ `logo.png`. — `feat(web): seo metadata, dynamic og image, sitemap, robots, and brand icons`
 - [ ] **T4.2** Lighthouse ≥ 90 mọi hạng mục; tối ưu ảnh (`next/image`, chuyển gif → mp4/webm nếu nặng).
 
 ### Giai đoạn 5 — CI & Deploy

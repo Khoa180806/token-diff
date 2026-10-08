@@ -45,18 +45,18 @@ pie title Feature Delivery Status
 ## 3. In Progress (Active Sprint)
 
 ### Phase 6 (Cont.): Interactive Web Playground UI (`web/PLAN.md` Stage 3)
-- [ ] Build interactive Playground layout with Before / After text panes, character/line/token counters, and model selector (source: `web/PLAN.md#L119`).
-- [ ] Implement result inspection tabs (Summary table, JSON ApiEnvelope view, and CLI command generator) (source: `web/PLAN.md#L120`).
-- [ ] Implement responsive layout across desktop and mobile screen sizes (source: `web/PLAN.md#L123`).
-- [ ] Integrate bilingual UI toggle (English & Vietnamese) as confirmed during planning (source: `web/PLAN.md#L155`).
+- [x] Build interactive Playground layout with Before / After text panes, character/line/token counters, and model selector (source: `web/PLAN.md#L119`).
+- [x] Implement result inspection tabs (Summary table, JSON ApiEnvelope view, and CLI command generator) (source: `web/PLAN.md#L120`).
+- [x] Implement responsive layout across desktop and mobile screen sizes (source: `web/PLAN.md#L123`).
+- [x] Integrate bilingual UI toggle (English & Vietnamese) as confirmed during planning (source: `web/PLAN.md#L155`).
 
 ---
 
 ## 4. Planned Milestones (Upcoming)
 
 ### Web Deployment & SEO (`web/PLAN.md` Stage 4 & 5)
+- [x] Configure OpenGraph social preview cards, favicon and SEO metadata (source: `web/PLAN.md#L127`).
 - [ ] Deploy Next.js Web Playground to Vercel targeting default `*.vercel.app` domain (source: `web/PLAN.md#L133`).
-- [ ] Configure OpenGraph social preview cards and SEO metadata (source: `web/PLAN.md#L128`).
 - [ ] Add web CI verification job to `.github/workflows/ci.yml` (source: `web/PLAN.md#L132`).
 
 ### NPM Public Release

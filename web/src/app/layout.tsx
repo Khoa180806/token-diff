@@ -13,9 +13,72 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "token-diff — Fast, Local Token Measurement & Prompt Diffing",
+  metadataBase: new URL('https://token-diff.vercel.app'),
+  title: {
+    default: 'token-diff — Fast, Local Token Measurement & Prompt Diffing',
+    template: '%s | token-diff',
+  },
   description:
-    "Zero-dependency, offline-first token measurement and context diff infrastructure for LLMs, prompt engineering, and AI Agent workflows.",
+    'Zero-dependency, offline-first token measurement and context diff infrastructure for LLMs, prompt engineering, and autonomous agent control planes.',
+  keywords: [
+    'token-diff',
+    'ai-token-diff',
+    'token counter',
+    'tiktoken',
+    'prompt engineering',
+    'prompt optimization',
+    'token savings',
+    'LLM token calculator',
+    'AI agent transport envelope',
+    'context window optimizer',
+    'pure javascript bpe',
+  ],
+  authors: [{ name: 'token-diff contributors' }],
+  creator: 'token-diff',
+  publisher: 'token-diff',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://token-diff.vercel.app',
+    siteName: 'token-diff',
+    title: 'token-diff — Fast, Local Token Measurement & Prompt Diffing',
+    description:
+      'Measure prompt token savings locally and instantly. 100% client-side execution, zero cloud calls, zero telemetry.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'token-diff — Fast, Local Token Measurement & Prompt Diffing',
+    description:
+      'Measure prompt token savings locally and instantly. 100% client-side execution, zero cloud calls, zero telemetry.',
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
